@@ -571,16 +571,16 @@ def index():
 		'progressPercent' : (progressPercent)
 	}
 	return render_template('main.html',**template_data)
-
+#Initialise USB (Izone) Camera Feed
 def gen(camera):
     while True:
         frame = camera.get_frame()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-
+#Check for button states of main program
 @app.route("/<state>")
 def startProgram(state = None):
-	if state == 'Start':
+	if state == 'Start': 
 		global t0
 		t0 = time.time() #Start timing
 		runProgram()
@@ -594,7 +594,7 @@ def startProgram(state = None):
 		ser.reset_input_buffer() #Flush buffer 
 		time.sleep(0.5)
 		return redirect('/')
-	if state == 'Skip':
+	if state == 'Skip': 
 		global skip
 		global incubationTime
 		skip = 1 
@@ -665,8 +665,6 @@ def video_feed():
 #----------------------------------------------------------------------------------------
 if __name__ == "__main__":
 	app.run(host = '0.0.0.0',port = 80,threaded = True)
-
-
 
 
 #----------------------------------------------------------------------------------------
