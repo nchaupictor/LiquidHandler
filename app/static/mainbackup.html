@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liquid Handler v1 Planner</title>
+
+    <script type="text/javascript">
+    function refreshData() {
+    //alert("Calling refresh...");
+    $.ajax({
+          url: "/refresh", 
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+             //alert("Refresh called. Result="+data.result);
+            $("#time").html(data.time);
+            $("#command").html(data.command);
+            $("#incubationTime").html(data.incubationTime);
+            $("#message").html(data.message);
+            $("#submessage").html(data.submessage);
+            setTimeout(refreshData, 500);
+        },
+        error: function(xhr, status, err) {
+             alert("Error: " + err);
+        }
+    });
+    }
+
+    $(document).ready(function() {
+    $("#refresh").click(function(event) {
+    //$("#Start").click(function(event){
+          refreshData();
+    });
+    });
+    </script>
+</head>
+
+<body>
+
+    <h1>Liquid Handler v1 Planner</h1>
+<div class = "container">
+    <div class = "btn-group">
+    <a href="/Start" class="btn btn-danger" role="button">START</a>
+    <a href="/Stop" class="btn btn-danger" role = "button">STOP</a>
+    <a href="/Skip" class="btn btn-danger" role = "button">SKIP</a>
+    <a id="refresh" class="btn btn-danger" role = "button">REFRESH</a>
+    </div>
+</div>
+        <h2>
+            Time = <span id="time">{{ time }} </span></a>
+    <br>Command = <span id="command">{{ command }}</span></a>
+    <br>Incubation Time = <span id="incubationTime">{{ incubationTime }} </span></a>
+    <br><br>Status = <span id="message">{{ message }}</span></a>
+    <br><span id='submessage'>{{ submessage }}</span></a>
+    </h2>
+
+</body>
+
+</html>

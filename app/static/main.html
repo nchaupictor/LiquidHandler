@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Liquid Handler v1</title>
+
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="js/bootstrap.min.js"></script>
+
+  <script type="text/javascript">
+    function refreshData() {
+    //alert("Calling refresh...");
+    $.ajax({
+          url: "/refresh", 
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+             //alert("Refresh called. Result="+data.result);
+            $("#time").html(data.time);
+            $("#command").html(data.command);
+            $("#incubationTime").html(data.incubationTime);
+            $("#message").html(data.message);
+            $("#submessage").html(data.submessage);
+            setTimeout(refreshData, 500);
+        },
+        error: function(xhr, status, err) {
+             alert("Error: " + err);
+        }
+    });
+    }
+
+    $(document).ready(function() {
+    $("#refresh").click(function(event) {
+    //$("#Start").click(function(event){
+          refreshData();
+    });
+    });
+    </script>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+  <div class="text-center">
+    <h1>Liquid Handler v1 Planner</h1>
+    <div class="btn-group">
+      <a href="/Start" class="btn btn-danger" role="button">START</a>
+      <a href="/Stop" class="btn btn-danger" role="button">STOP</a>
+      <a href="/Skip" class="btn btn-danger" role="button">SKIP</a>
+      <span id="refresh" class="btn btn-danger" role="button">REFRESH</a>
+    </div>
+</div>
+
+<form class = "form-inline text-center">
+  <div class="input-group">
+    <span class="input-group-addon">Number of Slides</span>
+    <input class="form-control " type="text" name = "text">
+    <span class="input-group-btn">
+      <input type = "submit" name = "slideform" class="btn btn-default" value = "Submit">
+    </span>
+  </div>
+</form>
+
+
+<div class = "text-center">
+        <h2>
+        Time = <span id="time">{{ time }} </span></a>
+      <br>Command = <span id="command">{{ command }}</span></a>
+      <br>Incubation Time = <span id="incubationTime">{{ incubationTime }} </span></a>
+      <br><br>Status = <span id="message">{{ message }}</span></a>
+      <br><span id='submessage'>{{ submessage }}</span></a>
+      </h2>
+    </div>
+
+
+</body>
+
+</html>

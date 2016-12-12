@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+
+    <style>
+    .w3-oswald{
+        font-family: 'Oswald', sans-serif;
+    }
+    </style>
+
+   <title>Liquid Handler v1 Planner</title>
+   <!-- Latest compiled and minified CSS -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+   <!-- Optional theme -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+   <!-- Latest compiled and minified JavaScript -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript">
+    function refreshData() {
+    //alert("Calling refresh...");
+    $.ajax({
+          url: "/refresh", 
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+             //alert("Refresh called. Result="+data.result);
+            $("#time").html(data.time);
+            $("#command").html(data.command);
+            $("#incubationTime").html(data.incubationTime);
+            $("#message").html(data.message);
+            $("#submessage").html(data.submessage);
+            setTimeout(refreshData, 500);
+        },
+        error: function(xhr, status, err) {
+             alert("Error: " + err);
+        }
+    });
+    }
+
+    $(document).ready(function() {
+    $("#refresh").click(function(event) {
+    //$("#Start").click(function(event){
+          refreshData();
+    });
+    });
+    </script>
+</head>
+
+<body>
+    <div class = "w3-container w3-red w3-center w3-oswald">
+        <h1>Liquid Handler v1 Planner</h1>
+    </div> 
+
+    <div class = "w3-container w3-dark-grey w3-center w3-oswald">
+        <a href = "/Start" id = "Start" class = "w3-btn w3-dark-grey w3-xxlarge">START</a>
+        <a href = "/Stop" id = "Stop" class = "w3-btn w3-dark-grey w3-xxlarge">STOP</a>
+        <a href = "/Skip" id = "Skip" class = "w3-btn w3-dark-grey w3-xxlarge">SKIP</a>
+        <span id="refresh" class = "w3-btn w3-dark-grey w3-xxlarge">REFRESH</a>
+    </div>
+
+    <div class = "w3-container w3-red w3-center w3-oswald">
+        <h2>
+            Time = <span id="time">{{ time }} </span></a>
+            <br>Command = <span id ="command">{{ command }}</span></a>
+            <br>Incubation Time = <span id = "incubationTime">{{ incubationTime }} </span></a>
+            <br><br>Status = <span id= "message">{{ message }}</span></a>
+            <br><span id = 'submessage'>{{ submessage }}</span></a>
+        </h2>
+    </div>
+</body>
+
+</html>
