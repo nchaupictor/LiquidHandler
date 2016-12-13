@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------
-#                                 Liquid Handler Routine v2
+#                                 Liquid Handler Routine v3
 #                          Date created: 23/11/2016 #Author: N Chau
 #Added features: Host raspberry pi as webserver through flask, GUI controlled through server
 #----------------------------------------------------------------------------------------
