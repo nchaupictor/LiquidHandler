@@ -31,7 +31,7 @@ GPIO.setup(11,GPIO.IN)
 #----------------------------------------------------------------------------------------
 #COORDINATES
 offsetX = 1
-offsetY = 10
+offsetY = 12
 #Tip Rack
 tipX = 3 -offsetX #4.95
 tipY = 115.5 - offsetY
