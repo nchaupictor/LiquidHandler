@@ -31,7 +31,7 @@ GPIO.setup(11,GPIO.IN)
 #----------------------------------------------------------------------------------------
 #COORDINATES
 offsetX = 0
-offsetY = 0
+offsetY = 20
 #Tip Rack
 tipX = 3 -offsetX #4.95
 tipY = 115.5 - offsetY
@@ -443,12 +443,12 @@ def runProgram():
 
 	#Loop through main program
 	#Dispense samples
-	count = 12
+	#count = 12
 	print("Dispensing Samples...")
 	for i in xrange(2):
 		message = "Step 1.0 - Dispensing Sample " + str(i + 1)
-		#pickTip(tipX,tipY,tipZ,i)
-		pickTip(tipX,tipY,tipZ,12)
+		pickTip(tipX,tipY,tipZ,i)
+		#pickTip(tipX,tipY,tipZ,12)
 		pickSample(sampleX,sampleY,i)
 		dispense(slideX,slideYDis,i,3000)
 		count += 1
