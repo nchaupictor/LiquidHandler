@@ -40,13 +40,13 @@ tipGap = 9
 
 #Sample Rack
 sampleX = 2.5 -offsetX
-sampleY = 219 - offsetY
+sampleY = 219.5 - offsetY
 sampleGap = 9.1
 samplePick = 49
 
 #Return Tip Rack
 returnX = 2.5 -offsetX
-returnY = 259 - offsetY
+returnY = 259.5 - offsetY
 returnZ = 67
 returnGap = 9
 
