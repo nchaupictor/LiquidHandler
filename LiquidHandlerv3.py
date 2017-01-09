@@ -34,7 +34,7 @@ offsetX = -1
 offsetY = 12.5
 #Tip Rack
 tipX = 0 -offsetX #4.95
-tipY = 115.5 - offsetY
+tipY = 116.5 - offsetY
 tipZ = 77
 tipGap = 9
 
@@ -57,10 +57,10 @@ reservePick = 70
 reserveGap = 17.25
 
 washY = 210 -offsetY
-conjGY = washY + 20 -offsetY
-detY = washY + 40 -offsetY
-conjMY = washY + 50 -offsetY
-subY = washY + 60 -offsetY
+conjGY = washY + 30 -offsetY
+detY = washY + 50 -offsetY
+conjMY = washY + 40 -offsetY
+subY = washY + 70 -offsetY
 
 #Waste Liquid 
 wasteLX = 117 - offsetX
@@ -130,8 +130,8 @@ def pickTip (X,Y,Z,count):
 				tipEnd = False
 				count = 0
 		count = 0
-		tipCount = count 
-
+		
+	tipCount = count 
 	tipEnd = "No"
 	Y = Y - count * tipGap
 	string = stringFormat(X,Y,None,None,3000)
@@ -216,7 +216,7 @@ def aspirate (X,Y,count,F):
 	#serialSend(string)
 	#time.sleep(1)
 	#serialSend("G1 E9.5 F200")
-	string = stringFormat(None,None,36.75,None,500) #32.5
+	string = stringFormat(None,None,36.65,None,500) #32.5
 	serialSend(string)
 	#time.sleep(1)
 	string = stringFormat(None,None,None,15.5-(7.75*(count+1)),700)
@@ -238,14 +238,14 @@ def wash (num,firstFlag,count):
 			count = pickTip(tipX,tipY,tipZ,count)
 			pickFluid(reserveX,washY,6)
 			dispense(slideX,slideYDis,0,3000)
-			aspirate(slideX,slideY,0,3000)
+			aspirate(slideX,slideY,0,750)
 			dispose(wasteLX,wasteLY)
 			eject(wasteTX,wasteTY,0)
 
 			count = pickTip(tipX,tipY,tipZ,count)
 			pickFluid(reserveX,washY,6)
 			dispense(slideX,slideYDis,1,3000)
-			aspirate(slideX,slideY,1,3000)
+			aspirate(slideX,slideY,1,750)
 			dispose(wasteLX,wasteLY)
 			eject(wasteTX,wasteTY,0)
 
@@ -265,9 +265,9 @@ def wash (num,firstFlag,count):
 						tipEnd = False
 						count = 0
 				count = 0
-				tipCount = count
 				tipEnd = "No"
 			count = pickTip(tipX,tipY,tipZ,count)
+			tipCount = count
 			pickFluid(reserveX,washY,10)
 			dispense(slideX,slideYDis,0,3000)
 			dispense(slideX,slideYDis,1,750)
