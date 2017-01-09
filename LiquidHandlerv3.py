@@ -39,13 +39,13 @@ tipZ = 77
 tipGap = 9
 
 #Sample Rack
-sampleX = 2 -offsetX
+sampleX = 1.5 -offsetX
 sampleY = 219.5 - offsetY
 sampleGap = 9.1
 samplePick = 49
 
 #Return Tip Rack
-returnX = 2 -offsetX
+returnX = 1.5 -offsetX
 returnY = 260.75 - offsetY
 returnZ = 67
 returnGap = 9
@@ -73,7 +73,7 @@ wasteTY = 10
 wasteTZ = 40
 
 #Slide
-slideX = 233 -offsetX
+slideX = 230 -offsetX
 slideY = 150.5 -offsetY
 slideYDis = 153.5 -offsetY
 slideZ = 43.5
