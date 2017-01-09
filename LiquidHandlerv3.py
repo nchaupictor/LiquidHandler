@@ -199,7 +199,7 @@ def dispense (X,Y,count,F):
 	serialSend(string)
 	#time.sleep(1)
 	serialSend("G1 E0 F700")
-	#time.sleep(2)
+	time.sleep(2)
 #-----------------------------------------------------------------------------------------
 #Aspirate
 def aspirate (X,Y,count,F):
@@ -209,7 +209,7 @@ def aspirate (X,Y,count,F):
 	string = stringFormat(X,Y,None,None,F)
 	serialSend(string)
 	#time.sleep(1)
-	string = stringFormat(None,None,None,16.5-(8.25*count),700)
+	string = stringFormat(None,None,None,16-(8*count),700)
 	serialSend(string)
 	#time.sleep(1)
 	#string = stringFormat(None,None,30,None,750)
@@ -219,7 +219,7 @@ def aspirate (X,Y,count,F):
 	string = stringFormat(None,None,36.75,None,500) #32.5
 	serialSend(string)
 	#time.sleep(1)
-	string = stringFormat(None,None,None,16.5-(8.25*(count+1)),700)
+	string = stringFormat(None,None,None,16-(8*(count+1)),700)
 	serialSend(string)
 	#serialSend("G1 E0 F200")
 	serialSend("G1 Z28 F700")
