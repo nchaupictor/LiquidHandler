@@ -34,13 +34,13 @@ offsetX = -1
 offsetY = 12.5
 #Tip Rack
 tipX = 1 -offsetX #4.95
-tipY = 116.5 - offsetY
+tipY = 115.5 - offsetY
 tipZ = 77
 tipGap = 9
 
 #Sample Rack
 sampleX = 1.5 -offsetX
-sampleY = 219.5 - offsetY
+sampleY = 218.5 - offsetY
 sampleGap = 9.1
 samplePick = 49
 
@@ -192,7 +192,7 @@ def dispense (X,Y,count,F):
 	#time.sleep(1)
 	#string = stringFormat(None,None,25,None,200)
 	#serialSend(string)
-	string = stringFormat(None,None,37.5,None,750)
+	string = stringFormat(None,None,32,None,750)
 	serialSend(string)
 	#time.sleep(1)
 	string = stringFormat(None,None,None,6*(count+1),700)
