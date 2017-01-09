@@ -33,19 +33,19 @@ GPIO.setup(11,GPIO.IN)
 offsetX = -1
 offsetY = 12.5
 #Tip Rack
-tipX = 1 -offsetX #4.95
+tipX = 0.75 -offsetX #4.95
 tipY = 115.5 - offsetY
 tipZ = 77
 tipGap = 9
 
 #Sample Rack
-sampleX = 1.5 -offsetX
+sampleX = 1.25 -offsetX
 sampleY = 218.5 - offsetY
 sampleGap = 9.1
 samplePick = 49
 
 #Return Tip Rack
-returnX = 1.5 -offsetX
+returnX = 1.25 -offsetX
 returnY = 260.75 - offsetY
 returnZ = 67
 returnGap = 9
@@ -73,7 +73,7 @@ wasteTY = 10
 wasteTZ = 40
 
 #Slide
-slideX = 230 -offsetX
+slideX = 232.5 -offsetX
 slideY = 150.5 -offsetY
 slideYDis = 153.5 -offsetY
 slideZ = 43.5
