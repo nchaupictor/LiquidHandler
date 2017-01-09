@@ -40,13 +40,13 @@ tipGap = 9
 
 #Sample Rack
 sampleX = 2.5 -offsetX
-sampleY = 219.5 - offsetY
+sampleY = 220 - offsetY
 sampleGap = 9.1
 samplePick = 49
 
 #Return Tip Rack
 returnX = 2.5 -offsetX
-returnY = 259.5 - offsetY
+returnY = 260 - offsetY
 returnZ = 67
 returnGap = 9
 
@@ -76,9 +76,9 @@ wasteTZ = 40
 slideX = 235 -offsetX
 slideY = 150.5 -offsetY
 slideYDis = 153.5 -offsetY
-slideZ = 35
+slideZ = 40
 slideGap = 9
-slideAspZ = 42
+slideAspZ = 45
 #Gap between slide modules
 moduleGap = 15
 
