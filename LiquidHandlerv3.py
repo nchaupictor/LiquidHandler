@@ -39,13 +39,13 @@ tipZ = 77
 tipGap = 9
 
 #Sample Rack
-sampleX = 1 -offsetX
+sampleX = 0.5 -offsetX
 sampleY = 218.5 - offsetY
 sampleGap = 9.1
 samplePick = 49
 
 #Return Tip Rack
-returnX = 1 -offsetX
+returnX = 0.5 -offsetX
 returnY = 260 - offsetY
 returnZ = 67
 returnGap = 9
@@ -209,7 +209,7 @@ def aspirate (X,Y,count,F):
 	string = stringFormat(X,Y,None,None,F)
 	serialSend(string)
 	#time.sleep(1)
-	string = stringFormat(None,None,None,16-(8*count),700)
+	string = stringFormat(None,None,None,16.5-(8.25*count),700)
 	serialSend(string)
 	#time.sleep(1)
 	#string = stringFormat(None,None,30,None,750)
@@ -219,7 +219,7 @@ def aspirate (X,Y,count,F):
 	string = stringFormat(None,None,36.75,None,500) #32.5
 	serialSend(string)
 	#time.sleep(1)
-	string = stringFormat(None,None,None,16-(8*(count+1)),700)
+	string = stringFormat(None,None,None,16.5-(8.25*(count+1)),700)
 	serialSend(string)
 	#serialSend("G1 E0 F200")
 	serialSend("G1 Z28 F700")
@@ -264,9 +264,9 @@ def wash (num,firstFlag,count):
 						print("Resuming...")
 						tipEnd = False
 						count = 0
-			count = 0
-			tipCount = count
-			tipEnd = "No"
+				count = 0
+				tipCount = count
+				tipEnd = "No"
 			count = pickTip(tipX,tipY,tipZ,count)
 			pickFluid(reserveX,washY,10)
 			dispense(slideX,slideYDis,0,3000)
