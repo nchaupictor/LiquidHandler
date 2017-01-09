@@ -33,19 +33,19 @@ GPIO.setup(11,GPIO.IN)
 offsetX = -1
 offsetY = 12.5
 #Tip Rack
-tipX = 2 -offsetX #4.95
+tipX = 1 -offsetX #4.95
 tipY = 116.5 - offsetY
 tipZ = 77
 tipGap = 9
 
 #Sample Rack
-sampleX = 2.5 -offsetX
+sampleX = 2 -offsetX
 sampleY = 219.5 - offsetY
 sampleGap = 9.1
 samplePick = 49
 
 #Return Tip Rack
-returnX = 2.5 -offsetX
+returnX = 2 -offsetX
 returnY = 260.75 - offsetY
 returnZ = 67
 returnGap = 9
@@ -73,7 +73,7 @@ wasteTY = 10
 wasteTZ = 40
 
 #Slide
-slideX = 235 -offsetX
+slideX = 233 -offsetX
 slideY = 150.5 -offsetY
 slideYDis = 153.5 -offsetY
 slideZ = 43.5
@@ -192,7 +192,7 @@ def dispense (X,Y,count,F):
 	#time.sleep(1)
 	#string = stringFormat(None,None,25,None,200)
 	#serialSend(string)
-	string = stringFormat(None,None,28,None,750)
+	string = stringFormat(None,None,37.5,None,750)
 	serialSend(string)
 	#time.sleep(1)
 	string = stringFormat(None,None,None,6*(count+1),700)
