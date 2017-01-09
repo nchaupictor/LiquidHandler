@@ -40,13 +40,13 @@ tipGap = 9
 
 #Sample Rack
 sampleX = 2.5 -offsetX
-sampleY = 220 - offsetY
+sampleY = 219.5 - offsetY
 sampleGap = 9.1
 samplePick = 49
 
 #Return Tip Rack
 returnX = 2.5 -offsetX
-returnY = 260.5 - offsetY
+returnY = 260.75 - offsetY
 returnZ = 67
 returnGap = 9
 
@@ -284,7 +284,7 @@ def dispose (X,Y):
 	serialSend("G1 Z10 F700")
 	string = stringFormat(X,Y,None,None,3000)
 	serialSend(string)
-	string = stringFormat(None,None,20,None,750)
+	string = stringFormat(None,None,19,None,750)
 	serialSend(string)
 	serialSend("G1 E16 F700")
 	serialSend("G1 E0 F700")
