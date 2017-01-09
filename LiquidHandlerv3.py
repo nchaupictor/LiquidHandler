@@ -35,7 +35,7 @@ offsetY = 12.5
 #Tip Rack
 tipX = 2 -offsetX #4.95
 tipY = 115.5 - offsetY
-tipZ = 75
+tipZ = 77
 tipGap = 9
 
 #Sample Rack
@@ -64,7 +64,7 @@ subY = washY + 60 -offsetY
 
 #Waste Liquid 
 wasteLX = 117 - offsetX
-wasteLY = 128
+wasteLY = 108
 wasteLZ = 20
 
 #Waste Tips
@@ -73,12 +73,12 @@ wasteTY = 10
 wasteTZ = 40
 
 #Slide
-slideX = 236 -offsetX
-slideY = 151.5 -offsetY
+slideX = 235 -offsetX
+slideY = 150.5 -offsetY
 slideYDis = 153.5 -offsetY
 slideZ = 35
 slideGap = 9
-slideAspZ = 39
+slideAspZ = 42
 #Gap between slide modules
 moduleGap = 15
 
