@@ -33,7 +33,7 @@ GPIO.setup(11,GPIO.IN)
 offsetX = -1
 offsetY = 12.5
 #Tip Rack
-tipX = 0.5 -offsetX #4.95
+tipX = 0 -offsetX #4.95
 tipY = 115.5 - offsetY
 tipZ = 77
 tipGap = 9
@@ -46,7 +46,7 @@ samplePick = 49
 
 #Return Tip Rack
 returnX = 1 -offsetX
-returnY = 260.75 - offsetY
+returnY = 260 - offsetY
 returnZ = 67
 returnGap = 9
 
@@ -238,14 +238,14 @@ def wash (num,firstFlag,count):
 			count = pickTip(tipX,tipY,tipZ,count)
 			pickFluid(reserveX,washY,6)
 			dispense(slideX,slideYDis,0,3000)
-			aspirate(slideX,slideY,0,3000)
+			aspirate(slideX,slideY,0,2500)
 			dispose(wasteLX,wasteLY)
 			eject(wasteTX,wasteTY,0)
 
 			count = pickTip(tipX,tipY,tipZ,count)
 			pickFluid(reserveX,washY,6)
 			dispense(slideX,slideYDis,1,3000)
-			aspirate(slideX,slideY,1,3000)
+			aspirate(slideX,slideY,1,2500)
 			dispose(wasteLX,wasteLY)
 			eject(wasteTX,wasteTY,0)
 
@@ -286,7 +286,7 @@ def dispose (X,Y):
 	serialSend(string)
 	string = stringFormat(None,None,19,None,750)
 	serialSend(string)
-	serialSend("G1 E16 F700")
+	serialSend("G1 E15 F700")
 	serialSend("G1 E0 F700")
 	#time.sleep(1)
 #-----------------------------------------------------------------------------------------
@@ -300,7 +300,7 @@ def eject (X,Y,count):
 	serialSend(string)
 	string = stringFormat(None,None,40,None,750)
 	serialSend(string)
-	serialSend("G1 E22.5 F400") 
+	serialSend("G1 E21 F400") 
 	serialSend("G1 E5 F700")
 	serialSend("G1 Z2 F7000")
 	homeE()
