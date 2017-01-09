@@ -77,7 +77,7 @@ slideX = 232.5 -offsetX
 slideY = 150.5 -offsetY
 slideYDis = 153.5 -offsetY
 slideZ = 43.5
-slideGap = 9
+slideGap = 10
 slideAspZ = 48
 #Gap between slide modules
 moduleGap = 15
