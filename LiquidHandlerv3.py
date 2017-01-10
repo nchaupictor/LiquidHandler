@@ -130,8 +130,8 @@ def pickTip (X,Y,Z,count):
 				tipEnd = False
 				count = 0
 		count = 0
-		tipCount = count 
-		tipEnd = "No"
+	tipCount = count 
+	tipEnd = "No"
 
 	Y = Y - count * tipGap
 	string = stringFormat(X,Y,None,None,3000)
