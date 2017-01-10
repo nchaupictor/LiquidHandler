@@ -216,7 +216,7 @@ def aspirate (X,Y,count,F):
 	#serialSend(string)
 	#time.sleep(1)
 	#serialSend("G1 E9.5 F200")
-	string = stringFormat(None,None,36.65,None,500) #32.5
+	string = stringFormat(None,None,36.35,None,500) #32.5
 	serialSend(string)
 	#time.sleep(1)
 	string = stringFormat(None,None,None,15.5-(7.75*(count+1)),700)
@@ -302,7 +302,7 @@ def eject (X,Y,count):
 	serialSend(string)
 	serialSend("G1 E21 F400") 
 	serialSend("G1 E5 F700")
-	serialSend("G1 Z2 F7000")
+	serialSend("G1 Z2 F700")
 	homeE()
 	serialSend("G28 Z")
 	#time.sleep(1)
