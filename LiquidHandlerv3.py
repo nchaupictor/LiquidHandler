@@ -33,8 +33,8 @@ GPIO.setup(11,GPIO.IN)
 offsetX = -1
 offsetY = 12.5
 #Tip Rack
-tipX = 0 -offsetX #4.95
-tipY = 116.5 - offsetY
+tipX = 0.5 #-offsetX #4.95
+tipY = 117 - offsetY
 tipZ = 77
 tipGap = 9
 
@@ -54,7 +54,7 @@ returnGap = 9
 reserveX = 117 -offsetX
 reserveY = 210 +14
 reservePick = 70
-reserveGap = 17.25
+reserveGap = 20 #17.25
 
 washY = 210 -offsetY
 conjGY = washY + 30 -offsetY
@@ -130,9 +130,9 @@ def pickTip (X,Y,Z,count):
 				tipEnd = False
 				count = 0
 		count = 0
-		
-	tipCount = count 
-	tipEnd = "No"
+		tipCount = count 
+		tipEnd = "No"
+
 	Y = Y - count * tipGap
 	string = stringFormat(X,Y,None,None,3000)
 	serialSend(string)
@@ -266,8 +266,9 @@ def wash (num,firstFlag,count):
 						count = 0
 				count = 0
 				tipEnd = "No"
+				tipCount = count
 			count = pickTip(tipX,tipY,tipZ,count)
-			tipCount = count
+			
 			pickFluid(reserveX,washY,10)
 			dispense(slideX,slideYDis,0,3000)
 			dispense(slideX,slideYDis,1,750)
@@ -315,7 +316,7 @@ def homeE ():
 		while Eend:
 			if GPIO.input(11):
 				print "HIGH"
-				serialSend("G1 E2 F700") #Lower E by 2mm after switch closed
+				serialSend("G1 E1.5 F700") #Lower E by 2mm after switch closed
 				serialSend("G90")
 				Eend = 0
 			else:
