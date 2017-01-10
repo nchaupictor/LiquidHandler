@@ -73,7 +73,7 @@ wasteTY = 0
 wasteTZ = 40
 
 #Slide
-slideX = 232.5 -offsetX
+slideX = 232 -offsetX
 slideY = 150.5 -offsetY
 slideYDis = 153.5 -offsetY
 slideZ = 43.5
@@ -446,7 +446,7 @@ def runProgram():
 	#Dispense samples
 	#count = 12
 	print("Dispensing Samples...")
-	for i in xrange(2):
+	for i in xrange(2): #xrange(2*slideNum)
 		message = "Step 1.0 - Dispensing Sample " + str(i + 1)
 		pickTip(tipX,tipY,tipZ,i)
 		#pickTip(tipX,tipY,tipZ,12)
@@ -518,6 +518,7 @@ def runProgram():
 	IncubationTime = incubation(1800)
 
 	progressPercent = 100
+	submessage = ""
 	message = "Assay Complete"
 	print("Assay Complete")
 	
