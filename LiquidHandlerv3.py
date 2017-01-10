@@ -266,9 +266,9 @@ def wash (num,firstFlag,count):
 						count = 0
 				count = 0
 				tipEnd = "No"
-			tipCount = count
-			count = pickTip(tipX,tipY,tipZ,count)
 			
+			count = pickTip(tipX,tipY,tipZ,count)
+			tipCount = count
 			pickFluid(reserveX,washY,10)
 			dispense(slideX,slideYDis,0,3000)
 			dispense(slideX,slideYDis,1,750)
