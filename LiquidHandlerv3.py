@@ -33,7 +33,7 @@ GPIO.setup(11,GPIO.IN)
 offsetX = -1
 offsetY = 8.5#12.5
 #Tip Rack
-tipX = 0.5 #-offsetX #4.95
+tipX = 0.25 #-offsetX #4.95
 tipY = 117 - offsetY
 tipZ = 77
 tipGap = 9
@@ -45,7 +45,7 @@ sampleGap = 9.1
 samplePick = 49
 
 #Return Tip Rack
-returnX = 0.5 -offsetX
+returnX = 0 -offsetX
 returnY = 260 - offsetY
 returnZ = 67
 returnGap = 9
@@ -54,7 +54,7 @@ returnGap = 9
 reserveX = 117 -offsetX
 reserveY = 210 +14
 reservePick = 70
-reserveGap = 20.1 #17.25
+reserveGap = 18.5 #17.25
 
 washY = 210 -offsetY
 conjGY = washY + 30 -offsetY
@@ -78,7 +78,7 @@ slideY = 150.6 -offsetY
 slideYDis = 153.5 -offsetY
 slideZ = 43.5
 slideGap = 10
-slideAspZ = 48
+slideAspZ = 47.75#48
 #Gap between slide modules
 moduleGap = 15
 
@@ -216,7 +216,7 @@ def aspirate (X,Y,count,F):
 	#serialSend(string)
 	#time.sleep(1)
 	#serialSend("G1 E9.5 F200")
-	string = stringFormat(None,None,36.35,None,500) #32.5
+	string = stringFormat(None,None,36.3,None,500) #36.35
 	serialSend(string)
 	#time.sleep(1)
 	string = stringFormat(None,None,None,15.5-(7.75*(count+1)),700)
