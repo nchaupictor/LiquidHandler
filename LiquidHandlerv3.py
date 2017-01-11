@@ -74,7 +74,7 @@ wasteTZ = 40
 
 #Slide
 slideX = 232 -offsetX
-slideY = 150.6 -offsetY
+slideY = 150.5 -offsetY
 slideYDis = 153.25 -offsetY
 slideZ = 43.5
 slideGap = 10
@@ -216,7 +216,7 @@ def aspirate (X,Y,count,F):
 	#serialSend(string)
 	#time.sleep(1)
 	#serialSend("G1 E9.5 F200")
-	string = stringFormat(None,None,36.3,None,500) #36.35
+	string = stringFormat(None,None,36.25,None,500) #36.35
 	serialSend(string)
 	#time.sleep(1)
 	string = stringFormat(None,None,None,15.5-(7.75*(count+1)),700)
