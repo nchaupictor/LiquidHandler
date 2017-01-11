@@ -518,8 +518,8 @@ def runProgram():
 	IncubationTime = incubation(1800)
 
 	progressPercent = 100
-	submessage = ""
-	message = "Assay Complete"
+	#submessage = ""
+	submessage = "Assay Complete"
 	print("Assay Complete")
 	
 #----------------------------------------------------------------------------------------
