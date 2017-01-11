@@ -40,7 +40,7 @@ tipGap = 9
 
 #Sample Rack
 sampleX = 0.5 -offsetX
-sampleY = 218 - offsetY #218.5
+sampleY = 218.5 - offsetY #218.5
 sampleGap = 9.1
 samplePick = 49
 
@@ -54,7 +54,7 @@ returnGap = 9
 reserveX = 117 -offsetX
 reserveY = 210 +14
 reservePick = 70
-reserveGap = 17.25 #17.25
+reserveGap = 15 #17.25
 
 washY = 210 -offsetY
 conjGY = washY + 30 -offsetY
@@ -74,7 +74,7 @@ wasteTZ = 40
 
 #Slide
 slideX = 232 -offsetX
-slideY = 150.5 -offsetY
+slideY = 150.25 -offsetY #150.5
 slideYDis = 153.25 -offsetY
 slideZ = 43.5
 slideGap = 10
@@ -176,7 +176,7 @@ def pickFluid (X,Y,E):
 	serialSend(string)
 	#serialSend("G1 E4.5 F200")
 	#serialSend('G1 E9 F200')
-	string = stringFormat(None,None,75,None,400)
+	string = stringFormat(None,None,72.5,None,400)
 	serialSend(string)
 	serialSend("G1 E0 F700")
 	serialSend("G1 Z20 F700")
