@@ -31,7 +31,7 @@ GPIO.setup(11,GPIO.IN)
 #----------------------------------------------------------------------------------------
 #COORDINATES
 offsetX = -1
-offsetY = 12.5
+offsetY = 15#12.5
 #Tip Rack
 tipX = 0.5 #-offsetX #4.95
 tipY = 117 - offsetY
@@ -54,7 +54,7 @@ returnGap = 9
 reserveX = 117 -offsetX
 reserveY = 210 +14
 reservePick = 70
-reserveGap = 20 #17.25
+reserveGap = 20.1 #17.25
 
 washY = 210 -offsetY
 conjGY = washY + 30 -offsetY
@@ -74,7 +74,7 @@ wasteTZ = 40
 
 #Slide
 slideX = 232 -offsetX
-slideY = 150.5 -offsetY
+slideY = 150.6 -offsetY
 slideYDis = 153.5 -offsetY
 slideZ = 43.5
 slideGap = 10
