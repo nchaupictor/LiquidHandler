@@ -40,7 +40,7 @@ tipGap = 9
 
 #Sample Rack
 sampleX = 0.5 -offsetX
-sampleY = 218.5 - offsetY
+sampleY = 218 - offsetY #218.5
 sampleGap = 9.1
 samplePick = 49
 
@@ -54,7 +54,7 @@ returnGap = 9
 reserveX = 117 -offsetX
 reserveY = 210 +14
 reservePick = 70
-reserveGap = 18.5 #17.25
+reserveGap = 17.25 #17.25
 
 washY = 210 -offsetY
 conjGY = washY + 30 -offsetY
