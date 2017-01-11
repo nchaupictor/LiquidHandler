@@ -74,7 +74,7 @@ wasteTZ = 40
 
 #Slide
 slideX = 232 -offsetX
-slideY = 150.25 -offsetY #150.5
+slideY = 152.5 -offsetY #150.5
 slideYDis = 153.25 -offsetY
 slideZ = 43.5
 slideGap = 10
