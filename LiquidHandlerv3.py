@@ -34,7 +34,7 @@ offsetX = -2
 offsetY = 6.5#12.5
 #Tip Rack
 tipX = 3 #-offsetX #4.95
-tipY = 116.5 - offsetY
+tipY = 116.75 - offsetY
 tipZ = 77
 tipGap = 9
 
@@ -77,7 +77,7 @@ slideX = 234 -offsetX
 slideY = 149.75 -offsetY #150.5
 slideYDis = 152.25 -offsetY
 slideZ = 43.5
-slideGap = 11
+slideGap = 10
 slideAspZ = 47.75#48
 #Gap between slide modules
 moduleGap = 15
