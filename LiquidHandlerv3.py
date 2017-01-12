@@ -34,7 +34,7 @@ offsetX = -2
 offsetY = 6.5#12.5
 #Tip Rack
 tipX = 3 #-offsetX #4.95
-tipY = 117 - offsetY
+tipY = 116.5 - offsetY
 tipZ = 77
 tipGap = 9
 
@@ -46,7 +46,7 @@ samplePick = 49
 
 #Return Tip Rack
 returnX = 1 -offsetX
-returnY = 261 - offsetY
+returnY = 260.5 - offsetY
 returnZ = 67
 returnGap = 9
 
@@ -74,7 +74,7 @@ wasteTZ = 40
 
 #Slide
 slideX = 234 -offsetX
-slideY = 150.25 -offsetY #150.5
+slideY = 149.75 -offsetY #150.5
 slideYDis = 152.25 -offsetY
 slideZ = 43.5
 slideGap = 10
@@ -216,7 +216,7 @@ def aspirate (X,Y,count,F):
 	#serialSend(string)
 	#time.sleep(1)
 	#serialSend("G1 E9.5 F200")
-	string = stringFormat(None,None,36,None,500) #36.25
+	string = stringFormat(None,None,35.9,None,500) #36.25
 	serialSend(string)
 	#time.sleep(1)
 	string = stringFormat(None,None,None,15.5-(7.75*(count+1)),700)
