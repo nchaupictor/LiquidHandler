@@ -30,8 +30,8 @@ GPIO.setup(11,GPIO.IN)
 #----------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------
 #COORDINATES
-offsetX = -1
-offsetY = 8.5#12.5
+offsetX = 2
+offsetY = 10#12.5
 #Tip Rack
 tipX = 0.25 #-offsetX #4.95
 tipY = 117 - offsetY
@@ -327,6 +327,7 @@ def homeE ():
 		serialSend("G92 E0")
 		#serialSend("M114")
 		#serialSend("G1 E10 F250")
+		GPIO.cleanup()
 	except KeyboardInterrupt:
 		GPIO.cleanup() 
 		serialSend("M81")
