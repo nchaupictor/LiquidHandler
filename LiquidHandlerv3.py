@@ -453,7 +453,7 @@ def runProgram():
 		pickSample(sampleX,sampleY,i)
 		dispense(slideX,slideYDis,i,3000)
 		count += 1
-		eject(returnX,returnY,i)
+		eject(returnX,returnY,i) #eject(tipX,tipY,i)
 
 	#30 minute incubation
 	progressPercent = 5
