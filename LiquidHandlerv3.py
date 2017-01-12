@@ -74,8 +74,8 @@ wasteTZ = 40
 
 #Slide
 slideX = 234 -offsetX
-slideY = 151.25 -offsetY #150.5
-slideYDis = 153.25 -offsetY
+slideY = 150.25 -offsetY #150.5
+slideYDis = 152.25 -offsetY
 slideZ = 43.5
 slideGap = 10
 slideAspZ = 47.75#48
@@ -327,7 +327,7 @@ def homeE ():
 		serialSend("G92 E0")
 		#serialSend("M114")
 		#serialSend("G1 E10 F250")
-		GPIO.cleanup()
+		
 	except KeyboardInterrupt:
 		GPIO.cleanup() 
 		serialSend("M81")
