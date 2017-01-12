@@ -54,7 +54,7 @@ returnGap = 9
 reserveX = 117 -offsetX
 reserveY = 210 +14
 reservePick = 70
-reserveGap = 22.5 #17.25
+reserveGap = 26 #17.25
 
 washY = 210 -offsetY
 conjGY = washY + 20 -offsetY
@@ -77,7 +77,7 @@ slideX = 234 -offsetX
 slideY = 149.75 -offsetY #150.5
 slideYDis = 152.25 -offsetY
 slideZ = 43.5
-slideGap = 10
+slideGap = 10.2
 slideAspZ = 47.75#48
 #Gap between slide modules
 moduleGap = 15
