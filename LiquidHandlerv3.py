@@ -33,7 +33,7 @@ GPIO.setup(11,GPIO.IN)
 offsetX = -2
 offsetY = 6.5#12.5
 #Tip Rack
-tipX = 2 #-offsetX #4.95
+tipX = 3 #-offsetX #4.95
 tipY = 117 - offsetY
 tipZ = 77
 tipGap = 9
