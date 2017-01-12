@@ -64,7 +64,7 @@ subY = washY + 70 -offsetY
 
 #Waste Liquid 
 wasteLX = 117 - offsetX
-wasteLY = 108
+wasteLY = 110
 wasteLZ = 20
 
 #Waste Tips
