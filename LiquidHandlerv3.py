@@ -54,7 +54,7 @@ returnGap = 9
 reserveX = 117 -offsetX
 reserveY = 210 +14
 reservePick = 70
-reserveGap = 20 #17.25
+reserveGap = 22.5 #17.25
 
 washY = 210 -offsetY
 conjGY = washY + 20 -offsetY
