@@ -156,7 +156,7 @@ def pickSample (X,Y,count):
 	serialSend(string)
 	string = stringFormat(None,None,33,None,750)
 	serialSend(string)
-	string = stringFormat(None,None,None,6,600)
+	string = stringFormat(None,None,None,4.75,600)
 	serialSend(string)
 	string = stringFormat(None,None,44,None,400)
 	serialSend(string)
@@ -195,7 +195,7 @@ def dispense (X,Y,count,F):
 	string = stringFormat(None,None,32,None,750)
 	serialSend(string)
 	#time.sleep(1)
-	string = stringFormat(None,None,None,6*(count+1),700)
+	string = stringFormat(None,None,None,4.75,700)
 	serialSend(string)
 	#time.sleep(1)
 	serialSend("G1 E0 F700")
@@ -233,18 +233,18 @@ def wash (num,firstFlag,count):
 
 	tipCount = count
 	for i in xrange(num):
-		#for j in xrange(0,2*slideNum,2)
 		submessage = "Wash " + str(i + 1) +"..." 
+		#for j in xrange(0,2*slideNum,2)
 		if (firstFlag == 1 and i == 0):
 			count = pickTip(tipX,tipY,tipZ,count)
-			pickFluid(reserveX,washY,6)
+			pickFluid(reserveX,washY,4.75)
 			dispense(slideX,slideYDis,0,3000) #j
 			aspirate(slideX,slideY,0,750)
 			dispose(wasteLX,wasteLY)
 			eject(wasteTX,wasteTY,0)
 
 			count = pickTip(tipX,tipY,tipZ,count)
-			pickFluid(reserveX,washY,6)
+			pickFluid(reserveX,washY,4.75)
 			dispense(slideX,slideYDis,1,3000) #j+1
 			aspirate(slideX,slideY,1,750)
 			dispose(wasteLX,wasteLY)
@@ -272,7 +272,7 @@ def wash (num,firstFlag,count):
 			#for j in xrange(0,2*slideNum,2)
 			count = pickTip(tipX,tipY,tipZ,count)
 			tipCount = count
-			pickFluid(reserveX,washY,10)
+			pickFluid(reserveX,washY,19) #Full 200 uL
 			dispense(slideX,slideYDis,0,3000)
 			dispense(slideX,slideYDis,1,750)
 			aspirate(slideX,slideY,0,750)
@@ -441,7 +441,6 @@ def runProgram():
 		time.sleep(1)
 	time.sleep(0.5)
 	message = str(slideNum) + " slides selected"
-	slideNum = slideNum - 1
 	#numSlide = 2
 	#numSlide = int(raw_input("Enter the number of slides: "))
 	#print "Number of slides selected: %d" %(numSlide)
@@ -455,6 +454,8 @@ def runProgram():
 	#count = 12
 	print("Dispensing Samples...")
 	for i in xrange(2*slideNum):
+		if (i != 0 and i % 2 == 0 ):
+			moduleGap += 12
 		message = "Step 1.0 - Dispensing Sample " + str(i + 1)
 		pickTip(tipX,tipY,tipZ,i)
 		#pickTip(tipX,tipY,tipZ,12)
@@ -463,9 +464,8 @@ def runProgram():
 		count += 1
 		#eject(returnX,returnY,i) 
 		eject(tipX,tipY,i)
-		#if (i != 0 and i % 2 == 0 )
-				#moduleGap += 15
-			#moduleGap = 0
+
+	moduleGap = 0
 	#30 minute incubation
 	progressPercent = 5
 	incubationTime = incubation(1800)
@@ -474,15 +474,16 @@ def runProgram():
 	print("Aspirating Samples...")
 	#Aspirate and dispose tips 
 	for i in xrange(2*slideNum):
+		if (i != 0 and i % 2 == 0 ):
+			moduleGap += 12
 		message = "Step 1.0 - Aspirating Sample " + str(i + 1)
 		#pickTip(returnX,returnY,returnZ,i)
 		pickTip(tipX,tipY,tipZ,i)
 		aspirate(slideX,slideY,i,3000)
 		dispose(wasteLX,wasteLY)
 		eject(wasteTX,wasteTY,0)
-		#if (i != 0 and i % 2 == 0 )
-				#moduleGap += 15
-			#moduleGap = 0
+
+	moduleGap = 0
 	progressPercent = 15
 	print("Washing Samples...")
 	#Wash , first wash flag set to 1
