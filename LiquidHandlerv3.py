@@ -80,7 +80,7 @@ slideZ = 43.5
 slideGap = 10.2
 slideAspZ = 47.75#48
 #Gap between slide modules
-moduleGap = 15
+moduleGap = 0
 
 #Global variables
 count = 0
@@ -186,7 +186,7 @@ def pickFluid (X,Y,E):
 def dispense (X,Y,count,F):
 	global submessage
 	submessage = "Dispensing..."
-	Y = Y + count * slideGap
+	Y = Y + count * slideGap + moduleGap
 	string = stringFormat(X,Y,None,None,F)
 	serialSend(string)
 	#time.sleep(1)
@@ -205,7 +205,7 @@ def dispense (X,Y,count,F):
 def aspirate (X,Y,count,F):
 	global submessage
 	submessage = "Aspirating..."
-	Y = Y + count * slideGap
+	Y = Y + count * slideGap + moduleGap
 	string = stringFormat(X,Y,None,None,F)
 	serialSend(string)
 	#time.sleep(1)
@@ -233,22 +233,25 @@ def wash (num,firstFlag,count):
 
 	tipCount = count
 	for i in xrange(num):
+		#for j in xrange(0,2*slideNum,2)
 		submessage = "Wash " + str(i + 1) +"..." 
 		if (firstFlag == 1 and i == 0):
 			count = pickTip(tipX,tipY,tipZ,count)
 			pickFluid(reserveX,washY,6)
-			dispense(slideX,slideYDis,0,3000)
+			dispense(slideX,slideYDis,0,3000) #j
 			aspirate(slideX,slideY,0,750)
 			dispose(wasteLX,wasteLY)
 			eject(wasteTX,wasteTY,0)
 
 			count = pickTip(tipX,tipY,tipZ,count)
 			pickFluid(reserveX,washY,6)
-			dispense(slideX,slideYDis,1,3000)
+			dispense(slideX,slideYDis,1,3000) #j+1
 			aspirate(slideX,slideY,1,750)
 			dispose(wasteLX,wasteLY)
 			eject(wasteTX,wasteTY,0)
-
+			#if (j != 0 and j % 2 == 0 )
+				#moduleGap += 15
+			#moduleGap = 0
 		else:
 			if count == 12: #Reached the end of tip box
 				#tipEnd = True
@@ -266,7 +269,7 @@ def wash (num,firstFlag,count):
 						count = 0
 				count = 0
 				tipEnd = "No"
-			
+			#for j in xrange(0,2*slideNum,2)
 			count = pickTip(tipX,tipY,tipZ,count)
 			tipCount = count
 			pickFluid(reserveX,washY,10)
@@ -276,6 +279,9 @@ def wash (num,firstFlag,count):
 			aspirate(slideX,slideY,1,750)
 			dispose(wasteLX,wasteLY)
 			eject(wasteTX,wasteTY,0)
+			#if (j != 0 and j % 2 == 0 )
+				#moduleGap += 15
+			#moduleGap = 0
 	return count	
 #-----------------------------------------------------------------------------------------
 #Dispose 
@@ -457,7 +463,9 @@ def runProgram():
 		count += 1
 		#eject(returnX,returnY,i) 
 		eject(tipX,tipY,i)
-
+		#if (i != 0 and i % 2 == 0 )
+				#moduleGap += 15
+			#moduleGap = 0
 	#30 minute incubation
 	progressPercent = 5
 	incubationTime = incubation(1800)
@@ -472,6 +480,9 @@ def runProgram():
 		aspirate(slideX,slideY,i,3000)
 		dispose(wasteLX,wasteLY)
 		eject(wasteTX,wasteTY,0)
+		#if (i != 0 and i % 2 == 0 )
+				#moduleGap += 15
+			#moduleGap = 0
 	progressPercent = 15
 	print("Washing Samples...")
 	#Wash , first wash flag set to 1
@@ -490,12 +501,14 @@ def runProgram():
 		print("Dispensing %d..." %(k+1))
 		
 		count = pickTip(tipX,tipY,tipZ,count)
-		#for j in xrange(slideNum)
+		#for j in xrange(0,2*slideNum,2)
 		pickFluid(reserveX,conjGY+(reserveGap*k),10)
 		dispense(slideX,slideYDis,0,3000)
 		dispense(slideX,slideYDis,1,750)
 		progressPercent += 10
-
+		#if (j != 0 and j % 2 == 0 )
+				#moduleGap += 15
+			#moduleGap = 0
 		if k == 2: #5 minute incubation for substrate 
 			IncubationTime = incubation(300) 
 			progressPercent += 10
@@ -503,12 +516,14 @@ def runProgram():
 			IncubationTime = incubation(1800)
 			progressPercent += 10
 
-		#for j in xrange(slideNum)		
+		#for j in xrange(0,2*slideNum,2)		
 		print("Aspirating %d..." %(k+1))
-		aspirate(slideX,slideY,0,3000) #Change variable
-		aspirate(slideX,slideY,1,750)
+		aspirate(slideX,slideY,0,3000) #j
+		aspirate(slideX,slideY,1,750)  #j+1
 		dispose(wasteLX,wasteLY)
-
+		#if (j != 0 and j % 2 == 0 )
+				#moduleGap += 15
+			#moduleGap = 0
 		eject(wasteTX,wasteTY,0)
 
 		if k == 2: #Wash once for substrate
