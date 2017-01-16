@@ -41,7 +41,7 @@ tipGap = 9
 #Sample Rack
 sampleX = 0.5 -offsetX
 sampleY = 218.5 - offsetY #218.5
-sampleGap = 9.1
+sampleGap = 9
 samplePick = 49
 
 #Return Tip Rack
@@ -458,7 +458,7 @@ def runProgram():
 	print("Dispensing Samples...")
 	for i in xrange(2*slideNum):
 		if (i != 0 and i % 2 == 0 ):
-			moduleGap += 12
+			moduleGap += 8
 		message = "Step 1.0 - Dispensing Sample " + str(i + 1)
 		pickTip(tipX,tipY,tipZ,i)
 		#pickTip(tipX,tipY,tipZ,12)
@@ -478,7 +478,7 @@ def runProgram():
 	#Aspirate and dispose tips 
 	for i in xrange(2*slideNum):
 		if (i != 0 and i % 2 == 0 ):
-			moduleGap += 12
+			moduleGap += 8
 		message = "Step 1.0 - Aspirating Sample " + str(i + 1)
 		#pickTip(returnX,returnY,returnZ,i)
 		pickTip(tipX,tipY,tipZ,i)
