@@ -435,7 +435,6 @@ def runProgram():
 		time.sleep(1)
 	time.sleep(0.5)
 	message = str(slideNum) + " slides selected"
-	slideNum = slideNum - 1
 	#numSlide = 2
 	#numSlide = int(raw_input("Enter the number of slides: "))
 	#print "Number of slides selected: %d" %(numSlide)
@@ -465,7 +464,7 @@ def runProgram():
 
 	print("Aspirating Samples...")
 	#Aspirate and dispose tips 
-	for i in xrange(2*slideNum):
+	for i in xrange(2):
 		message = "Step 1.0 - Aspirating Sample " + str(i + 1)
 		#pickTip(returnX,returnY,returnZ,i)
 		pickTip(tipX,tipY,tipZ,i)
@@ -488,9 +487,7 @@ def runProgram():
 		else:
 			message = "Step 4.0 - Dispensing Sub"
 		print("Dispensing %d..." %(k+1))
-		
 		count = pickTip(tipX,tipY,tipZ,count)
-		#for j in xrange(slideNum)
 		pickFluid(reserveX,conjGY+(reserveGap*k),10)
 		dispense(slideX,slideYDis,0,3000)
 		dispense(slideX,slideYDis,1,750)
@@ -502,13 +499,11 @@ def runProgram():
 		else:
 			IncubationTime = incubation(1800)
 			progressPercent += 10
-
-		#for j in xrange(slideNum)		
+				
 		print("Aspirating %d..." %(k+1))
-		aspirate(slideX,slideY,0,3000) #Change variable
+		aspirate(slideX,slideY,0,3000)
 		aspirate(slideX,slideY,1,750)
 		dispose(wasteLX,wasteLY)
-
 		eject(wasteTX,wasteTY,0)
 
 		if k == 2: #Wash once for substrate
