@@ -200,7 +200,7 @@ def dispense (X,Y,count,F,vol,firstFlag):
 		string = stringFormat(None,None,None,vol,700)
 		serialSend(string)
 	else:
-		string = stringFormat(None,None,None,vol - (4.75*(count % 4 + 1),700)	
+		string = stringFormat(None,None,None,vol - (4.75*(count % 4 + 1)),700)	
 		serialSend(string)
 	#time.sleep(1)
 	serialSend("G1 E0 F700")
@@ -224,6 +224,7 @@ def aspirate (X,Y,count,F,firstFlag):
 	#serialSend("G1 E9.5 F200")
 	string = stringFormat(None,None,35.85,None,500) #36.25
 	serialSend(string)
+	
 	#time.sleep(1)
 	if firstFlag == 0:
 		string = stringFormat(None,None,None,7.75,700)
