@@ -300,7 +300,7 @@ def wash (num,firstFlag,count):
 
 				dispense(slideX,slideYDis,j,3000,vol,1)
 
-				if (j != 0 and j % 2 == 0 )
+				if (j != 0 and j % 2 == 0 ):
 					moduleGap += 6.5
 			moduleGap = 0
 
