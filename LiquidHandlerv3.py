@@ -185,6 +185,7 @@ def pickFluid (X,Y,E):
 #Dispense 
 def dispense (X,Y,count,F):
 	global submessage
+	global moduleGap
 	submessage = "Dispensing..."
 	Y = Y + count * slideGap + moduleGap
 	string = stringFormat(X,Y,None,None,F)
@@ -204,6 +205,7 @@ def dispense (X,Y,count,F):
 #Aspirate
 def aspirate (X,Y,count,F):
 	global submessage
+	global moduleGap
 	submessage = "Aspirating..."
 	Y = Y + count * slideGap + moduleGap
 	string = stringFormat(X,Y,None,None,F)
@@ -394,6 +396,7 @@ def runProgram():
 	global message
 	global submessage
 	global progressPercent
+	global moduleGap
 	#INITIALISATION PHASE
 	print "Initialisation..."
 	message = "Initialisation..."
