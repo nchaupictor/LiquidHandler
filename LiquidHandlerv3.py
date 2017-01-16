@@ -447,14 +447,15 @@ def runProgram():
 	#Dispense samples
 	#count = 12
 	print("Dispensing Samples...")
-	for i in xrange(2): #xrange(2*slideNum)
+	for i in xrange(2*slideNum):
 		message = "Step 1.0 - Dispensing Sample " + str(i + 1)
 		pickTip(tipX,tipY,tipZ,i)
 		#pickTip(tipX,tipY,tipZ,12)
 		pickSample(sampleX,sampleY,i)
 		dispense(slideX,slideYDis,i,3000)
 		count += 1
-		eject(returnX,returnY,i) #eject(tipX,tipY,i)
+		#eject(returnX,returnY,i) 
+		eject(tipX,tipY,i)
 
 	#30 minute incubation
 	progressPercent = 5
@@ -465,7 +466,8 @@ def runProgram():
 	#Aspirate and dispose tips 
 	for i in xrange(2):
 		message = "Step 1.0 - Aspirating Sample " + str(i + 1)
-		pickTip(returnX,returnY,returnZ,i)
+		#pickTip(returnX,returnY,returnZ,i)
+		pickTip(tipX,tipY,tipZ,i)
 		aspirate(slideX,slideY,i,3000)
 		dispose(wasteLX,wasteLY)
 		eject(wasteTX,wasteTY,0)
