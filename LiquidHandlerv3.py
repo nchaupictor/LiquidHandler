@@ -393,7 +393,7 @@ def runProgram():
 	message = "Initialisation..."
 	serialSend("M114")
 	#Initialise and maintain heater at 40deg
-	serialSend("M140 S40 R37.5")
+	serialSend("M140 S40 R40")
 	print "Heater ON"
 	message = "Heater ON"
 	#Turn on fan 
