@@ -254,7 +254,7 @@ def wash (num,firstFlag,count):
 					moduleGap += 6.7
 				vol = 15.5
 				speed = 700
-				if slideNum == 0 or (slideNum == 3 and j == 4):
+				if slideNum == 1 or (slideNum == 3 and j == 4):
 					vol = 7.75
 				if j % 4 == 0:
 					pickFluid(reserveX,washY,vol)
