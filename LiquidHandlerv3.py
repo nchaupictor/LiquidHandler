@@ -230,7 +230,7 @@ def aspirate (X,Y,count,F,firstFlag):
 		string = stringFormat(None,None,None,7.75,700)
 		serialSend(string)
 	else:
-		string = stringFormat(None,None,None,15.5-(7.75*(count % 2 + 1)),700)
+		string = stringFormat(None,None,None,15.5-7.75*(count % 2 +1),700)
 		serialSend(string)
 	#serialSend("G1 E0 F200")
 	serialSend("G1 Z28 F700")
@@ -309,13 +309,16 @@ def wash (num,firstFlag,count):
 
 
 			moduleGap = 0
-
+			speed = 750
 			for j in xrange(0,2*slideNum):
 				if (j != 0 and j % 2 == 0):
 					moduleGap += 6.5
-				aspirate(slideX,slideY,j,750,1)
-				if (j != 0 and j % 2 == 0):
-					dispose(wasteLX,wasteLY)	
+				aspirate(slideX,slideY,j,speed,1)
+				speed = 750
+				if (j != 0 and j % 2 -1 == 0):
+					dispose(wasteLX,wasteLY)
+					serialSend("G1 Z10 F550")
+					speed = 3000	
 			moduleGap = 0
 
 			eject(wasteTX,wasteTY,0)
@@ -566,12 +569,16 @@ def runProgram():
 
 		#for j in xrange(0,2*slideNum,2)		
 		print("Aspirating %d..." %(k+1))
+		speed = 750
 		for j in xrange(2*slideNum):
 			if (j != 0 and j % 2 == 0):
 				moduleGap += 6.5
-			aspirate(slideX,slideY,j,750,1)
-			if (j != 0 and j % 2 == 0):
-				dispose(wasteLX,wasteLY)	
+			aspirate(slideX,slideY,j,speed,1)
+			speed = 750
+			if (j != 0 and j % 2 - 1 == 0):
+				dispose(wasteLX,wasteLY)
+				serialSend("G1 Z10 F550")	
+				speed = 3000
 		moduleGap = 0
 		eject(wasteTX,wasteTY,0)
 
