@@ -200,7 +200,7 @@ def dispense (X,Y,count,F,vol,firstFlag):
 		string = stringFormat(None,None,None,vol,700)
 		serialSend(string)
 	else:
-		string = stringFormat(None,None,None,vol - (4.75*(count % 4 + 1)),700)	
+		string = stringFormat(None,None,None,vol - (3.875*(count % 4 + 1)),700)	
 		serialSend(string)
 	#time.sleep(1)
 	serialSend("G1 E0 F700")
@@ -249,28 +249,30 @@ def wash (num,firstFlag,count):
 		if (firstFlag == 1 and i == 0):
 			count = pickTip(tipX,tipY,tipZ,count)
 			for j in xrange(2*slideNum):
-				vol = 19
+				if (j != 0 and j % 2 == 0 ):
+					moduleGap += 6.5
+				vol = 15.5
 				speed = 700
 				if slideNum == 0 or (slideNum == 3 and j == 4):
-					vol = 9.5
+					vol = 7.75
 				if j % 4 == 0:
 					pickFluid(reserveX,washY,vol)
 					speed = 3000
 				dispense(slideX,slideYDis,j,speed,vol,1)
 
-				if (j != 0 and j % 2 == 0 ):
-					moduleGap += 6.5
+
 			moduleGap = 0 
 
 			for j in xrange(2*slideNum):
 				if j != 0:
-					count = pickTip(tipX,tipY,tipZ,count)	 
+					count = pickTip(tipX,tipY,tipZ,count)	
+				if (j != 0 and j % 2 == 0 ):
+					moduleGap += 6.5 
 				aspirate(slideX,slideY,j,750,0)
 				dispose(wasteLX,wasteLY)
 				eject(wasteTX,wasteTY,0)
 
-				if (j != 0 and j % 2 == 0 ):
-					moduleGap += 6.5
+
 			moduleGap = 0
 
 		else:
@@ -294,23 +296,25 @@ def wash (num,firstFlag,count):
 			count = pickTip(tipX,tipY,tipZ,count)
 			tipCount = count
 			for j in xrange(0,2*slideNum):
-				vol = 19 #Default to 200uL
+				vol = 15.5 #Default to 200uL
 				speed = 700
+				if (j != 0 and j % 2 == 0 ):
+					moduleGap += 6.5
 				if slideNum == 0 or (slideNum == 3 and j == 4):
-					vol = 9.5
+					vol = 7.75
 				if j % 4 == 0:
 					pickFluid(reserveX,washY,vol)
 					speed = 3000
 				dispense(slideX,slideYDis,j,speed,vol,1)
 
-				if (j != 0 and j % 2 == 0 ):
-					moduleGap += 6.5
+
 			moduleGap = 0
 
 			for j in xrange(0,2*slideNum):
-				aspirate(slideX,slideY,j,750,1)
 				if (j != 0 and j % 2 == 0):
 					moduleGap += 6.5
+				aspirate(slideX,slideY,j,750,1)
+				if (j != 0 and j % 2 == 0):
 					dispose(wasteLX,wasteLY)	
 			moduleGap = 0
 
@@ -538,16 +542,17 @@ def runProgram():
 		
 		count = pickTip(tipX,tipY,tipZ,count)
 		for j in xrange(2*slideNum):
-			vol = 19
+			if (j != 0 and j % 2 == 0 ):
+				moduleGap += 6.5
+			vol = 15.5
 			speed = 700
 			if slideNum == 0 or (slideNum == 3 and j == 4):
-				vol = 9.5
+				vol = 7.75
 			if j % 4 == 0:
 				pickFluid(reserveX,conjGY+(reserveGap*k),vol)
 				speed = 3000
 			dispense(slideX,slideYDis,j,speed,vol,1)
-			if (j != 0 and j % 2 == 0 ):
-				moduleGap += 6.5
+
 
 		moduleGap = 0
 		progressPercent += 10
@@ -562,9 +567,10 @@ def runProgram():
 		#for j in xrange(0,2*slideNum,2)		
 		print("Aspirating %d..." %(k+1))
 		for j in xrange(2*slideNum):
-			aspirate(slideX,slideY,j,750,1)
 			if (j != 0 and j % 2 == 0):
 				moduleGap += 6.5
+			aspirate(slideX,slideY,j,750,1)
+			if (j != 0 and j % 2 == 0):
 				dispose(wasteLX,wasteLY)	
 		moduleGap = 0
 		eject(wasteTX,wasteTY,0)
