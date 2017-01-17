@@ -136,7 +136,7 @@ def pickTip (X,Y,Z,count):
 	Y = Y - count * tipGap
 	string = stringFormat(X,Y,None,None,5000)
 	serialSend(string)
-	string = stringFormat(None,None,60,None,750)
+	string = stringFormat(None,None,60,None,900)
 	serialSend(string)
 	string = stringFormat(None,None,Z,None,400)
 	serialSend(string)
@@ -154,7 +154,7 @@ def pickSample (X,Y,count):
 	Y = Y - count * sampleGap
 	string = stringFormat(X,Y,None,None,5000)
 	serialSend(string)
-	string = stringFormat(None,None,33,None,750)
+	string = stringFormat(None,None,33,None,900)
 	serialSend(string)
 	string = stringFormat(None,None,None,4.75,600)
 	serialSend(string)
@@ -170,7 +170,7 @@ def pickFluid (X,Y,E):
 	submessage = "Picking reagent..."
 	string = stringFormat(X,Y,None,None,5000)
 	serialSend(string)
-	string = stringFormat(None,None,65,None,750)
+	string = stringFormat(None,None,65,None,900)
 	serialSend(string)
 	string = stringFormat(None,None,None,E,700)
 	serialSend(string)
@@ -193,7 +193,7 @@ def dispense (X,Y,count,F,vol,firstFlag):
 	#time.sleep(1)
 	#string = stringFormat(None,None,25,None,200)
 	#serialSend(string)
-	string = stringFormat(None,None,32,None,750)
+	string = stringFormat(None,None,32,None,900)
 	serialSend(string)
 	#time.sleep(1)
 	if firstFlag == 0:
@@ -333,7 +333,7 @@ def dispose (X,Y):
 	serialSend("G1 Z10 F700")
 	string = stringFormat(X,Y,None,None,5000)
 	serialSend(string)
-	string = stringFormat(None,None,19,None,750)
+	string = stringFormat(None,None,19,None,900)
 	serialSend(string)
 	serialSend("G1 E15 F700")
 	serialSend("G1 E0 F700")
@@ -347,7 +347,7 @@ def eject (X,Y,count):
 	Y = Y - count * returnGap
 	string = stringFormat(X,Y,None,None,5000)
 	serialSend(string)
-	string = stringFormat(None,None,40,None,750)
+	string = stringFormat(None,None,40,None,900)
 	serialSend(string)
 	serialSend("G1 E20 F400") 
 	serialSend("G1 E3 F700")
@@ -578,7 +578,7 @@ def runProgram():
 			speed = 900
 			if (j != 0 and j % 2 - 1 == 0):
 				dispose(wasteLX,wasteLY)
-				serialSend("G1 Z10 F550")	
+				serialSend("G1 Z10 F900")	
 				speed = 5000
 		moduleGap = 0
 		eject(wasteTX,wasteTY,0)
