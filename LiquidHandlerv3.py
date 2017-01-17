@@ -31,7 +31,7 @@ GPIO.setup(11,GPIO.IN)
 #----------------------------------------------------------------------------------------
 #COORDINATES
 offsetX = -3
-offsetY = 10.5#12.5
+offsetY = 8.5#12.5
 #Tip Rack
 tipX = 3 #-offsetX #4.95
 tipY = 117 - offsetY
@@ -39,7 +39,7 @@ tipZ = 76
 tipGap = 9
 
 #Sample Rack
-sampleX = 0.5 -offsetX
+sampleX = 1.5 -offsetX
 sampleY = 218.5 - offsetY #218.5
 sampleGap = 9
 samplePick = 49
@@ -301,7 +301,7 @@ def wash (num,firstFlag,count):
 				speed = 700
 				if (j != 0 and j % 2 == 0 ):
 					moduleGap += 6.7
-				if slideNum == 0 or (slideNum == 3 and j == 4):
+				if slideNum == 1 or (slideNum == 3 and j == 4):
 					vol = 7.75
 				if j % 4 == 0:
 					pickFluid(reserveX,washY,vol)
@@ -550,7 +550,7 @@ def runProgram():
 				moduleGap += 6.7
 			vol = 15.5
 			speed = 700
-			if slideNum == 0 or (slideNum == 3 and j == 4):
+			if slideNum == 1 or (slideNum == 3 and j == 4):
 				vol = 7.75
 			if j % 4 == 0:
 				pickFluid(reserveX,conjGY+(reserveGap*k),vol)
