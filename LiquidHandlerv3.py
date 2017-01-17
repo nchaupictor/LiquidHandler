@@ -134,14 +134,14 @@ def pickTip (X,Y,Z,count):
 	tipEnd = "No"
 
 	Y = Y - count * tipGap
-	string = stringFormat(X,Y,None,None,3000)
+	string = stringFormat(X,Y,None,None,3500)
 	serialSend(string)
 	string = stringFormat(None,None,60,None,750)
 	serialSend(string)
 	string = stringFormat(None,None,Z,None,400)
 	serialSend(string)
 	#serialSend("G1 Z75 F200")
-	serialSend("G1 Z4 F700")
+	serialSend("G1 Z4 F900")
 	serialSend("G28 Z")
 	#time.sleep(1)
 	count += 1
@@ -152,7 +152,7 @@ def pickSample (X,Y,count):
 	global submessage
 	submessage = "Picking sample..."
 	Y = Y - count * sampleGap
-	string = stringFormat(X,Y,None,None,3000)
+	string = stringFormat(X,Y,None,None,3500)
 	serialSend(string)
 	string = stringFormat(None,None,33,None,750)
 	serialSend(string)
@@ -161,14 +161,14 @@ def pickSample (X,Y,count):
 	string = stringFormat(None,None,44,None,400)
 	serialSend(string)
 	serialSend("G1 E0 F700")
-	serialSend("G1 Z0 F700")
+	serialSend("G1 Z0 F900")
 	#time.sleep(1)
 #-----------------------------------------------------------------------------------------	
 #Picking up Fluid
 def pickFluid (X,Y,E):
 	global submessage
 	submessage = "Picking reagent..."
-	string = stringFormat(X,Y,None,None,3000)
+	string = stringFormat(X,Y,None,None,3500)
 	serialSend(string)
 	string = stringFormat(None,None,65,None,750)
 	serialSend(string)
@@ -179,7 +179,7 @@ def pickFluid (X,Y,E):
 	string = stringFormat(None,None,72.5,None,400)
 	serialSend(string)
 	serialSend("G1 E0 F700")
-	serialSend("G1 Z20 F700")
+	serialSend("G1 Z20 F900")
 	#time.sleep(1)
 #-----------------------------------------------------------------------------------------
 #Dispense 
@@ -203,7 +203,7 @@ def dispense (X,Y,count,F,vol,firstFlag):
 		string = stringFormat(None,None,None,3.875*(count % 4 + 1),700)	
 		serialSend(string)
 	#time.sleep(1)
-	serialSend("G1 E0 F700")
+	serialSend("G1 E0 F900")
 	time.sleep(2)
 #-----------------------------------------------------------------------------------------
 #Aspirate
@@ -234,7 +234,7 @@ def aspirate (X,Y,count,F,firstFlag):
 		string = stringFormat(None,None,None,15.5-7.75*(count % 2 +1),700)
 		serialSend(string)
 	#serialSend("G1 E0 F200")
-	serialSend("G1 Z28 F700")
+	serialSend("G1 Z28 F900")
 	#time.sleep(2)
 #-----------------------------------------------------------------------------------------
 #Wash 
@@ -258,7 +258,7 @@ def wash (num,firstFlag,count):
 					vol = 7.75
 				if j % 4 == 0:
 					pickFluid(reserveX,washY,vol)
-					speed = 3000
+					speed = 3500
 				dispense(slideX,slideYDis,j,speed,vol,1)
 
 
@@ -305,7 +305,7 @@ def wash (num,firstFlag,count):
 					vol = 7.75
 				if j % 4 == 0:
 					pickFluid(reserveX,washY,vol)
-					speed = 3000
+					speed = 3500
 				dispense(slideX,slideYDis,j,speed,vol,1)
 
 
@@ -318,8 +318,8 @@ def wash (num,firstFlag,count):
 				speed = 750
 				if (j != 0 and j % 2 -1 == 0):
 					dispose(wasteLX,wasteLY)
-					serialSend("G1 Z10 F550")
-					speed = 3000	
+					serialSend("G1 Z10 F900")
+					speed = 3500	
 			moduleGap = 0
 
 			eject(wasteTX,wasteTY,0)
@@ -331,7 +331,7 @@ def dispose (X,Y):
 	global submessage
 	submessage = "Disposing..."
 	serialSend("G1 Z10 F700")
-	string = stringFormat(X,Y,None,None,3000)
+	string = stringFormat(X,Y,None,None,3500)
 	serialSend(string)
 	string = stringFormat(None,None,19,None,750)
 	serialSend(string)
@@ -345,13 +345,13 @@ def eject (X,Y,count):
 	submessage = "Ejecting tips..."
 	serialSend("G1 Z10 F550")
 	Y = Y - count * returnGap
-	string = stringFormat(X,Y,None,None,3000)
+	string = stringFormat(X,Y,None,None,3500)
 	serialSend(string)
 	string = stringFormat(None,None,40,None,750)
 	serialSend(string)
 	serialSend("G1 E20 F400") 
 	serialSend("G1 E5 F700")
-	serialSend("G1 Z2 F700")
+	serialSend("G1 Z2 F900")
 	homeE()
 	serialSend("G28 Z")
 	#time.sleep(1)
@@ -503,7 +503,7 @@ def runProgram():
 		pickTip(tipX,tipY,tipZ,i)
 		#pickTip(tipX,tipY,tipZ,12)
 		pickSample(sampleX,sampleY,i)
-		dispense(slideX,slideYDis,i,3000,4.75,0)
+		dispense(slideX,slideYDis,i,3500,4.75,0)
 		count += 1
 		#eject(returnX,returnY,i) 
 		eject(tipX,tipY,i)
@@ -522,7 +522,7 @@ def runProgram():
 		message = "Step 1.0 - Aspirating Sample " + str(i + 1)
 		#pickTip(returnX,returnY,returnZ,i)
 		pickTip(tipX,tipY,tipZ,i)
-		aspirate(slideX,slideY,i,3000,0)
+		aspirate(slideX,slideY,i,3500,0)
 		dispose(wasteLX,wasteLY)
 		eject(wasteTX,wasteTY,0)
 
@@ -554,7 +554,7 @@ def runProgram():
 				vol = 7.75
 			if j % 4 == 0:
 				pickFluid(reserveX,conjGY+(reserveGap*k),vol)
-				speed = 3000
+				speed = 3500
 			dispense(slideX,slideYDis,j,speed,vol,1)
 
 
@@ -579,7 +579,7 @@ def runProgram():
 			if (j != 0 and j % 2 - 1 == 0):
 				dispose(wasteLX,wasteLY)
 				serialSend("G1 Z10 F550")	
-				speed = 3000
+				speed = 3500
 		moduleGap = 0
 		eject(wasteTX,wasteTY,0)
 
