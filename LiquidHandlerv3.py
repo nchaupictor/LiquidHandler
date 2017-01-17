@@ -134,7 +134,7 @@ def pickTip (X,Y,Z,count):
 	tipEnd = "No"
 
 	Y = Y - count * tipGap
-	string = stringFormat(X,Y,None,None,4000)
+	string = stringFormat(X,Y,None,None,5000)
 	serialSend(string)
 	string = stringFormat(None,None,60,None,750)
 	serialSend(string)
@@ -152,7 +152,7 @@ def pickSample (X,Y,count):
 	global submessage
 	submessage = "Picking sample..."
 	Y = Y - count * sampleGap
-	string = stringFormat(X,Y,None,None,4000)
+	string = stringFormat(X,Y,None,None,5000)
 	serialSend(string)
 	string = stringFormat(None,None,33,None,750)
 	serialSend(string)
@@ -168,7 +168,7 @@ def pickSample (X,Y,count):
 def pickFluid (X,Y,E):
 	global submessage
 	submessage = "Picking reagent..."
-	string = stringFormat(X,Y,None,None,4000)
+	string = stringFormat(X,Y,None,None,5000)
 	serialSend(string)
 	string = stringFormat(None,None,65,None,750)
 	serialSend(string)
@@ -253,12 +253,12 @@ def wash (num,firstFlag,count):
 				if (j != 0 and j % 2 == 0 ):
 					moduleGap += 6.7
 				vol = 15.5
-				speed = 700
+				speed = 900
 				if slideNum == 1 or (slideNum == 3 and j == 4):
 					vol = 7.75
 				if j % 4 == 0:
 					pickFluid(reserveX,washY,vol)
-					speed = 4000
+					speed = 5000
 				dispense(slideX,slideYDis,j,speed,vol,1)
 
 
@@ -298,28 +298,28 @@ def wash (num,firstFlag,count):
 			tipCount = count
 			for j in xrange(0,2*slideNum):
 				vol = 15.5 #Default to 200uL
-				speed = 700
+				speed = 900
 				if (j != 0 and j % 2 == 0 ):
 					moduleGap += 6.7
 				if slideNum == 1 or (slideNum == 3 and j == 4):
 					vol = 7.75
 				if j % 4 == 0:
 					pickFluid(reserveX,washY,vol)
-					speed = 4000
+					speed = 5000
 				dispense(slideX,slideYDis,j,speed,vol,1)
 
 
 			moduleGap = 0
-			speed = 750
+			speed = 900
 			for j in xrange(0,2*slideNum):
 				if (j != 0 and j % 2 == 0):
 					moduleGap += 6.7
 				aspirate(slideX,slideY,j,speed,1)
-				speed = 750
+				speed = 900
 				if (j != 0 and j % 2 -1 == 0):
 					dispose(wasteLX,wasteLY)
 					serialSend("G1 Z10 F900")
-					speed = 4000	
+					speed = 5000	
 			moduleGap = 0
 
 			eject(wasteTX,wasteTY,0)
@@ -331,7 +331,7 @@ def dispose (X,Y):
 	global submessage
 	submessage = "Disposing..."
 	serialSend("G1 Z10 F700")
-	string = stringFormat(X,Y,None,None,4000)
+	string = stringFormat(X,Y,None,None,5000)
 	serialSend(string)
 	string = stringFormat(None,None,19,None,750)
 	serialSend(string)
@@ -345,7 +345,7 @@ def eject (X,Y,count):
 	submessage = "Ejecting tips..."
 	serialSend("G1 Z10 F550")
 	Y = Y - count * returnGap
-	string = stringFormat(X,Y,None,None,4000)
+	string = stringFormat(X,Y,None,None,5000)
 	serialSend(string)
 	string = stringFormat(None,None,40,None,750)
 	serialSend(string)
@@ -503,7 +503,7 @@ def runProgram():
 		pickTip(tipX,tipY,tipZ,i)
 		#pickTip(tipX,tipY,tipZ,12)
 		pickSample(sampleX,sampleY,i)
-		dispense(slideX,slideYDis,i,4000,4.75,0)
+		dispense(slideX,slideYDis,i,5000,4.75,0)
 		count += 1
 		#eject(returnX,returnY,i) 
 		eject(tipX,tipY,i)
@@ -522,7 +522,7 @@ def runProgram():
 		message = "Step 1.0 - Aspirating Sample " + str(i + 1)
 		#pickTip(returnX,returnY,returnZ,i)
 		pickTip(tipX,tipY,tipZ,i)
-		aspirate(slideX,slideY,i,4000,0)
+		aspirate(slideX,slideY,i,5000,0)
 		dispose(wasteLX,wasteLY)
 		eject(wasteTX,wasteTY,0)
 
@@ -549,12 +549,12 @@ def runProgram():
 			if (j != 0 and j % 2 == 0 ):
 				moduleGap += 6.7
 			vol = 15.5
-			speed = 700
+			speed = 900
 			if slideNum == 1 or (slideNum == 3 and j == 4):
 				vol = 7.75
 			if j % 4 == 0:
 				pickFluid(reserveX,conjGY+(reserveGap*k),vol)
-				speed = 4000
+				speed = 5000
 			dispense(slideX,slideYDis,j,speed,vol,1)
 
 
@@ -570,16 +570,16 @@ def runProgram():
 
 		#for j in xrange(0,2*slideNum,2)		
 		print("Aspirating %d..." %(k+1))
-		speed = 750
+		speed = 900
 		for j in xrange(2*slideNum):
 			if (j != 0 and j % 2 == 0):
 				moduleGap += 6.7
 			aspirate(slideX,slideY,j,speed,1)
-			speed = 750
+			speed = 900
 			if (j != 0 and j % 2 - 1 == 0):
 				dispose(wasteLX,wasteLY)
 				serialSend("G1 Z10 F550")	
-				speed = 4000
+				speed = 5000
 		moduleGap = 0
 		eject(wasteTX,wasteTY,0)
 
