@@ -31,11 +31,11 @@ GPIO.setup(11,GPIO.IN)
 #----------------------------------------------------------------------------------------
 #COORDINATES
 offsetX = -2
-offsetY = 6.5#12.5
+offsetY = 10.5#12.5
 #Tip Rack
 tipX = 3 #-offsetX #4.95
 tipY = 117 - offsetY
-tipZ = 77
+tipZ = 76
 tipGap = 9
 
 #Sample Rack
@@ -200,7 +200,7 @@ def dispense (X,Y,count,F,vol,firstFlag):
 		string = stringFormat(None,None,None,vol,700)
 		serialSend(string)
 	else:
-		string = stringFormat(None,None,None,vol - (3.875*(count % 4 + 1)),700)	
+		string = stringFormat(None,None,None,3.875*(count % 4 + 1),700)	
 		serialSend(string)
 	#time.sleep(1)
 	serialSend("G1 E0 F700")
@@ -268,7 +268,7 @@ def wash (num,firstFlag,count):
 					count = pickTip(tipX,tipY,tipZ,count)	
 				if (j != 0 and j % 2 == 0 ):
 					moduleGap += 6.5 
-				aspirate(slideX,slideY,j,750,0)
+				aspirate(slideX,slideY,j,3000,0)
 				dispose(wasteLX,wasteLY)
 				eject(wasteTX,wasteTY,0)
 
@@ -345,7 +345,7 @@ def eject (X,Y,count):
 	serialSend(string)
 	string = stringFormat(None,None,40,None,750)
 	serialSend(string)
-	serialSend("G1 E21 F400") 
+	serialSend("G1 E20 F400") 
 	serialSend("G1 E5 F700")
 	serialSend("G1 Z2 F700")
 	homeE()
