@@ -215,8 +215,9 @@ def aspirate (X,Y,count,F,firstFlag):
 	string = stringFormat(X,Y,None,None,F)
 	serialSend(string)
 	#time.sleep(1)
-	#string = stringFormat(None,None,None,15.5,700)
-	#serialSend(string)
+	if (firstFlag == 0 or count % 2 == 0):
+		string = stringFormat(None,None,None,15.5,700)
+		serialSend(string)
 	#time.sleep(1)
 	#string = stringFormat(None,None,30,None,750)
 	#serialSend(string)
@@ -250,7 +251,7 @@ def wash (num,firstFlag,count):
 			count = pickTip(tipX,tipY,tipZ,count)
 			for j in xrange(2*slideNum):
 				if (j != 0 and j % 2 == 0 ):
-					moduleGap += 6.6
+					moduleGap += 6.7
 				vol = 15.5
 				speed = 700
 				if slideNum == 0 or (slideNum == 3 and j == 4):
@@ -267,7 +268,7 @@ def wash (num,firstFlag,count):
 				if j != 0:
 					count = pickTip(tipX,tipY,tipZ,count)	
 				if (j != 0 and j % 2 == 0 ):
-					moduleGap += 6.6 
+					moduleGap += 6.7 
 				aspirate(slideX,slideY,j,3000,0)
 				dispose(wasteLX,wasteLY)
 				eject(wasteTX,wasteTY,0)
@@ -299,7 +300,7 @@ def wash (num,firstFlag,count):
 				vol = 15.5 #Default to 200uL
 				speed = 700
 				if (j != 0 and j % 2 == 0 ):
-					moduleGap += 6.6
+					moduleGap += 6.7
 				if slideNum == 0 or (slideNum == 3 and j == 4):
 					vol = 7.75
 				if j % 4 == 0:
@@ -312,7 +313,7 @@ def wash (num,firstFlag,count):
 			speed = 750
 			for j in xrange(0,2*slideNum):
 				if (j != 0 and j % 2 == 0):
-					moduleGap += 6.6
+					moduleGap += 6.7
 				aspirate(slideX,slideY,j,speed,1)
 				speed = 750
 				if (j != 0 and j % 2 -1 == 0):
@@ -497,7 +498,7 @@ def runProgram():
 	print("Dispensing Samples...")
 	for i in xrange(2*slideNum):
 		if (i != 0 and i % 2 == 0 ):
-			moduleGap += 6.6
+			moduleGap += 6.7
 		message = "Step 1.0 - Dispensing Sample " + str(i + 1)
 		pickTip(tipX,tipY,tipZ,i)
 		#pickTip(tipX,tipY,tipZ,12)
@@ -517,7 +518,7 @@ def runProgram():
 	#Aspirate and dispose tips 
 	for i in xrange(2*slideNum):
 		if (i != 0 and i % 2 == 0 ):
-			moduleGap += 6.6
+			moduleGap += 6.7
 		message = "Step 1.0 - Aspirating Sample " + str(i + 1)
 		#pickTip(returnX,returnY,returnZ,i)
 		pickTip(tipX,tipY,tipZ,i)
@@ -546,7 +547,7 @@ def runProgram():
 		count = pickTip(tipX,tipY,tipZ,count)
 		for j in xrange(2*slideNum):
 			if (j != 0 and j % 2 == 0 ):
-				moduleGap += 6.6
+				moduleGap += 6.7
 			vol = 15.5
 			speed = 700
 			if slideNum == 0 or (slideNum == 3 and j == 4):
@@ -572,7 +573,7 @@ def runProgram():
 		speed = 750
 		for j in xrange(2*slideNum):
 			if (j != 0 and j % 2 == 0):
-				moduleGap += 6.6
+				moduleGap += 6.7
 			aspirate(slideX,slideY,j,speed,1)
 			speed = 750
 			if (j != 0 and j % 2 - 1 == 0):
