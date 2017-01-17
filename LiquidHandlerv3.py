@@ -350,7 +350,7 @@ def eject (X,Y,count):
 	string = stringFormat(None,None,40,None,750)
 	serialSend(string)
 	serialSend("G1 E20 F400") 
-	serialSend("G1 E5 F700")
+	serialSend("G1 E3 F700")
 	serialSend("G1 Z2 F900")
 	homeE()
 	serialSend("G28 Z")
