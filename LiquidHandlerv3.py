@@ -250,11 +250,13 @@ def wash (num,firstFlag,count):
 			count = pickTip(tipX,tipY,tipZ,count)
 			for j in xrange(2*slideNum):
 				vol = 19
+				speed = 700
 				if slideNum == 0 or (slideNum == 3 and j == 4):
 					vol = 9.5
 				if j % 4 == 0:
 					pickFluid(reserveX,washY,vol)
-				dispense(slideX,slideYDis,j,3000,vol,1)
+					speed = 3000
+				dispense(slideX,slideYDis,j,speed,vol,1)
 
 				if (j != 0 and j % 2 == 0 ):
 					moduleGap += 6.5
@@ -293,12 +295,13 @@ def wash (num,firstFlag,count):
 			tipCount = count
 			for j in xrange(0,2*slideNum):
 				vol = 19 #Default to 200uL
+				speed = 700
 				if slideNum == 0 or (slideNum == 3 and j == 4):
 					vol = 9.5
 				if j % 4 == 0:
 					pickFluid(reserveX,washY,vol)
-
-				dispense(slideX,slideYDis,j,3000,vol,1)
+					speed = 3000
+				dispense(slideX,slideYDis,j,speed,vol,1)
 
 				if (j != 0 and j % 2 == 0 ):
 					moduleGap += 6.5
@@ -536,11 +539,13 @@ def runProgram():
 		count = pickTip(tipX,tipY,tipZ,count)
 		for j in xrange(2*slideNum):
 			vol = 19
+			speed = 700
 			if slideNum == 0 or (slideNum == 3 and j == 4):
 				vol = 9.5
 			if j % 4 == 0:
 				pickFluid(reserveX,conjGY+(reserveGap*k),vol)
-			dispense(slideX,slideYDis,j,3000,vol,1)
+				speed = 3000
+			dispense(slideX,slideYDis,j,speed,vol,1)
 			if (j != 0 and j % 2 == 0 ):
 				moduleGap += 6.5
 
