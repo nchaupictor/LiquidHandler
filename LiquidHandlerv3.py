@@ -121,7 +121,7 @@ def pickTip (X,Y,Z,count):
 			try: #Move pipette to ejection area 
 				string = stringFormat(wasteTX,wasteTY,None,None,2500)
 				serialSend(string)
-				serialSend("G1 Z0 F700")
+				serialSend("G1 Z0 F900")
 				serialSend("G4 S10")
 				print("Please change tip box, press Ctrl + C to resume")
 				time.sleep(20)
@@ -156,11 +156,11 @@ def pickSample (X,Y,count):
 	serialSend(string)
 	string = stringFormat(None,None,33,None,900)
 	serialSend(string)
-	string = stringFormat(None,None,None,4.75,600)
+	string = stringFormat(None,None,None,4.75,900)
 	serialSend(string)
 	string = stringFormat(None,None,44,None,400)
 	serialSend(string)
-	serialSend("G1 E0 F700")
+	serialSend("G1 E0 F900")
 	serialSend("G1 Z0 F900")
 	#time.sleep(1)
 #-----------------------------------------------------------------------------------------	
@@ -172,13 +172,13 @@ def pickFluid (X,Y,E):
 	serialSend(string)
 	string = stringFormat(None,None,65,None,900)
 	serialSend(string)
-	string = stringFormat(None,None,None,E,700)
+	string = stringFormat(None,None,None,E,900)
 	serialSend(string)
 	#serialSend("G1 E4.5 F200")
 	#serialSend('G1 E9 F200')
 	string = stringFormat(None,None,72.5,None,400)
 	serialSend(string)
-	serialSend("G1 E0 F700")
+	serialSend("G1 E0 F900")
 	serialSend("G1 Z20 F900")
 	#time.sleep(1)
 #-----------------------------------------------------------------------------------------
@@ -197,10 +197,10 @@ def dispense (X,Y,count,F,vol,firstFlag):
 	serialSend(string)
 	#time.sleep(1)
 	if firstFlag == 0:
-		string = stringFormat(None,None,None,vol,700)
+		string = stringFormat(None,None,None,vol,900)
 		serialSend(string)
 	else:
-		string = stringFormat(None,None,None,3.875*(count % 4 + 1),700)	
+		string = stringFormat(None,None,None,3.875*(count % 4 + 1),900)	
 		serialSend(string)
 	#time.sleep(1)
 	serialSend("G1 E0 F900")
@@ -216,22 +216,22 @@ def aspirate (X,Y,count,F,firstFlag):
 	serialSend(string)
 	#time.sleep(1)
 	if (firstFlag == 0 or count % 2 == 0):
-		string = stringFormat(None,None,None,15.5,700)
+		string = stringFormat(None,None,None,15.5,900)
 		serialSend(string)
 	#time.sleep(1)
 	#string = stringFormat(None,None,30,None,750)
 	#serialSend(string)
 	#time.sleep(1)
 	#serialSend("G1 E9.5 F200")
-	string = stringFormat(None,None,35.85,None,500) #36.25
+	string = stringFormat(None,None,35.85,None,900) #36.25
 	serialSend(string)
 	
 	#time.sleep(1)
 	if firstFlag == 0:
-		string = stringFormat(None,None,None,7.75,700)
+		string = stringFormat(None,None,None,7.75,900)
 		serialSend(string)
 	else:
-		string = stringFormat(None,None,None,15.5-7.75*(count % 2 +1),700)
+		string = stringFormat(None,None,None,15.5-7.75*(count % 2 +1),900)
 		serialSend(string)
 	#serialSend("G1 E0 F200")
 	serialSend("G1 Z28 F900")
@@ -284,7 +284,7 @@ def wash (num,firstFlag,count):
 					try: #Move pipette to ejection area 
 						string = stringFormat(wasteTX,wasteTY,None,None,2500)
 						serialSend(string)
-						serialSend("G1 Z0 F700")
+						serialSend("G1 Z0 F900")
 						serialSend("G4 S10")
 						print("Please change tip box, press Ctrl + C to resume")
 						time.sleep(20)
@@ -331,13 +331,13 @@ def wash (num,firstFlag,count):
 def dispose (X,Y):
 	global submessage
 	submessage = "Disposing..."
-	serialSend("G1 Z10 F700")
+	serialSend("G1 Z10 F900")
 	string = stringFormat(X,Y,None,None,5000)
 	serialSend(string)
 	string = stringFormat(None,None,19,None,900)
 	serialSend(string)
-	serialSend("G1 E15 F700")
-	serialSend("G1 E0 F700")
+	serialSend("G1 E15 F900")
+	serialSend("G1 E0 F900")
 	#time.sleep(1)
 #-----------------------------------------------------------------------------------------
 #Eject
@@ -351,7 +351,7 @@ def eject (X,Y,count):
 	string = stringFormat(None,None,40,None,900)
 	serialSend(string)
 	serialSend("G1 E20 F400") 
-	serialSend("G1 E3 F700")
+	serialSend("G1 E3 F900")
 	serialSend("G1 Z2 F900")
 	homeE()
 	serialSend("G28 Z")
@@ -365,13 +365,13 @@ def homeE ():
 		while Eend:
 			if GPIO.input(11):
 				print "HIGH"
-				serialSend("G1 E1.5 F700") #Lower E by 2mm after switch closed
+				serialSend("G1 E1.5 F900") #Lower E by 2mm after switch closed
 				serialSend("G90")
 				Eend = 0
 			else:
 				print "LOW"
 				serialSend("G91") #Relative Positioning
-				serialSend("G1 E-1 F700") #Raise E by 2mm until switch closed
+				serialSend("G1 E-1 F900") #Raise E by 2mm until switch closed
 		#serialSend("M114")
 		serialSend("G92 E0")
 		#serialSend("M114")
