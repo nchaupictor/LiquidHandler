@@ -266,7 +266,8 @@ def wash (num,firstFlag,count):
 
 			for j in xrange(2*slideNum):
 				if j != 0:
-					count = pickTip(tipX,tipY,tipZ,count)	
+					count = pickTip(tipX,tipY,tipZ,count)
+					tipCount = count	
 				if (j != 0 and j % 2 == 0 ):
 					moduleGap += 6.7 
 				aspirate(slideX,slideY,j,3000,0)
@@ -275,7 +276,7 @@ def wash (num,firstFlag,count):
 
 
 			moduleGap = 0
-			tipCount = count
+			
 		else:
 			if count == 12: #Reached the end of tip box
 				#tipEnd = True
