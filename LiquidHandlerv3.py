@@ -275,7 +275,7 @@ def wash (num,firstFlag,count):
 
 
 			moduleGap = 0
-
+			tipCount = count
 		else:
 			if count == 12: #Reached the end of tip box
 				#tipEnd = True
