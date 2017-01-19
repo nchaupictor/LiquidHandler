@@ -39,7 +39,7 @@ tipZ = 76
 tipGap = 9
 
 #Sample Rack
-sampleX = 1.5 -offsetX
+sampleX = 2.5 -offsetX
 sampleY = 218.5 - offsetY #218.5
 sampleGap = 9
 samplePick = 49
@@ -204,7 +204,7 @@ def dispense (X,Y,count,F,vol,firstFlag):
 		serialSend(string)
 	#time.sleep(1)
 	serialSend("G1 E0 F900")
-	time.sleep(2)
+	#time.sleep(2)
 #-----------------------------------------------------------------------------------------
 #Aspirate
 def aspirate (X,Y,count,F,firstFlag):
