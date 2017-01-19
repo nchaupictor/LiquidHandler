@@ -39,7 +39,7 @@ tipZ = 76
 tipGap = 9
 
 #Sample Rack
-sampleX = 2.5 -offsetX
+sampleX = 3 -offsetX
 sampleY = 218.5 - offsetY #218.5
 sampleGap = 9
 samplePick = 49
