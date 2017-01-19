@@ -8,6 +8,7 @@
 #SETUP
 import RPi.GPIO as GPIO
 import time
+from datetime import datetime
 import serial
 from flask import Flask,render_template,request,redirect,Response,jsonify
 from camera import VideoCamera
@@ -438,6 +439,15 @@ def runProgram():
 	global progressPercent
 	global moduleGap
 	#INITIALISATION PHASE
+
+	#Open File 
+	cTime = str(datetime.now())
+	Timestr = cTime[0:9]
+
+	f = open(Timestr + str(".txt"),"a+")
+	f.write("Pictor Liquid Handler Log\n")
+	f.write(cTime + "\n")
+
 	print "Initialisation..."
 	message = "Initialisation..."
 	serialSend("M114")
@@ -603,6 +613,9 @@ def runProgram():
 	submessage = "Assay Complete"
 	print("Assay Complete")
 	
+	cTime = str(datetime.now())
+	f.write(cTime)
+	f.close
 #----------------------------------------------------------------------------------------
 	#SHUTDOWN PHASE
 
