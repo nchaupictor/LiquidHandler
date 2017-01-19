@@ -293,8 +293,7 @@ def wash (num,firstFlag,count):
 						tipEnd = False
 						count = 0
 				count = 0
-				tipEnd = "No"
-
+			tipEnd = "No"
 			count = pickTip(tipX,tipY,tipZ,count)
 			tipCount = count
 			for j in xrange(0,2*slideNum):
