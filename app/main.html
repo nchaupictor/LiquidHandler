@@ -56,8 +56,8 @@
       $("#progressPercent").css("width",progJ+'%').attr('aria-valuenow',progJ);
       
       //Highlight list when progress percent reaches certain percentages
-      document.getElementsByTagName("LI")[listCount].style.color = "green";
-      
+      var lists = document.getElementsByTagName("LI")[listCount];
+      lists.style.color = "green";
     });
   }
 
