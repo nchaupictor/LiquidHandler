@@ -486,6 +486,7 @@ def runProgram():
 	print "Homing COMPLETE"
 	message = "Homing COMPLETE"
 	progressPercent = 1
+	listCount +=1
 
 #----------------------------------------------------------------------------------------
 	#MAIN PHASE
