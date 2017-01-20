@@ -444,7 +444,7 @@ def runProgram():
 
 	#Open File 
 	cTime = str(datetime.now())
-	Timestr = cTime[0:9]
+	Timestr = cTime[0:10]
 
 	f = open(Timestr + str(".txt"),"a+")
 	f.write("Pictor Liquid Handler Log\n")
