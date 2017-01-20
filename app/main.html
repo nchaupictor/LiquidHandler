@@ -15,7 +15,7 @@
   <!-- Include all compiled plugins (below), or include individual files as needed -->
   <script src="/static/js/bootstrap.min.js"></script>
 
-<!-- JSON Refresh Javascript -->
+  <!-- JSON Refresh Javascript -->
   <script type="text/javascript">
     function refreshData() {
     //alert("Calling refresh...");
@@ -47,20 +47,26 @@
     });
     </script>
 
-<!-- Progress Bar Update Javascript -->
-<script type="text/javascript">
+  <!-- Progress Bar Update Javascript -->
+  <script type="text/javascript">
   function updateProg(){
     $.getJSON('/progress', function(data){
       progJ = data.progJ
+      listCount = data.listC
       $("#progressPercent").css("width",progJ+'%').attr('aria-valuenow',progJ);
+      
+      //Highlight list when progress percent reaches certain percentages
+      var list = document.getElementsByTagName("UL")[0];
+      list.getElementsbyTagName("LI")[listCount].style.color = #00FF00;
+      
     });
   }
 
 setInterval('updateProg()',1000);
 </script>
 
-<!-- Script for displaying tip box popup -->
-<script type="text/javascript">
+  <!-- Script for displaying tip box popup -->
+  <script type="text/javascript">
   function tipCheck(){
     jQuery.noConflict(); 
     $('#popup').modal({show:false});
@@ -79,8 +85,8 @@ setInterval('updateProg()',1000);
 setInterval('tipCheck()',1000);
 </script>
 
-<!-- Activate Hover over Tooltips -->
-<script type = "text/javascript">
+  <!-- Activate Hover over Tooltips -->
+  <script type="text/javascript">
 function tooltip(){
   jQuery.noConflict();
   $(document).ready(function(){
@@ -98,6 +104,7 @@ function tooltip(){
 </head>
 
 <!-- Button Group Bar -->
+
 <body>
   <div class="text-center">
     <h1>Liquid Handler v1 Planner</h1>
@@ -122,35 +129,36 @@ function tooltip(){
 <form class = "form-inline text-center" action = "/slide" method = "POST">
   <div class="input-group">
     <span class="input-group-addon">Number of Slides</span>
-      <input id = "slideF" class="form-control " type="text" name="text" placeholder="1-4" data-toggle="tooltip" data-placement="bottom" title="Enter a number from 1 to 4">
+      <input id="slideF" class="form-control " type="text" name="text" placeholder="1-4" data-toggle="tooltip" data-placement="bottom"
+        title="Enter a number from 1 to 4">
       <span class="input-group-btn">
       <button type = "submit" name = "slideform" class="btn btn-default">Submit</button>
     </span>
     </div>
     </form>
 
-<!-- Tip Change Popup Box -->
-<div id="popup" class="modal fade bd-example-modal-lg" role="dialog" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">ALERT</h4>
-      </div>
-      <div class="modal-body">
-        <p>All 96 Tips have been used. Please replace with new tips.</p>
-      </div>
-      <div class="modal-footer">
-        <form action = "/tip" method = "POST">
-          <input type = "submit" class = "btn btn-danger" value = "Confirm" name = "tipChange" id = "tip" data-backdrop="static"></input>
-        </form>
-         <button type="button" class="btn btn-default" id = "closeModal" data-dismiss = "modal">Close</button>
+    <!-- Tip Change Popup Box -->
+    <div id="popup" class="modal fade bd-example-modal-lg" role="dialog" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">ALERT</h4>
+          </div>
+          <div class="modal-body">
+            <p>All 96 Tips have been used. Please replace with new tips.</p>
+          </div>
+          <div class="modal-footer">
+            <form action="/tip" method="POST">
+              <input type="submit" class="btn btn-danger" value="Confirm" name="tipChange" id="tip" data-backdrop="static"></input>
+            </form>
+            <button type="button" class="btn btn-default" id="closeModal" data-dismiss="modal">Close</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
 
-<!-- Information Text Box -->
+    <!-- Information Text Box -->
     <div class="text-center">
       <h3>
         Time = <span id="time">{{ time }} </span></a>
@@ -161,69 +169,69 @@ function tooltip(){
       </h3>
     </div>
 
-<!-- Camera Stream -->
-<div class = "row">
-  <div class = "col-sm-6">
-    <!--<div class="text-center"> -->
-      <h3> Live Stream </h3>
-      <img id="bg" src="{{ url_for('video_feed') }}">
-    <!--</div> -->
-  </div>
+    <!-- Camera Stream -->
+    <div class="row">
+      <div class="col-sm-6">
+        <!--<div class="text-center"> -->
+        <h3> Live Stream </h3>
+        <img id="bg" src="{{ url_for('video_feed') }}">
+        <!--</div> -->
+      </div>
 
-  <div class = "col-sm-6">
-    <h3> Assay Program </h3>
-      <ul class = "list-group">
-        <li class = "list-group-item">
-          Dispense Samples
-        </li>
-        <li class = "list-group-item">
-          Incubation
-        </li>
-        <li class = "list-group-item">
-          Aspirate Samples
-        </li>
-        <li class = "list-group-item">
-          Wash 1 
-        </li>
-        <li class = "list-group-item">
-          Dispense Conjugate G
-        </li>        
-        <li class = "list-group-item">
-          Incubation
-        </li>        
-        <li class = "list-group-item">
-          Aspirate Conjugate G
-        </li>
-        <li class = "list-group-item">
-          Wash 2
-        </li>        
-        <li class = "list-group-item">
-          Dispense Detection Agent
-        </li>
-        <li class = "list-group-item">
-          Incubation
-        </li>
-        <li class = "list-group-item">
-          Aspirate Detection Agent
-        </li>
-        <li class = "list-group-item">
-          Wash 3
-        </li>
-        <li class = "list-group-item">
-          Dispense Substrate
-        </li>
-        <li class = "list-group-item">
-          Incubation
-        </li>
-        <li class = "list-group-item">
-          Aspirate Substrate
-        </li>
-        <li class = "list-group-item">
-          Wash 4 
-        </li>
-      </ul>
-  </div>
-</div>
+      <div class="col-sm-6">
+        <h3> Assay Program </h3>
+        <ul class="list-group">
+          <li class="list-group-item">
+            Dispense Samples
+          </li>
+          <li class="list-group-item">
+            Incubation
+          </li>
+          <li class="list-group-item">
+            Aspirate Samples
+          </li>
+          <li class="list-group-item">
+            Wash 1
+          </li>
+          <li class="list-group-item">
+            Dispense Conjugate G
+          </li>
+          <li class="list-group-item">
+            Incubation
+          </li>
+          <li class="list-group-item">
+            Aspirate Conjugate G
+          </li>
+          <li class="list-group-item">
+            Wash 2
+          </li>
+          <li class="list-group-item">
+            Dispense Detection Agent
+          </li>
+          <li class="list-group-item">
+            Incubation
+          </li>
+          <li class="list-group-item">
+            Aspirate Detection Agent
+          </li>
+          <li class="list-group-item">
+            Wash 3
+          </li>
+          <li class="list-group-item">
+            Dispense Substrate
+          </li>
+          <li class="list-group-item">
+            Incubation
+          </li>
+          <li class="list-group-item">
+            Aspirate Substrate
+          </li>
+          <li class="list-group-item">
+            Wash 4
+          </li>
+        </ul>
+      </div>
+    </div>
 
 </body>
 <script src="https://code.jquery.com/jquery-1.9.1.js" integrity="sha256-e9gNBsAcA0DBuRWbm0oZfbiCyhjLrI6bmqAl5o+ZjUA=" crossorigin="anonymous"></script>

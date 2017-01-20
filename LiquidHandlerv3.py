@@ -95,6 +95,7 @@ slideNum = 0
 tipEnd = "No"
 progressPercent = 0
 tipCount = 0
+listCount = -1
 #----------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------
 #FUNCTIONS 
@@ -438,6 +439,7 @@ def runProgram():
 	global submessage
 	global progressPercent
 	global moduleGap
+	global listCount
 	#INITIALISATION PHASE
 
 	#Open File 
@@ -521,8 +523,10 @@ def runProgram():
 	moduleGap = 0
 	#30 minute incubation
 	progressPercent = 5
+	listCount += 1;
 	incubationTime = incubation(1800)
 	progressPercent = 10
+	listCount += 1;
 
 	print("Aspirating Samples...")
 	#Aspirate and dispose tips 
@@ -538,11 +542,13 @@ def runProgram():
 
 	moduleGap = 0
 	progressPercent = 15
+	listCount += 1;
 	print("Washing Samples...")
 	#Wash , first wash flag set to 1
 	count = wash(3,1,count)
 	print("Count:  %d" % count)
 	progressPercent = 20
+	listCount += 1;
 
 	#Dispense ConjG , Det , Sub
 	for k in xrange(3):
@@ -570,13 +576,16 @@ def runProgram():
 
 		moduleGap = 0
 		progressPercent += 10
+		listCount += 1;
 
 		if k == 2: #5 minute incubation for substrate 
 			IncubationTime = incubation(300) 
 			progressPercent += 10
+			listCount += 1;
 		else:
 			IncubationTime = incubation(1800)
 			progressPercent += 10
+			listCount += 1;
 
 		#for j in xrange(0,2*slideNum,2)		
 		print("Aspirating %d..." %(k+1))
@@ -598,6 +607,7 @@ def runProgram():
 			submessage = "Final Wash"
 			print("Final Wash")
 			progressPercent += 10
+			listCount += 1;
 			count = wash(1,0,count)
 		else:
 			print("Washing %d..." %(k+1))
@@ -606,13 +616,15 @@ def runProgram():
 	message = "Final Incubation"
 	print("Final Incubation")
 	progressPercent += 5
+	listCount += 1;
 	IncubationTime = incubation(1800)
 
 	progressPercent = 100
+	
 	#submessage = ""
 	submessage = "Assay Complete"
 	print("Assay Complete")
-	
+	                                                                                                                                                                                                                                                                                                                                                      
 	cTime = str(datetime.now())
 	f.write(cTime)
 	f.close
@@ -720,7 +732,8 @@ def refresh():
 @app.route("/progress", methods = ['GET'])
 def progress():
 	progJ = progressPercent
-	return jsonify(progJ=progJ)
+	listC = listCount
+	return jsonify(progJ=progJ,listC = listC)
 #----------------------------------------------------------------------------------------
 #Form for slide number submission
 @app.route("/slide",methods = ['GET','POST'])
