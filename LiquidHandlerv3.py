@@ -695,6 +695,7 @@ def startProgram(state = None):
 		runProgram()
 		#serialSend("M106")
 		time.sleep(0.5)
+		return redirect('/')
 	if state == 'Stop':
 		global message
 		print("STOP PRESSED")
@@ -712,16 +713,16 @@ def startProgram(state = None):
 		time.sleep(0.5)
 		return redirect('/')
 		
-	template_data = {
-		'title' : state,
-		'time' : timer(t0),
-		'command' : string,
-		'incubationTime' : (incubationTime),
-		'message' : message,
-		'submessage' : submessage,
-        'progressPercent' : (progressPercent)
-	}
-	return render_template('main.html', **template_data)
+	#template_data = {
+		#'title' : state,
+		#'time' : timer(t0),
+		#'command' : string,
+		#'incubationTime' : (incubationTime),
+		#'message' : message,
+		#'submessage' : submessage,
+        #'progressPercent' : (progressPercent)
+	#}
+	#return render_template('main.html', **template_data)
 #----------------------------------------------------------------------------------------
 #URL JSON refresher  for updated string information
 @app.route("/refresh")
