@@ -37,7 +37,7 @@ offsetY = 8.5#12.5
 tipX = 4.5 #-offsetX #4.95
 tipY = 117 - offsetY
 tipZ = 76
-tipGap = 9.5
+tipGap = 9.25
 
 #Sample Rack
 sampleX = 2 -offsetX
@@ -58,7 +58,7 @@ reservePick = 70
 reserveGap = 14 #17.25
 
 washY = 210 -offsetY
-conjGY = washY + 30 -offsetY
+conjGY = washY + 28 -offsetY
 detY = washY + 50 -offsetY
 conjMY = washY + 40 -offsetY
 subY = washY + 70 -offsetY
