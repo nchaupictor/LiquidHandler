@@ -37,7 +37,7 @@ offsetY = 8.5#12.5
 tipX = 4.5 #-offsetX #4.95
 tipY = 117 - offsetY
 tipZ = 76
-tipGap = 9
+tipGap = 10
 
 #Sample Rack
 sampleX = 2 -offsetX
@@ -74,7 +74,7 @@ wasteTY = 0
 wasteTZ = 40
 
 #Slide
-slideX = 236 -offsetX
+slideX = 234 -offsetX
 slideY = 152.25 -offsetY #150.5
 slideYDis = 154.25 -offsetY
 slideZ = 43.5
