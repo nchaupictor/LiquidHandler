@@ -37,7 +37,7 @@ offsetY = 8.5#12.5
 tipX = 4.5 #-offsetX #4.95
 tipY = 117 - offsetY
 tipZ = 76
-tipGap = 10
+tipGap = 9.5
 
 #Sample Rack
 sampleX = 2 -offsetX
