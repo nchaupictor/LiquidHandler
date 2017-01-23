@@ -241,14 +241,14 @@ def aspirate (X,Y,count,F,firstFlag):
 #-----------------------------------------------------------------------------------------
 #Wash 
 def wash (num,firstFlag,count):
-	global submessage
+	global message
 	global tipEnd
 	global tipCount
 	global moduleGap
 
 	tipCount = count
 	for i in xrange(num):
-		submessage = "Wash " + str(i + 1) +"..." 
+		message = "Wash " + str(i + 1) +"..." 
 		if (firstFlag == 1 and i == 0):
 			count = pickTip(tipX,tipY,tipZ,count)
 			for j in xrange(2*slideNum):
