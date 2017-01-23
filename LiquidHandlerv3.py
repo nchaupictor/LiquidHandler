@@ -695,7 +695,7 @@ def startProgram(state = None):
 		runProgram()
 		#serialSend("M106")
 		time.sleep(0.5)
-		return false
+		return redirect('/')
 	if state == 'Stop':
 		global message
 		print("STOP PRESSED")
@@ -703,7 +703,7 @@ def startProgram(state = None):
 		serialSend("M112") #Emergency Stop 
 		ser.reset_input_buffer() #Flush buffer 
 		time.sleep(0.5)
-		return false
+		return redirect('/')
 	if state == 'Skip': 
 		global skip
 		global incubationTime
@@ -711,7 +711,7 @@ def startProgram(state = None):
 		print("INCUBATION SKIPPED")
 		incubationTime = 0
 		time.sleep(0.5)
-		return false
+		return redirect('/')
 		
 	#template_data = {
 		#'title' : state,
