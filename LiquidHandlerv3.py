@@ -37,7 +37,7 @@ offsetY = 8.5#12.5
 tipX = 4.5 #-offsetX #4.95
 tipY = 117 - offsetY
 tipZ = 75
-tipGap = 9.25
+tipGap = 9.1
 
 #Sample Rack
 sampleX = 2 -offsetX
@@ -225,7 +225,7 @@ def aspirate (X,Y,count,F,firstFlag):
 	#serialSend(string)
 	#time.sleep(1)
 	#serialSend("G1 E9.5 F200")
-	string = stringFormat(None,None,35.85,None,900) #36.25
+	string = stringFormat(None,None,35.55,None,900) #36.25
 	serialSend(string)
 	
 	#time.sleep(1)
