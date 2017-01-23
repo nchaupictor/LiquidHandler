@@ -525,7 +525,7 @@ def runProgram():
 	#30 minute incubation
 	progressPercent = 5
 	listCount += 1;
-	incubationTime = incubation(18)
+	incubationTime = incubation(1800)
 	progressPercent = 10
 	listCount += 1;
 
