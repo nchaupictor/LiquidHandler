@@ -55,10 +55,16 @@
       listCount = data.listC
       $("#progressPercent").css("width",progJ+'%').attr('aria-valuenow',progJ);
       
+      var temp = 0;
       if(listCount != -1){
         //Highlight list when progress percent reaches certain percentages
         var lists = document.getElementsByTagName("LI")[listCount];
         lists.style.color = "#d9534f";
+        if(listCount != temp){
+          var lists = document.getElementsByTagName("LI")[listCount-1];
+          lists.style.color = "#ebebeb";
+        }
+        temp = listCount;
     }
     });
   }
