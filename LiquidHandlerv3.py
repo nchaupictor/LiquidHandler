@@ -570,8 +570,7 @@ def runProgram():
 			if slideNum == 1 or (slideNum == 3 and j == 4):
 				vol = 7.75
 			if j % 4 == 0:
-				#pickFluid(reserveX,conjGY+(reserveGap*k),vol)
-				pickFluid(reserveX,conjGY+(reserveGap*2),vol)
+				pickFluid(reserveX,conjGY+(reserveGap*k),vol)
 				speed = 5000
 			dispense(slideX,slideYDis,j,speed,vol,1)
 
