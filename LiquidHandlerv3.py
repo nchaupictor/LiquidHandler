@@ -37,7 +37,7 @@ offsetY = 8.5#12.5
 tipX = 4.5 #-offsetX #4.95
 tipY = 117 - offsetY
 tipZ = 75
-tipGap = 9.1
+tipGap = 9.05
 
 #Sample Rack
 sampleX = 2 -offsetX
@@ -55,7 +55,7 @@ returnGap = 9
 reserveX = 117 -offsetX
 reserveY = 210 +14
 reservePick = 70
-reserveGap = 14 #17.25
+reserveGap = 17.25 #17.25
 
 washY = 210 -offsetY
 conjGY = washY + 28 -offsetY
@@ -549,10 +549,9 @@ def runProgram():
 	count = wash(3,1,count)
 	print("Count:  %d" % count)
 
-
+	progressPercent = 20
 	#Dispense ConjG , Det , Sub
 	for k in xrange(3):
-		progressPercent = 20
 		listCount += 1;
 		if k == 0:
 			message = "Step 2.0 - Dispensing ConjG"
