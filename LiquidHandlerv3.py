@@ -581,11 +581,11 @@ def runProgram():
 
 		if k == 2: #5 minute incubation for substrate 
 			IncubationTime = incubation(300) 
-			progressPercent += 10
+			progressPercent += 5
 			listCount += 1;
 		else:
 			IncubationTime = incubation(1800)
-			progressPercent += 10
+			progressPercent += 5
 			listCount += 1;
 
 		#for j in xrange(0,2*slideNum,2)		
