@@ -107,8 +107,8 @@ def serialSend(command):
 	while ser.inWaiting() > 0: #Read buffer
 		out += ser.read(1)
 	if out != '':
-		print ">>" + out 
-	print command
+		print (">>" + out) 
+	print (command)
 #-----------------------------------------------------------------------------------------
 #Picking up Tip
 def pickTip (X,Y,Z,count):
@@ -365,12 +365,12 @@ def homeE ():
 	try:
 		while Eend:
 			if GPIO.input(11):
-				print "HIGH"
+				print ("HIGH")
 				serialSend("G1 E1.5 F900") #Lower E by 2mm after switch closed
 				serialSend("G90")
 				Eend = 0
 			else:
-				print "LOW"
+				print ("LOW")
 				serialSend("G91") #Relative Positioning
 				serialSend("G1 E-1 F900") #Raise E by 2mm until switch closed
 		#serialSend("M114")
@@ -450,16 +450,16 @@ def runProgram():
 	f.write("Pictor Liquid Handler Log\n\n")
 	f.write(cTime + "\n")
 
-	print "Initialisation..."
+	print ("Initialisation...")
 	message = "Initialisation..."
 	serialSend("M114")
 	#Initialise and maintain heater at 40deg
 	serialSend("M140 S40 R40")
-	print "Heater ON"
+	print ("Heater ON")
 	message = "Heater ON"
 	#Turn on fan 
 	serialSend("M106")
-	print "Fan ON"
+	print ("Fan ON")
 	message = "Fan ON"
 
 	#Set jerk 
@@ -476,14 +476,14 @@ def runProgram():
 	#cv2.imshow("camera",img)
 
 	#Home XYZ 
-	print "Homing..."
+	print ("Homing...")
 	message = "Homing..."
 	serialSend("G28 Z") #Home Z first to avoid collisions 
 	serialSend("G28 XY")
 
 	#Home E
 	homeE()
-	print "Homing COMPLETE"
+	print ("Homing COMPLETE")
 	message = "Homing COMPLETE"
 	progressPercent = 1
 	listCount +=1
@@ -493,7 +493,7 @@ def runProgram():
 	#User input for number of slide and modules
 	message = "Enter the number of slides"
 	while slideNum == 0:
-		print "Enter number of slides: "
+		print ("Enter number of slides: ")
 		time.sleep(1)
 	time.sleep(0.5)
 	message = str(slideNum) + " slides selected"
@@ -635,12 +635,12 @@ def runProgram():
 	#Turn off heater
 	serialSend("M140 S0")
 	message = "Heater OFF"
-	print "Heater OFF"
+	print ("Heater OFF")
 
 	#Turn off fan 
 	serialSend("M107")
 	message = "Fan OFF"
-	print "Fan OFF"
+	print ("Fan OFF")
 
 	#Home XYZ
 	serialSend("G28 Z")
@@ -649,7 +649,7 @@ def runProgram():
 	#Home E 
 	homeE()
 	message = "Homing COMPLETE"
-	print "Homing COMPLETE"
+	print ("Homing COMPLETE")
 
 
 #------------------------------------------------------------------------------------------

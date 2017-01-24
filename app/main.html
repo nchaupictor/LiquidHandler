@@ -84,6 +84,7 @@ setInterval('updateProg()',1000);
 
         $('#tip').click(function(){
           $(this).removeClass('btn-danger').addClass('btn-success');
+          $('#popup').modal('hide');
         });
       }
     });
@@ -177,16 +178,23 @@ function tooltip(){
     </div>
 
     <!-- Camera Stream -->
-    <div class="row">
-      <div class="col-sm-6">
-        <!--<div class="text-center"> -->
-        <h3> Live Stream </h3>
-        <img id="bg" src="{{ url_for('video_feed') }}">
-        <!--</div> -->
-      </div>
 
-      <div class="col-sm-6">
-        <h3> Assay Program </h3>
+    <a class="btn btn-danger" role="button" data-toggle="collapse" href="#collapseProgram" aria-expanded="false" aria-controls="collapseProgram">
+      Program
+    </a>
+    <a class="btn btn-danger" role="button" data-toggle="collapse" href="#collapseStream" aria-expanded="false" aria-controls="collapseStream">
+      Stream
+    </a>
+        <div class="collapse" id="collapseStream">
+            <div class="well">
+        <!--<div class="text-center"> -->
+              <img id="bg" src="{{ url_for('video_feed') }}">
+        <!--</div> -->
+            </div>
+        </div>
+
+      <div class="collapse" id = "collapseProgram">
+        <div class="well">
         <ul class="list-group">
           <li class="list-group-item">
             Dispense Samples
@@ -238,7 +246,7 @@ function tooltip(){
           </li>
         </ul>
       </div>
-    </div>
+      </div>
 
 </body>
 <script src="https://code.jquery.com/jquery-1.9.1.js" integrity="sha256-e9gNBsAcA0DBuRWbm0oZfbiCyhjLrI6bmqAl5o+ZjUA=" crossorigin="anonymous"></script>
