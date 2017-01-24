@@ -447,7 +447,7 @@ def runProgram():
 	Timestr = cTime[0:10]
 
 	f = open(Timestr + str(".txt"),"a+")
-	f.write("Pictor Liquid Handler Log\n")
+	f.write("Pictor Liquid Handler Log\n\n")
 	f.write(cTime + "\n")
 
 	print "Initialisation..."
