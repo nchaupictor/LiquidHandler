@@ -548,11 +548,12 @@ def runProgram():
 	#Wash , first wash flag set to 1
 	count = wash(3,1,count)
 	print("Count:  %d" % count)
-	progressPercent = 20
-	listCount += 1;
+
 
 	#Dispense ConjG , Det , Sub
 	for k in xrange(3):
+		progressPercent = 20
+		listCount += 1;
 		if k == 0:
 			message = "Step 2.0 - Dispensing ConjG"
 		elif k == 1: 
@@ -603,12 +604,12 @@ def runProgram():
 		moduleGap = 0
 		eject(wasteTX,wasteTY,0)
 
+		progressPercent += 10
+		listCount += 1;
 
 		if k == 2: #Wash once for substrate
 			submessage = "Final Wash"
 			print("Final Wash")
-			progressPercent += 10
-			listCount += 1;
 			count = wash(1,0,count)
 		else:
 			print("Washing %d..." %(k+1))
