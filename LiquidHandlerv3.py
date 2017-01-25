@@ -485,8 +485,7 @@ def runProgram():
 	homeE()
 	print ("Homing COMPLETE")
 	message = "Homing COMPLETE"
-	progressPercent = 1
-	listCount +=1
+
 
 #----------------------------------------------------------------------------------------
 	#MAIN PHASE
@@ -497,6 +496,8 @@ def runProgram():
 		time.sleep(1)
 	time.sleep(0.5)
 	message = str(slideNum) + " slides selected"
+	progressPercent = 1
+	listCount +=1
 	#numSlide = 2
 	#numSlide = int(raw_input("Enter the number of slides: "))
 	#print "Number of slides selected: %d" %(numSlide)
