@@ -185,7 +185,7 @@ function tooltip(){
 
     <!-- Camera Stream -->
 
-  <div class="text-center" style = "padding-bottom:10px">  
+  <div class="text-center" style = "padding-bottom:10px;">  
     <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#collapseProgram">
       Program
     </button>
@@ -197,7 +197,9 @@ function tooltip(){
   
   
       <div class="collapse text-center" id = "collapseStream" style = "padding:20px">
+          <a href = "www.pictordx.com">
             <img id="bg" src="{{ url_for('video_feed') }}">
+          </a>
       </div>
   
 
@@ -254,7 +256,7 @@ function tooltip(){
         </ul>
       </div>
 
-<footer class="jumbotron text-center" style="padding-bottom:0px;">
+<footer class="jumbotron text-center" style="padding-bottom:10px; padding-top:10px;">
   <div class="row">
         <div class = "text-center">
           <img src="{{url_for('static', filename='img/logo.png')}}" />
