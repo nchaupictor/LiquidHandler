@@ -14,7 +14,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
   <!-- <script src="/static/js/bootstrap.min.js"></script> -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   <!-- JSON Refresh Javascript -->
   <script type="text/javascript">
@@ -121,7 +121,7 @@ function tooltip(){
 </body>
 
 <body>
-  <div class = "text-center">
+  <div class="text-center">
     <div class="btn-group">
       <a href="/Start" class="btn btn-danger" role="button">START</a>
       <a href="/Stop" class="btn btn-danger" role="button">STOP</a>
@@ -185,93 +185,90 @@ function tooltip(){
 
     <!-- Camera Stream -->
 
-  <div class="text-center" style = "padding-bottom:10px;">  
-    <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#collapseProgram">
+    <div class="text-center" style="padding-bottom:10px;">
+      <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#collapseProgram">
       Program
     </button>
-  <!--</div>-->
-  <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#collapseStream">
+      <!--</div>-->
+      <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#collapseStream">
       Stream
   </button>
-  </div>
-  
-  
-      <div class="collapse text-center" id = "collapseStream" style = "padding:20px">
-          <img id="bg" src="{{ url_for('video_feed') }}">
-      </div>
-  
+    </div>
 
-      <div class="collapse" id = "collapseProgram" style = "padding:20px">
-        <ul class="list-group">
-          <li class="list-group-item">
-            Dispense Samples
-          </li>
-          <li class="list-group-item">
-            Incubation
-          </li>
-          <li class="list-group-item">
-            Aspirate Samples
-          </li>
-          <li class="list-group-item">
-            Wash 1
-          </li>
-          <li class="list-group-item">
-            Dispense Conjugate G
-          </li>
-          <li class="list-group-item">
-            Incubation
-          </li>
-          <li class="list-group-item">
-            Aspirate Conjugate G
-          </li>
-          <li class="list-group-item">
-            Wash 2
-          </li>
-          <li class="list-group-item">
-            Dispense Detection Agent
-          </li>
-          <li class="list-group-item">
-            Incubation
-          </li>
-          <li class="list-group-item">
-            Aspirate Detection Agent
-          </li>
-          <li class="list-group-item">
-            Wash 3
-          </li>
-          <li class="list-group-item">
-            Dispense Substrate
-          </li>
-          <li class="list-group-item">
-            Incubation
-          </li>
-          <li class="list-group-item">
-            Aspirate Substrate
-          </li>
-          <li class="list-group-item">
-            Wash 4
-          </li>
-        </ul>
-      </div>
+    <div class="collapse text-center" id="collapseStream" style="padding:20px">
+      <img id="bg" src="{{ url_for('video_feed') }}">
+    </div>
 
-<footer class="jumbotron text-center" style="padding-bottom:10px; padding-top:10px;">
-  <div class="row">
-        <div class = "text-center">
-          <a href = "http://www.pictordx.com" target="_blank"><img src="{{url_for('static', filename='img/logo.png')}}" /></a>
+
+    <div class="collapse" id="collapseProgram" style="padding:20px">
+      <ul class="list-group">
+        <li class="list-group-item">
+          Dispense Samples
+        </li>
+        <li class="list-group-item">
+          Incubation
+        </li>
+        <li class="list-group-item">
+          Aspirate Samples
+        </li>
+        <li class="list-group-item">
+          Wash 1
+        </li>
+        <li class="list-group-item">
+          Dispense Conjugate G
+        </li>
+        <li class="list-group-item">
+          Incubation
+        </li>
+        <li class="list-group-item">
+          Aspirate Conjugate G
+        </li>
+        <li class="list-group-item">
+          Wash 2
+        </li>
+        <li class="list-group-item">
+          Dispense Detection Agent
+        </li>
+        <li class="list-group-item">
+          Incubation
+        </li>
+        <li class="list-group-item">
+          Aspirate Detection Agent
+        </li>
+        <li class="list-group-item">
+          Wash 3
+        </li>
+        <li class="list-group-item">
+          Dispense Substrate
+        </li>
+        <li class="list-group-item">
+          Incubation
+        </li>
+        <li class="list-group-item">
+          Aspirate Substrate
+        </li>
+        <li class="list-group-item">
+          Wash 4
+        </li>
+      </ul>
+    </div>
+
+    <footer class="jumbotron text-center" style="padding-bottom:10px; padding-top:10px;">
+      <div class="row">
+        <div class="text-center">
+          <a href="http://www.pictordx.com" target="_blank"><img src="{{url_for('static', filename='img/logo.png')}}" /></a>
         </div>
-        <div class="col-sm-4">       
-            <br>24 Balfour Road<br>
-            Parnell, Auckland 1052<br>
-            New Zealand</li>
-         </div>
-         <div class = "col-sm-4">
-           <br>E: info@pictordx.com<br>T: +64 9 309 0950
+        <div class="col-sm-4">
+          <br>24 Balfour Road<br> Parnell, Auckland 1052<br> New Zealand</li>
         </div>
-        <div class = "col-sm-4 text-danger">
-          <br></b>ISO 9001:2008 certified</b><br>ISO 13485 certified
+        <div class="col-sm-4">
+          <br>E: info@pictordx.com<br>T: +64 9 309 0950
         </div>
-    </div>      
-</footer>
+        <div class="col-sm-4 text-danger">
+          <br></b>ISO 9001:2008 Certified</b><br>ISO 13485 Certified
+        </div>
+      </div>
+    </footer>
 
 
 
