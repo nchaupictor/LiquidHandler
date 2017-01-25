@@ -180,24 +180,22 @@ function tooltip(){
     <!-- Camera Stream -->
 
   <div class="col-md-4 text-center">  
-    <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#collapseProgram" aria-expanded="false" aria-controls="collapse">
+    <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#collapseProgram">
       Program
     </button>
 
-  <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#collapseStream" aria-expanded="false" aria-controls="collapse">
+  <!--<button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#collapseStream">
       Stream
   </button>
   </div>
-
+  -->
+  <!--
       <div class="collapse" id = "collapseStream">
-        <div class="well">
             <img id="bg" src="{{ url_for('video_feed') }}">
-        </div>
       </div>
-
+  -->
 
       <div class="collapse" id = "collapseProgram">
-        <div class="well">
         <ul class="list-group">
           <li class="list-group-item">
             Dispense Samples
@@ -248,7 +246,6 @@ function tooltip(){
             Wash 4
           </li>
         </ul>
-      </div>
       </div>
 
 </body>
