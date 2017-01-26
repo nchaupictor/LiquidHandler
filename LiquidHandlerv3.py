@@ -178,7 +178,7 @@ def pickFluid (X,Y,E):
 	serialSend(string)
 	#serialSend("G1 E4.5 F200")
 	#serialSend('G1 E9 F200')
-	string = stringFormat(None,None,72.5,None,400)
+	string = stringFormat(None,None,72.75,None,400)
 	serialSend(string)
 	serialSend("G1 E0 F900")
 	serialSend("G1 Z20 F900")
