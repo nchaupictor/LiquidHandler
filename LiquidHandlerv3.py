@@ -505,7 +505,7 @@ def runProgram():
 	#if numSlide == 1:
 		#numMod = int(raw_input("Enter the number of modules: "))
 		#print "Number of modules selected: %d" %(numMod)
-
+	count = wash(3,1,count)
 	#Loop through main program
 	#Dispense samples
 	#count = 12
