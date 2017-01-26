@@ -225,7 +225,7 @@ def aspirate (X,Y,count,F,firstFlag):
 	#serialSend(string)
 	#time.sleep(1)
 	#serialSend("G1 E9.5 F200")
-	string = stringFormat(None,None,35.25,None,900) #36.25
+	string = stringFormat(None,None,35,None,900) #36.25
 	serialSend(string)
 	
 	#time.sleep(1)
