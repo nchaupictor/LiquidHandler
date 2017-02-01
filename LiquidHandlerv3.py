@@ -780,6 +780,11 @@ def video_feed():
 def instructions():
 	return render_template('instructions.html')
 
+#----------------------------------------------------------------------------------------
+#Return to home from nav bar
+@app.route('/home')
+def home():
+	return render_template('main.html')
 
 
 if __name__ == "__main__":
