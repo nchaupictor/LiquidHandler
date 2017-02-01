@@ -2,30 +2,26 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Liquid</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Liquid Handler Planner</title>
 
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+  <!-- Bootstrap -->
+  <link href="/static/css/bootstrap.css" rel="stylesheet">
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <!-- <script src="/static/js/bootstrap.min.js"></script> -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <script type="text/javascript">
+  <!-- JSON Refresh Javascript -->
+  <script type="text/javascript">
     function refreshData() {
     //alert("Calling refresh...");
     $.ajax({
-          url: "/refresh", 
+        url: "/refresh", 
         type: "GET",
         dataType: "json",
         success: function(data) {
@@ -35,6 +31,7 @@
             $("#incubationTime").html(data.incubationTime);
             $("#message").html(data.message);
             $("#submessage").html(data.submessage);
+            $("#progressPercent").html(data.progressPercent);
             setTimeout(refreshData, 500);
         },
         error: function(xhr, status, err) {
@@ -44,34 +41,257 @@
     }
 
     $(document).ready(function() {
-    $("#refresh").click(function(event) {
+    //$("#refresh").click(function(event) {
     //$("#Start").click(function(event){
           refreshData();
-    });
+    //});
     });
     </script>
 
+  <!-- Progress Bar Update Javascript -->
+  <script type="text/javascript">
+  function updateProg(){
+    $.getJSON('/progress', function(data){
+      progJ = data.progJ
+      listCount = data.listC
+      $("#progressPercent").css("width",progJ+'%').attr('aria-valuenow',progJ);
+      
+      var temp = 0;
+      if(listCount != -1){
+        //Highlight list when progress percent reaches certain percentages
+        var lists = document.getElementsByClassName("list-group-item")[listCount];
+        lists.style.color = "#a00000";
+        if(listCount != temp){
+          var lists = document.getElementsByClassName("list-group-item")[listCount-1];
+          lists.style.color = "#2c3e50";
+        }
+        temp = listCount;
+    }
+    });
+  }
+
+setInterval('updateProg()',1000);
+</script>
+
+  <!-- Script for displaying tip box popup -->
+  <script type="text/javascript">
+  function tipCheck(){
+    jQuery.noConflict(); 
+    $('#popup').modal({show:false});
+    $.getJSON('/refresh',function(data){
+      tipCount = data.tipCount
+      if(tipCount == 12){
+        $('#popup').modal('show');
+
+        $('#tip').click(function(){
+          $(this).removeClass('btn-danger').addClass('btn-success');
+          $('#popup').modal('hide');
+        });
+      }
+    });
+  }
+
+setInterval('tipCheck()',1000);
+</script>
+
+  <!-- Activate Hover over Tooltips -->
+  <script type="text/javascript">
+function tooltip(){
+  jQuery.noConflict();
+  $(document).ready(function(){
+     $("#slideF").tooltip();
+  });
+}
+</script>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 
+<!-- Button Group Bar -->
+
 <body>
-    <h1>Liquid Handler v1 Planner</h1>
-    <div class="container">
-        <div class="btn-group">
-            <a href="/Start" class="btn btn-danger" role="button">START</a>
-            <a href="/Stop" class="btn btn-danger" role="button">STOP</a>
-            <a href="/Skip" class="btn btn-danger" role="button">SKIP</a>
-            <span id="refresh" class="btn btn-danger" role="button">REFRESH</a>
+  <div class="jumbotron text-center">
+    <h1>Liquid Handler Planner</h1>
+  </div>
+</body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="glyphicon glyphicon-home" href="/home"></a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/instructions">Instructions <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Calibration</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+
+<body>
+  <div class="text-center">
+    <div class="btn-group">
+      <a href="/Start" class="btn btn-danger" role="button">START</a>
+      <a href="/Stop" class="btn btn-danger" role="button">STOP</a>
+      <a href="/Skip" class="btn btn-danger" role="button">SKIP</a>
+      <span id="refresh" class="btn btn-danger" role="button">REFRESH</a>
+    </div>
+</div>
+
+<!-- Progress Bar -->
+<div class= "container" style = "width:340px;">
+<div class="progress progress-striped active">
+  <div id='progressPercent' class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+    <span>{{progJ}}</span>
+  </div>
+</div>
+</div>
+
+<!-- Slide User Form -->
+<form class = "form-inline text-center" action = "/slide" method = "POST">
+  <div class="input-group">
+    <span class="input-group-addon">Number of Slides</span>
+      <input id="slideF" class="form-control " type="text" name="text" placeholder="1-4" data-toggle="tooltip" data-placement="bottom"
+        title="Enter a number from 1 to 4">
+      <span class="input-group-btn">
+      <button type = "submit" name = "slideform" class="btn btn-default">Submit</button>
+    </span>
+    </div>
+    </form>
+
+    <!-- Tip Change Popup Box -->
+    <div id="popup" class="modal fade bd-example-modal-lg" role="dialog" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">ALERT</h4>
+          </div>
+          <div class="modal-body">
+            <p>All 96 Tips have been used. Please replace with new tips.</p>
+          </div>
+          <div class="modal-footer">
+            <form action="/tip" method="POST">
+              <input type="submit" class="btn btn-danger" value="Confirm" name="tipChange" id="tip" data-backdrop="static"></input>
+            </form>
+            <button type="button" class="btn btn-default" id="closeModal" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class = "container">
-    <h2>
+
+    <!-- Information Text Box -->
+    <div class="text-center">
+      <h3>
         Time = <span id="time">{{ time }} </span></a>
-            <br>Command = <span id="command">{{ command }}</span></a>
-            <br>Incubation Time = <span id="incubationTime">{{ incubationTime }} </span></a>
-            <br><br>Status = <span id="message">{{ message }}</span></a>
-            <br><span id='submessage'>{{ submessage }}</span></a>
-            </h2>
+        <br>Command = <span id="command">{{ command }}</span></a>
+        <br>Incubation Time = <span id="incubationTime">{{ incubationTime }} </span></a>
+        <br><br><span id="message">{{ message }}</span></a>
+        <br><span id='submessage'>{{ submessage }}</span></a>
+      </h3>
     </div>
+
+    <!-- Camera Stream -->
+
+    <div class="text-center" style="padding-bottom:10px;">
+      <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#collapseProgram">
+      Program
+    </button>
+      <!--</div>-->
+      <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#collapseStream">
+      Stream
+  </button>
+    </div>
+
+    <div class="collapse text-center" id="collapseStream" style="padding:20px">
+      <img id="bg" src="{{ url_for('video_feed') }}">
+    </div>
+
+
+    <div class="collapse" id="collapseProgram" style="padding:20px">
+      <ul class="list-group">
+        <li class="list-group-item">
+          Dispense Samples
+        </li>
+        <li class="list-group-item">
+          Incubation
+        </li>
+        <li class="list-group-item">
+          Aspirate Samples
+        </li>
+        <li class="list-group-item">
+          Wash 1
+        </li>
+        <li class="list-group-item">
+          Dispense Conjugate G
+        </li>
+        <li class="list-group-item">
+          Incubation
+        </li>
+        <li class="list-group-item">
+          Aspirate Conjugate G
+        </li>
+        <li class="list-group-item">
+          Wash 2
+        </li>
+        <li class="list-group-item">
+          Dispense Detection Agent
+        </li>
+        <li class="list-group-item">
+          Incubation
+        </li>
+        <li class="list-group-item">
+          Aspirate Detection Agent
+        </li>
+        <li class="list-group-item">
+          Wash 3
+        </li>
+        <li class="list-group-item">
+          Dispense Substrate
+        </li>
+        <li class="list-group-item">
+          Incubation
+        </li>
+        <li class="list-group-item">
+          Aspirate Substrate
+        </li>
+        <li class="list-group-item">
+          Wash 4
+        </li>
+      </ul>
+    </div>
+
+    <footer class="jumbotron text-center" style="padding-bottom:10px; padding-top:10px;">
+      <div class="row">
+        <div class="text-center">
+          <a href="http://www.pictordx.com" target="_blank"><img src="{{url_for('static', filename='img/logo.png')}}" / style ="width:25%;height:25%;"></a>
+        </div>
+        <div class="col-sm-4">
+          <br>24 Balfour Road<br> Parnell, Auckland 1052<br> New Zealand</li>
+        </div>
+        <div class="col-sm-4">
+          <br>E: info@pictordx.com<br>T: +64 9 309 0950
+        </div>
+        <div class="col-sm-4 text-danger">
+          <br></b>ISO 9001:2008 Certified</b><br>ISO 13485 Certified
+        </div>
+      </div>
+    </footer>
+
+
 
 </body>
+<script src="https://code.jquery.com/jquery-1.9.1.js" integrity="sha256-e9gNBsAcA0DBuRWbm0oZfbiCyhjLrI6bmqAl5o+ZjUA=" crossorigin="anonymous"></script>
+
+
 </html>

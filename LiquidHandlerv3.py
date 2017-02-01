@@ -680,7 +680,7 @@ def index():
 		'submessage' : submessage,
 		'progressPercent' : (progressPercent)
 	}
-	return render_template('main.html',**template_data)
+	return render_template('index.html',**template_data)
 #Initialise USB (Izone) Camera Feed
 def gen(camera):
     while True:
@@ -784,7 +784,7 @@ def instructions():
 #Return to home from nav bar
 @app.route('/home')
 def home():
-	return render_template('main.html')
+	return render_template('index.html')
 
 
 if __name__ == "__main__":
