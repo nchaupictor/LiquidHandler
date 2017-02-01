@@ -25,18 +25,22 @@
 </body>
 
 <nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="glyphicon glyphicon-home" href="/main" style = "color:#FFFFFF; top:20px;"></a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="/instructions">Instructions <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Calibration</a></li>
-            </ul>
-        </div>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="glyphicon glyphicon-home" href="/main" style="color:#FFFFFF"></a>
     </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/instructions">Instructions</a></li>
+        <li><a href="#">Calibration</a></li>
+      </ul>
+    </div>
+  </div>
 </nav>
 
 
@@ -89,11 +93,10 @@
 
 
 
-
 <footer class="jumbotron text-center" style="padding-bottom:10px; padding-top:10px;">
     <div class="row">
         <div class="text-center">
-            <a href="http://www.pictordx.com" target="_blank"><img src="{{url_for('static', filename='img/logo.png')}}" / style="width:25%;height:25%;"></a>
+            <a href="http://www.pictordx.com" target="_blank"><img src="{{url_for('static', filename='img/logo.png')}}" / style="width:20%;height:20%;"></a>
         </div>
         <div class="col-sm-4">
             <br>24 Balfour Road<br> Parnell, Auckland 1052<br> New Zealand</li>
