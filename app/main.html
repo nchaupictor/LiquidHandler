@@ -59,10 +59,10 @@
       var temp = 0;
       if(listCount != -1){
         //Highlight list when progress percent reaches certain percentages
-        var lists = document.getElementsByTagName("LI")[listCount];
+        var lists = document.getElementsByClassName("list-group-item")[listCount];
         lists.style.color = "#a00000";
         if(listCount != temp){
-          var lists = document.getElementsByTagName("LI")[listCount-1];
+          var lists = document.getElementsByClassName("list-group-item")[listCount-1];
           lists.style.color = "#2c3e50";
         }
         temp = listCount;
@@ -128,7 +128,7 @@ function tooltip(){
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="instructions.html">Instructions <span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="/instructions">Instructions <span class="sr-only">(current)</span></a></li>
                 <li><a href="#">Calibration</a></li>
             </ul>
         </div>
