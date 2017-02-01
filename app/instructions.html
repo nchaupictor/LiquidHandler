@@ -2,19 +2,52 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title>Liquid Handler Planner</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Liquid Handler Planner</title>
 
-  <!-- Bootstrap -->
-  <link href="/static/css/bootstrap.css" rel="stylesheet">
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <!-- <script src="/static/js/bootstrap.min.js"></script> -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Bootstrap -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Load imagemapster script -->
+    <script src="{{url_for('static', filename='js/jquery.imagemapster.js')}}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- <script src="/static/js/bootstrap.min.js"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        var = xref={
+            SampleRack: "Prepare 200 &mu;L Serum Samples into the 0.2 mL 8-Well Strip Tubes labelled 1-8 and place into Sample Rack starting at Position 1 labelled on the Deck. This position correlates tothe first row of the first slide. After all the samples have been added, put the entire rack into the slot located on the layout map."
+        };
+
+        var image = $("#layout")
+
+    image.mapster(
+    {
+        fillOpacity: 0.4,
+        fillColor: "d42e16",
+        stroke: true,
+        strokeColor: "3320FF",
+        strokeOpacity: 0.8,
+        strokeWidth: 4,
+        singleSelect: true,
+        mapKey: 'name',
+        listKey: 'name',
+        onClick: function (e) {  
+            // update text depending on area selected
+            $('#selections').html(xref[e.key]);
+        },
+        areas: [
+            {
+                key: "SampleRack",
+                fillColor: "ffffff"
+            }
+            ]
+    });
+    </script>
 
 </head>
 
@@ -48,10 +81,25 @@
 
 
 <body>
-    <div class = "text-center">
-        <h2>Deck Layout</h2>
-        <a><img src="{{url_for('static', filename='img/layout.png')}}" / style="width:75%;height:75%;"></a>
-        <h2>Physical Setup</h2>
+    <div style="clear: both; width: 500px; height: 50px; border: 1px solid black;" id="selections"></div>
+    <img src="{{url_for('static', filename='img/layout.png')}}" / style="width:75%;height:75%;" usemap="#layoutmap" id= "layout">
+
+    <map id = "layoutmap" name="layoutmap">
+    <area target="" alt="TipWaste" title="TipWaste" href="" coords="1143,655,678,329" shape="rect">
+    <area target="" alt="LiquidWaste" title="LiquidWaste" href="" coords="670,779,1154,1116" shape="rect">
+    <area target="" alt="Reservoir" title="Reservoir" href="" coords="663,1223,1159,1555" shape="rect">
+    <area target="" alt="SlideTray" title="SlideTray" href="" coords="312,992,636,1473" shape="rect">
+    <area target="" alt="SampleRack" title="SampleRack" href="" coords="1200,1030,1501,1321" shape="rect">
+    <area target="" alt="ReturnRack" title="ReturnRack" href="" coords="1200,1396,1501,1550" shape="rect">
+    </map>
+
+
+
+
+
+
+
+
     </div>
 
         <p>Place the following items onto the Liquid Handler Deck:</p>
