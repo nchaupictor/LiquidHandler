@@ -18,57 +18,6 @@
     <!-- <script src="/static/js/bootstrap.min.js"></script> -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script>
-        var inArea,
-            map = $("#layout"),
-            captions = {
-                SampleRack: ["Sample Rack", "Prepare 200 &mu;L Serum Samples into the 0.2 mL 8-Well Strip Tubes labelled 1-8 and place into Sample Rack starting at Position 1 labelled on the Deck. This position correlates tothe first row of the first slide. After all the samples have been added, put the entire rack into the slot located on the layout map."]
-            },
-            single_opts = {
-                fillColor: '000000',
-                fillOpacity: 0,
-                stroke: true,
-                strokeColor: 'ff0000',
-                strokeWidth: 2
-            },
-            all_opts = {
-                fillColor: 'ffffff',
-                fillOpacity: 0.6,
-                stroke: true,
-                strokeWidth: 2,
-                strokeColor: 'ffffff'
-            },
-            initial_opts = {
-                mapKey: 'data-name',
-                isSelectable: false,
-                onMouseover: function (data) {
-                    inArea = true;
-                    $('#layout-caption-header').text(captions[data.key][0]);
-                    $('#layout-caption-text').text(captions[data.key][1]);
-                    $('#layout-caption').show();
-                },
-                onMouseout: function (data) {
-                    inArea = false;
-                    $('#layout-caption').hide();
-                }
-            };
-        opts = $.extend({}, all_opts, initial_opts, single_opts);
-
-        map.mapster('unbind')
-            .mapster(opts)
-            .bind('mouseover', function () {
-                if (!inArea) {
-                    map.mapster('set_options', all_opts)
-                       .mapster('set', true, 'all')
-                       .mapster('set_options', single_opts);
-                }
-            }).bind('mouseout', function () {
-                if (!inArea) {
-                    map.mapster('set', false, 'all');
-                }
-            });
-    </script>
-
 </head>
 
 <body>
@@ -96,28 +45,24 @@
   </div>
 </nav>
 
-
-
-
-
 <body>
     
     <img src="{{url_for('static', filename='img/layout.png')}}" / style="width:100%;height:100%;" usemap="#layoutmap" id= "layout">
 
     <map id = "layout_map" name="layoutmap">
-    <area data-name="TipWaste" href="#" coords="512,249,858,488" shape="rect"/>
-    <area data-name="LiquidWaste" href="#" coords="505,583,867,836" shape="rect"/>
-    <area data-name="SlideTray" href="#" coords="234,742,479,1105" shape="rect"/>
-    <area data-name="Reservoir" href="#" coords="499,913,871,1168" shape="rect"/>
-    <area data-name="SampleRack" href="#" coords="901,771,1125,992" shape="rect"/>
-    <area data-name="ReturnRack" href="#" coords="901,1044,1128,1162" shape="rect"/>
-    <area data-name="TipBox" href="#" coords="893,368,1137,720" shape="rect"/>
+    <area data-name = "TipWaste,all" alt="TipWaste" title="TipWaste" href="#" coords="512,249,858,488" shape="rect">
+    <area data-name = "LiquidWaste,all" alt="LiquidWaste" title="LiquidWaste" href="#" coords="505,583,867,836" shape="rect">
+    <area data-name = "SlideTray,all" alt="SlideTray" title="SlideTray" href="#" coords="234,742,479,1105" shape="rect">
+    <area data-name = "Reservoir,all" alt="Reservoir" title="Reservoir" href="#" coords="499,913,871,1168" shape="rect">
+    <area data-name = "SampleRack,all" alt="SampleRack" title="SampleRack" href="#" coords="901,771,1125,992" shape="rect">
+    <area data-name = "ReturnRack,all" alt="ReturnRack" title="ReturnRack" href="#" coords="901,1044,1128,1162" shape="rect">
+    <area data-name = "TipBox,all" alt="TipBox" title="TipBox" href="#" coords="893,368,1137,720" shape="rect">
     </map>
 
-   <div id="layout-caption" style="clear:both;border: 1px solid black; width: 400px; padding: 6px; display:none;">
+   <p><div id="layout-caption" style="clear:both;border: 1px solid black; width: 400px; padding: 6px; display:none;">
      <div id="layout-caption-header" style="font-style: italic; font-weight: bold; margin-bottom: 12px;"></div>
      <div id="layout-caption-text"></div>
-</div>
+   </div></p>
  
 
         <p>Place the following items onto the Liquid Handler Deck:</p>
@@ -180,5 +125,54 @@
 </footer>
 
 <script src="https://code.jquery.com/jquery-1.9.1.js" integrity="sha256-e9gNBsAcA0DBuRWbm0oZfbiCyhjLrI6bmqAl5o+ZjUA=" crossorigin="anonymous"></script>
+<script>
+        var inArea,
+            map = $("#layout"),
+            captions = {
+                SampleRack: ["Sample Rack", "Prepare 200 &mu;L Serum Samples into the 0.2 mL 8-Well Strip Tubes labelled 1-8 and place into Sample Rack starting at Position 1 labelled on the Deck. This position correlates tothe first row of the first slide. After all the samples have been added, put the entire rack into the slot located on the layout map."]
+            },
+            single_opts = {
+                fillColor: '000000',
+                fillOpacity: 0,
+                stroke: true,
+                strokeColor: 'ff0000',
+                strokeWidth: 2
+            },
+            all_opts = {
+                fillColor: 'ffffff',
+                fillOpacity: 0.6,
+                stroke: true,
+                strokeWidth: 2,
+                strokeColor: 'ffffff'
+            },
+            initial_opts = {
+                mapKey: 'data-name',
+                isSelectable: false,
+                onMouseover: function (data) {
+                    inArea = true;
+                    $('#layout-caption-header').text(captions[data.key][0]);
+                    $('#layout-caption-text').text(captions[data.key][1]);
+                    $('#layout-caption').show();
+                },
+                onMouseout: function (data) {
+                    inArea = false;
+                    $('#layout-caption').hide();
+                }
+            };
+        opts = $.extend({}, all_opts, initial_opts, single_opts);
 
+        map.mapster('unbind')
+            .mapster(opts)
+            .bind('mouseover', function () {
+                if (!inArea) {
+                    map.mapster('set_options', all_opts)
+                       .mapster('set', true, 'all')
+                       .mapster('set_options', single_opts);
+                }
+            }).bind('mouseout', function () {
+                if (!inArea) {
+                    map.mapster('set', false, 'all');
+                }
+            });
+    </script>
 </html>
