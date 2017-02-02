@@ -47,7 +47,7 @@
 
 <body>
     
-    <div class = "text-center">
+    <div class = "container-fluid text-center">
     <img src="{{url_for('static', filename='img/layout.png')}}" / style="width:100%;height:100%;" usemap="#layoutmap" id= "layout">
 
     <map id = "layout_map" name="layoutmap">
@@ -128,32 +128,8 @@
 <!--<script src="https://code.jquery.com/jquery-1.9.1.js" integrity="sha256-e9gNBsAcA0DBuRWbm0oZfbiCyhjLrI6bmqAl5o+ZjUA=" crossorigin="anonymous"></script>-->
 <script>
 
-function finishSetup() {
-    var image = $(this),
-        imgWidth = image.width(),
-        imgHeight = image.height(),
-        maxWidth = $(window).width(),
-        maxHeight = $(window).height(),
-        newWidth=0,
-        newHeight=0;
-
-    if (imgWidth/maxWidth>imgHeight/maxHeight) {
-        newWidth = maxWidth;
-    } else {
-        newHeight = maxHeight;
-    }
-    image.mapster('resize',newWidth,newHeight,0);
-    
-
-}
-
         var inArea,
-            map = $("#layout"),
-            map.mapster({
-                mapScale: true,
-                onConfigured: finishSetup
-            }),
-            
+            map = $("#layout")          
             captions = {
                 SampleRack: ["Sample Rack", "Prepare 200 μL Serum Samples into the 0.2 mL 8-Well Strip Tubes labelled 1-8 and place into Sample Rack starting at Position 1 labelled on the Deck. This position correlates tothe first row of the first slide. After all the samples have been added, put the entire rack into the slot located on the layout map."],
                 Reservoir: ["Reagent Reservoir", "Prepare 3 mL of Conjugate G, Conjugate M (if required), Detection Reagent, and Substrate Solution and 5 mL of Wash Buffer and dispense into their corresponding locations according to the labels on the Deck."],
@@ -181,6 +157,7 @@ function finishSetup() {
                 mapKey: 'data-name',
                 isSelectable: false,
                 onMouseover: function (data) {
+                    
                     inArea = true;
                     $('#layout-caption-header').text(captions[data.key][0]);
                     $('#layout-caption-text').text(captions[data.key][1]);
