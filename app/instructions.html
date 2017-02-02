@@ -50,14 +50,13 @@
     <img src="{{url_for('static', filename='img/layout.png')}}" / style="width:100%;height:100%;" usemap="#layoutmap" id= "layout">
 
     <map id = "layout_map" name="layoutmap">
-    <area data-name = "TipWaste,all" alt="TipWaste" title="TipWaste" href="#" coords="512,249,858,488" shape="rect">
-    <area data-name = "LiquidWaste,all" alt="LiquidWaste" title="LiquidWaste" href="#" coords="505,583,867,836" shape="rect">
-    <area data-name = "SlideTray,all" alt="SlideTray" title="SlideTray" href="#" coords="234,742,479,1105" shape="rect">
-    <area data-name = "Reservoir,all" alt="Reservoir" title="Reservoir" href="#" coords="499,913,871,1168" shape="rect">
-    <area data-name = "SampleRack,all" alt="SampleRack" title="SampleRack" href="#" coords="901,771,1125,992" shape="rect">
-    <area data-name = "ReturnRack,all" alt="ReturnRack" title="ReturnRack" href="#" coords="901,1044,1128,1162" shape="rect">
-    <area data-name = "TipBox,all" alt="TipBox" title="TipBox" href="#" coords="892,368,892,716,1136,716,1137,583,1156,575,1169,564,1175,550,1172,534,1166,519,1155,509,1136,502,1134,368" shape="poly">
-
+    <area data-name = "TipWaste,all" alt="TipWaste" title="TipWaste" href="#" coords="861,246,861,493,509,493,509,410,493,404,482,394,476,383,474,371,474,357,478,347,487,338,495,330,509,324,509,246" shape="poly">
+    <area data-name = "SlideTray,all" alt="SlideTray" title="SlideTray" href="#" coords="478,740,478,1104,234,1104,234,964,221,962,209,958,197,945,190,933,190,923,192,910,197,898,207,888,219,882,232,879,234,740" shape="poly">
+    <area data-name = "Reservoir,all" alt="Reservoir" title="Reservoir" href="#" coords="873,910,873,1168,729,1168,725,1178,717,1190,702,1201,690,1205,674,1203,661,1196,651,1186,647,1178,643,1168,497,1168,497,910,641,912,643,902,651,890,657,884,668,879,676,875,692,875,705,879,713,888,721,896,727,910,641,912" shape="poly">
+    <area data-name = "LiquidWaste,all" alt="LiquidWaste" title="LiquidWaste" href="#" coords="503,580,503,839,869,837,869,580" shape="poly">
+    <area data-name = "TipBox,all" alt="TipBox" title="TipBox" href="#" coords="1136,368,1136,504,1145,504,1157,510,1165,516,1171,528,1173,539,1173,549,1169,563,1163,572,1151,580,1136,582,1136,718,892,718,892,368" shape="poly">
+    <area data-name = "SampleRack,all" alt="SampleRack" title="SampleRack" href="#" coords="1128,769,900,769,900,991,1130,991,1128,924,1138,922,1153,917,1161,909,1167,899,1169,884,1169,870,1163,856,1151,845,1138,839,1128,837,1128,924" shape="poly">
+    <area data-name = "ReturnRack,all" alt="ReturnRack" title="ReturnRack" href="#" coords="900,1041,900,1162,1130,1162,1130,1146,1145,1142,1159,1133,1167,1121,1169,1109,1169,1096,1165,1080,1157,1070,1145,1063,1130,1059,1130,1041" shape="poly">
     </map>
 
    <p><div id="layout-caption" style="clear:both;border: 1px solid black; padding: 6px; display:none;">
@@ -131,13 +130,11 @@
             map = $("#layout"),
             captions = {
                 SampleRack: ["Sample Rack", "Prepare 200 &mu;L Serum Samples into the 0.2 mL 8-Well Strip Tubes labelled 1-8 and place into Sample Rack starting at Position 1 labelled on the Deck. This position correlates tothe first row of the first slide. After all the samples have been added, put the entire rack into the slot located on the layout map."],
-                ReagentReservoir: ["Reagent Reservoir", "Prepare 3 mL of Conjugate G, Conjugate M (if required), Detection Reagent, and Substrate Solution and 5 mL of Wash Buffer and dispense into their corresponding locations according to the labels on the Deck."],
+                Reservoir: ["Reagent Reservoir", "Prepare 3 mL of Conjugate G, Conjugate M (if required), Detection Reagent, and Substrate Solution and 5 mL of Wash Buffer and dispense into their corresponding locations according to the labels on the Deck."],
                 SlideTray: ["Slide Tray", "Place your PictArray&trade; Panel onto the Slide Tray, starting from the top-most position. Press down firmly onto the slide to ensure it is positioned properly. Place the entire tray onto the deck and also ensure it is positioned properly.  "],
                 TipBox: ["96 Tip Box", "Place a 96 Well 200 &mu;L Tip Box with lid removed into the corresponding Tip Box slot."],
                 LiquidWaste: ["Liquid Waste", "Place a 50 mL Biotix Disposable Reagent Reservoir into the middle slot on the Deck."],
                 TipWaste: ["Tip Waste", "Place the empty tip box into this slot"]
-
-
 
             },
             single_opts = {
@@ -145,15 +142,15 @@
                 fillOpacity: 0,
                 stroke: true,
                 strokeColor: '0000ff',
-                strokeWidth: 2
+                strokeWidth: 4
             },
-            all_opts = {
-                fillColor: '000000',
-                fillOpacity: 0.6,
-                stroke: true,
-                strokeWidth: 2,
-                strokeColor: '0000ff'
-            },
+            //all_opts = {
+                //fillColor: '000000',
+                //fillOpacity: 0.6,
+                //stroke: true,
+                //strokeWidth: 2,
+                //strokeColor: '0000ff'
+            //}, 
             initial_opts = {
                 mapKey: 'data-name',
                 isSelectable: false,
@@ -168,15 +165,14 @@
                     $('#layout-caption').hide();
                 }
             };
-        opts = $.extend({}, all_opts, initial_opts, single_opts);
+        opts = $.extend({},initial_opts, single_opts);
 
         map.mapster('unbind')
             .mapster(opts)
             .bind('mouseover', function () {
                 if (!inArea) {
-                    map.mapster('set_options', all_opts)
-                       .mapster('set', true, 'all')
-                       .mapster('set_options', single_opts);
+                    map.mapster('set_options', single_opts)
+                       .mapster('set', true, 'all');
                 }
             }).bind('mouseout', function () {
                 if (!inArea) {
