@@ -19,7 +19,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script>
-        var = xref={
+        var xref = {
             SampleRack: "Prepare 200 &mu;L Serum Samples into the 0.2 mL 8-Well Strip Tubes labelled 1-8 and place into Sample Rack starting at Position 1 labelled on the Deck. This position correlates tothe first row of the first slide. After all the samples have been added, put the entire rack into the slot located on the layout map."
         };
 
@@ -43,7 +43,7 @@
         areas: [
             {
                 key: "SampleRack",
-                fillColor: "ffffff"
+                fillColor: "000000"
             }
             ]
     });
@@ -84,7 +84,7 @@
     
     <img src="{{url_for('static', filename='img/layout.png')}}" / style="width:100%;height:100%;" usemap="#layoutmap" id= "layout">
 
-    <map id = "layoutmap" name="layoutmap">
+    <map id = "layout_map" name="layoutmap">
     <area target="" alt="TipWaste" title="TipWaste" href="#" coords="1143,655,678,329" shape="rect">
     <area target="" alt="LiquidWaste" title="LiquidWaste" href="#" coords="670,779,1154,1116" shape="rect">
     <area target="" alt="Reservoir" title="Reservoir" href="#" coords="663,1223,1159,1555" shape="rect">
