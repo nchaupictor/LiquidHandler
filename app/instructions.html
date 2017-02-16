@@ -47,7 +47,7 @@
 
 <body>
     
-
+<div class = "text-center">
     <img src="{{url_for('static', filename='img/layout.png')}}" / style="max-width:100%" usemap="#layoutmap" id= "layout">
 
     <map id = "layout_map" name="layoutmap">
@@ -60,15 +60,15 @@
     <area data-name = "TipWaste" alt="TipWaste" href="#" coords="511,247,858,491" shape="rect">
     </map>
 
-   <p><div class = "text-center" id="layout-caption" style="clear:both;border: 1px solid black; padding: 6px; display:none;">
+   <p><div id="layout-caption" style="clear:both;border: 1px solid black; padding: 6px; display:none;">
      <div id="layout-caption-header" style="color: #A00000; font-style: italic; font-weight: bold; margin-bottom: 12px;"></div>
      <div id="layout-caption-text"></div>
    </div></p>
-
+</div>
 
         <p>Place the following items onto the Liquid Handler Deck:</p>
         <br><h3>Sample Rack</h3>
-        <p>Prepare 200 &mu;L Serum Samples into the 0.2 mL 8-Well Strip Tubes labelled 1-8 and place 
+        <p>Prepare 100 &mu;L Serum Samples into the 0.2 mL 8-Well Strip Tubes labelled 1-8 and place 
             into Sample Rack starting at Position 1 labelled on the Deck. This position correlates to
             the first row of the first slide. After all the samples have been added, put the entire rack 
             into the slot located on the layout map. 
@@ -131,7 +131,7 @@
         var inArea,
             map = $("#layout")          
             captions = {
-                SampleRack: ["Sample Rack", "Prepare 200 μL Serum Samples into the 0.2 mL 8-Well Strip Tubes labelled 1-8 and place into Sample Rack starting at Position 1 labelled on the Deck. This position correlates tothe first row of the first slide. After all the samples have been added, put the entire rack into the slot located on the layout map."],
+                SampleRack: ["Sample Rack", "Prepare 100 μL Serum Samples into the 0.2 mL 8-Well Strip Tubes labelled 1-8 and place into Sample Rack starting at Position 1 labelled on the Deck. This position correlates tothe first row of the first slide. After all the samples have been added, put the entire rack into the slot located on the layout map."],
                 Reservoir: ["Reagent Reservoir", "Prepare 3 mL of Conjugate G, Conjugate M (if required), Detection Reagent, and Substrate Solution and 5 mL of Wash Buffer and dispense into their corresponding locations according to the labels on the Deck."],
                 SlideTray: ["Slide Tray", "Place your PictArray™ Panel onto the Slide Tray, starting from the top-most position. Press down firmly onto the slide to ensure it is positioned properly. Place the entire tray onto the deck and also ensure it is positioned properly.  "],
                 TipBox: ["96 Tip Box", "Place a 96 Well 200 μL Tip Box with lid removed into the corresponding Tip Box slot."],
