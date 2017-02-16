@@ -781,6 +781,12 @@ def instructions():
 	return render_template('instructions.html')
 
 #----------------------------------------------------------------------------------------
+#Launch calibration page from nav bar
+@app.route('/calibration')
+def instructions():
+	return render_template('calibration.html')
+
+#----------------------------------------------------------------------------------------
 #Return to home from nav bar
 @app.route('/main')
 def home():
