@@ -783,7 +783,7 @@ def instructions():
 #----------------------------------------------------------------------------------------
 #Launch calibration page from nav bar
 @app.route('/calibration')
-def instructions():
+def calibration():
 	return render_template('calibration.html')
 
 #----------------------------------------------------------------------------------------
