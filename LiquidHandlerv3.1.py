@@ -13,6 +13,7 @@ import serial
 from flask import Flask,render_template,request,redirect,Response,jsonify
 from camera import VideoCamera
 import cv2
+import csv
 
 app = Flask(__name__)
 
@@ -31,57 +32,19 @@ GPIO.setup(11,GPIO.IN)
 #----------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------
 #COORDINATES
-offsetX = 0
-offsetY = 8.5#8.5
-#Tip Rack
-tipX = 0.1 #-offsetX #4.95
-tipY = 118.5 - offsetY
-tipZ = 75
-tipGap = 9.0
+#Read in coordinates.csv and store them into variables
+varName = []
+coords = []
+with open('coordinates.csv', 'r') as f:
+    reader = csv.reader(f, delimiter=',')
+    for row in reader:
+        varName.append(row[0])
+        coords.append(float(row[1]))
 
-#Sample Rack
-sampleX = 0.4 -offsetX
-sampleY = 223.5 - offsetY #218.5
-sampleGap = 9
-samplePick = 49
-
-#Return Tip Rack
-returnX = 1 -offsetX
-returnY = 260.5 - offsetY
-returnZ = 67
-returnGap = 9
-
-#Reservoir 
-reserveX = 117 -offsetX
-reserveY = 210 +14
-reservePick = 70
-reserveGap = 17.25 #17.25
-
-washY = 214 -offsetY
-conjGY = washY + 28 -offsetY
-detY = washY + 50 -offsetY
-conjMY = washY + 40 -offsetY
-subY = washY + 70 -offsetY
-
-#Waste Liquid 
-wasteLX = 117 - offsetX
-wasteLY = 125
-wasteLZ = 20
-
-#Waste Tips
-wasteTX = 117 -offsetX
-wasteTY = 0
-wasteTZ = 40
-
-#Slide
-slideX = 232.5 -offsetX #234
-slideY = 155.5 -offsetY #154 #Aspirate
-slideYDis = 155.75 -offsetY #154.25 #SlideY Centre
-slideZ = 43.5
-slideGap = 10.2
-slideAspZ = 47.55#48
-#Gap between slide modules
-moduleGap = 0
+d = dict(zip(varName,coords))
+#Convert dict objects back into variable names
+for key,val in d.items():
+    exec(key + '=val')
 
 #Global variables
 count = 0
@@ -96,19 +59,35 @@ tipEnd = "No"
 progressPercent = 0
 tipCount = 0
 listCount = -1
+marlinOut = ''
+coordX = 0
+coordY = 0
+coordZ = 0
+activeTab = ""
 #----------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------
 #FUNCTIONS 
 #Sending Marlin G-code commands to Arduino through serial 
 def serialSend(command):
-	ser.write(command + "\r\n") #Command string
-	out = '' #Clear buffer
-	time.sleep(1)
-	while ser.inWaiting() > 0: #Read buffer
-		out += ser.read(1)
-	if out != '':
-		print (">>" + out) 
-	print (command)
+    global out
+    global coordX
+    global coordY
+    global coordZ
+    ser.write(command + "\r\n") #Command string
+    out = '' #Clear buffer
+    time.sleep(1)
+    while ser.inWaiting() > 0: #Read buffer
+        out += ser.read(1)
+    if out != '':
+        print (">>" + out)
+        #time.sleep(1)
+        if command == 'M114':
+            marlinOut = out
+            coordX = float(marlinOut[marlinOut.find('X')+2:marlinOut.find('X')+6])
+            coordY = float(marlinOut[marlinOut.find('Y')+2:marlinOut.find('Y')+6])
+            coordZ = float(marlinOut[marlinOut.find('Z')+2:marlinOut.find('Z')+6])
+            print(coordX,coordY,coordZ)
+    print (command)
 #-----------------------------------------------------------------------------------------
 #Picking up Tip
 def pickTip (X,Y,Z,count):
@@ -688,6 +667,7 @@ def gen(camera):
         frame = camera.get_frame()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+#------------------------------------------------------------------------------------------          
 #Check for button states of main program
 @app.route("/<state>")
 def startProgram(state = None):
@@ -714,17 +694,80 @@ def startProgram(state = None):
 		incubationTime = 0
 		time.sleep(0.5)
 		return redirect('/')
-		
-	#template_data = {
-		#'title' : state,
-		#'time' : timer(t0),
-		#'command' : string,
-		#'incubationTime' : (incubationTime),
-		#'message' : message,
-		#'submessage' : submessage,
-        #'progressPercent' : (progressPercent)
-	#}
-	#return render_template('main.html', **template_data)
+#------------------------------------------------------------------------------------------
+#Check for button states of main program
+@app.route("/calibration/Home")
+def calibHome():
+    serialSend("G28 Z")
+    serialSend("G28 X Y")
+    time.sleep(0.5)
+    print('Calib Home Pressed')
+    serialSend("M114")
+    #marlinOut = out
+        #Get current coordinates and display onto calibration html\
+    return redirect('/calibration')
+
+@app.route("/calibration/Left")
+def calibLeft():
+    serialSend("G91")
+    serialSend("G1 X10 F900")
+    time.sleep(0.25)
+    serialSend("G90")
+    print("Calib Left Pressed")
+    serialSend("M114")
+    return redirect('/calibration')
+
+@app.route("/calibration/Right")
+def calibRight():
+    serialSend("G91")
+    serialSend("G1 X-10 F900")
+    time.sleep(0.25)
+    serialSend("G90")
+    print("Calib Right Pressed")
+    serialSend("M114")
+    return redirect('/calibration')
+
+@app.route("/calibration/Forward")
+def calibForward():
+    serialSend("G91")
+    serialSend("G1 Y10 F900")
+    time.sleep(0.25)
+    serialSend("G90")
+    print("Calib Forward Pressed")
+    serialSend("M114")
+    return redirect('/calibration')
+
+@app.route("/calibration/Backward")
+def calibBackward():
+    serialSend("G91")
+    serialSend("G1 Y-10 F900")
+    time.sleep(0.25)
+    serialSend("G90")
+    print("Calib Backward Pressed")
+    serialSend("M114")
+    return redirect('/calibration')
+
+@app.route("/calibration/Up")
+def calibUp():
+    serialSend("G91")
+    serialSend("G1 Z-10 F700")
+    time.sleep(0.25)
+    serialSend("G90")
+    print("Calib Up Pressed")
+    serialSend("M114")
+    return redirect('/calibration')
+
+@app.route("/calibration/Down")
+def calibDown():
+    serialSend("G91")
+    serialSend("G1 Z10 F700")
+    time.sleep(0.25)
+    serialSend("G90")
+    print("Calib Down Pressed")
+    serialSend("M114")
+    return redirect('/calibration')   
+
+
 #----------------------------------------------------------------------------------------
 #URL JSON refresher  for updated string information
 @app.route("/refresh")
@@ -732,9 +775,12 @@ def refresh():
 	json = jsonify({'time': timer(t0), 'command': string, 'incubationTime' : incubationTime, 'message': message, 'submessage' : submessage, 'progressPercent' : (progressPercent), 'tipCount' : tipCount})
 	return json	
 #----------------------------------------------------------------------------------------
-@app.route("/refreshCalib")
+#URL JSON refresher  for updated string information
+@app.route("/calibration/refreshCalib")
 def refreshCalib():
-	json = jsonify({'coordX': coordX, 'coordY': coordY, 'coordZ' : coordZ})
+	json = jsonify({'coordX': coordX, 'coordY': coordY, 'coordZ' : coordZ,'tipX':tipX,'tipY':tipY,'tipZ':tipZ,'sampleX':sampleX,'sampleY':sampleY,'sampleZ':samplePick,\
+    'returnX':returnX,'returnY':returnY,'returnZ':returnZ,'wasteTX':wasteTX,'wasteTY':wasteTY,'wasteTZ':wasteTZ,'wasteLX':wasteLX,'wasteLY':wasteLY,'wasteLZ':wasteLZ, \
+    'reserveX':reserveX,'reserveY':washY,'reserveZ':reservePick,'slideX':slideX,'slideY':slideY,'slideZ':slideZ})
 	return json	
 #----------------------------------------------------------------------------------------
 #URL JSON refresher for progress bar 
@@ -772,7 +818,54 @@ def tipform():
 		except:
 			print("Cannot obtain form data")
 	return redirect("/")
+#----------------------------------------------------------------------------------------
+#Form in calibration to go to XYZ Position
+@app.route("/calibration/postCoord",methods = ['GET','POST'])
+def calibForm():
+    if request.method == 'POST':
+        try:
+            postX = 'X' + str(request.form['postX'])
+            postY = 'Y' + str(request.form['postY'])
+            postZ = 'Z' + str(request.form['postZ'])
+            postF = 'F' + str(request.form['postF'])
+            print(postX,postY,postZ,postF)
+            poststr = 'G1' + " " + postX + " " + postY + " " + postZ + " " + postF
+            print(poststr)            
+        except:
+            print("Error")
+    serialSend(poststr)
+    serialSend("M114")
+    
+    return redirect("/calibration")
+#----------------------------------------------------------------------------------------
+#Form to save new coordinates into coordinates.csv
+@app.route("/calibration/saveCoord",methods = ['GET','POST'])
+def calibSave():
+    if request.method == 'POST':
+        try:
+            coordN = request.form['newCoord']
+            print("return value:")
+            print(coordN)
+            #postY = 'Y' + str(request.form['postY'])
+            #postZ = 'Z' + str(request.form['postZ'])
+        except:
+            print("Error")
 
+    return redirect("/calibration")
+    #----------------------------------------------------------------------------------------
+@app.route("/calibration/activeTab",methods = ['POST'])
+def activeTab():
+    global activeTab
+    if request.method == 'POST':
+        try:
+            activeTab = request.form['activeTab']
+            print(activeTab)
+            #postY = 'Y' + str(request.form['postY'])
+            #postZ = 'Z' + str(request.form['postZ'])
+        except:
+            print("Error")
+
+    return redirect("/calibration")
 #----------------------------------------------------------------------------------------
 #Return video stream back to /index from /video_feed
 @app.route('/video_feed')
