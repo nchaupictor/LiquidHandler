@@ -70,18 +70,18 @@
     </script>
 
     <script>
-        function activeTabf(){
+        function activeTabf() {
             var activeTab = $('.nav-tabs .active').text()
             $.ajax({
-                type : 'POST',
+                type: 'POST',
                 url: "/calibration/activeTab",
                 dataType: "text",
-                data: {activeTab : activeTab},
-                complete: setTimeout(function() {activeTabf()}, 2000),
+                data: { activeTab: activeTab },
+                complete: setTimeout(function () { activeTabf() }, 2000),
                 timeout: 1000
             });
         }
-        
+
         $(document).ready(function () {
             activeTabf();
             //});
@@ -126,14 +126,16 @@
 </body>
 
 <body>
-    <div class="text-center col-xs-2">
+    <div class="text-center">
         <!-- Information Text Box -->
-        <h3>
+        <h4>
             X Coordinate = <span id="coordX">{{ coordX }} </span></a>
             <br>Y Coordinate = <span id="coordY">{{ coordY }}</span></a>
             <br>Z Coordinate = <span id="coordZ">{{ coordZ }} </span></a>
-        </h3>
+        </h4>
     </div>
+</body>
+<body>
     <div class="text-center">
         <div class="btn-group">
             <a href="/calibration/Home" class="btn btn-danger" role="button">Home</a>
@@ -147,12 +149,13 @@
     </div>
 </body>
 
+<body>
 <ul class="nav nav-tabs">
     <li class="active"><a href="#tipbox" data-toggle="tab" aria-expanded="true">Tip Box</a></li>
     <li class=""><a href="#samplerack" data-toggle="tab" aria-expanded="false">Sample Rack</a></li>
     <li class=""><a href="#returnrack" data-toggle="tab" aria-expanded="false">Return Rack</a></li>
-    <li class=""><a href="#tipwaste" data-toggle="tab" aria-expanded="false">Tip Waste</a></li>
-    <li class=""><a href="#liquidwaste" data-toggle="tab" aria-expanded="false">Liquid Waste</a></li>
+    <li class=""><a href="#tipwaste" data-toggle="tab" aria-expanded="false">Waste Tip</a></li>
+    <li class=""><a href="#liquidwaste" data-toggle="tab" aria-expanded="false">Waste Liquid</a></li>
     <li class=""><a href="#reagentreservoir" data-toggle="tab" aria-expanded="false">Reagent Reservoir</a></li>
     <li class=""><a href="#slidetray" data-toggle="tab" aria-expanded="false">Slide Tray</a></li>
 </ul>
@@ -160,117 +163,121 @@
     <div class="tab-pane fade" id="tipbox">
         <div class="text-center">
             <!-- Information Text Box -->
-            <h3>
+            <h4>
                 Saved X Coordinate = <span id="tipX">{{ tipX }} </span></a>
                 <br>Saved Y Coordinate = <span id="tipY">{{ tipY }}</span></a>
                 <br>Saved Z Coordinate = <span id="tipZ">{{ tipZ }} </span></a><br><br>
-            </h3>
+            </h4>
         </div>
     </div>
     <div class="tab-pane fade" id="samplerack">
         <div class="text-center">
             <!-- Information Text Box -->
-            <h3>
+            <h4>
                 Saved X Coordinate = <span id="sampleX">{{ sampleX }} </span></a>
                 <br>Saved Y Coordinate = <span id="sampleY">{{ sampleY }}</span></a>
                 <br>Saved Z Coordinate = <span id="sampleZ">{{ sampleZ }} </span></a><br><br>
-            </h3>
+            </h4>
         </div>
     </div>
     <div class="tab-pane fade" id="returnrack">
         <div class="text-center">
             <!-- Information Text Box -->
-            <h3>
+            <h4>
                 Saved X Coordinate = <span id="returnX">{{ returnX }} </span></a>
                 <br>Saved Y Coordinate = <span id="returnY">{{ returnY }}</span></a>
                 <br>Saved Z Coordinate = <span id="returnZ">{{ returnZ }} </span></a><br><br>
-            </h3>
+            </h4>
         </div>
     </div>
     <div class="tab-pane fade" id="tipwaste">
         <div class="text-center">
             <!-- Information Text Box -->
-            <h3>
+            <h4>
                 Saved X Coordinate = <span id="wasteTX">{{ wasteTX }} </span></a>
                 <br>Saved Y Coordinate = <span id="wasteTY">{{ wasteTY }}</span></a>
                 <br>Saved Z Coordinate = <span id="wasteTZ">{{ wasteTZ }} </span></a><br><br>
-            </h3>
+            </h4>
         </div>
     </div>
     <div class="tab-pane fade" id="liquidwaste">
         <div class="text-center">
             <!-- Information Text Box -->
-            <h3>
+            <h4>
                 Saved X Coordinate = <span id="wasteLX">{{ wasteLX }} </span></a>
                 <br>Saved Y Coordinate = <span id="wasteLY">{{ wasteLY }}</span></a>
                 <br>Saved Z Coordinate = <span id="wasteLZ">{{ wasteLZ }} </span></a><br><br>
-            </h3>
+            </h4>
         </div>
     </div>
     <div class="tab-pane fade" id="reagentreservoir">
         <div class="text-center">
             <!-- Information Text Box -->
-            <h3>
+            <h4>
                 Saved X Coordinate = <span id="reserveX">{{ reserveX }} </span></a>
                 <br>Saved Y Coordinate = <span id="reserveY">{{ reserveY }}</span></a>
                 <br>Saved Z Coordinate = <span id="reserveZ">{{ reserveZ }} </span></a><br><br>
-            </h3>
+            </h4>
         </div>
     </div>
     <div class="tab-pane fade" id="slidetray">
         <div class="text-center">
             <!-- Information Text Box -->
-            <h3>
+            <h4>
                 Saved X Coordinate = <span id="slideX">{{ slideX }} </span></a>
                 <br>Saved Y Coordinate = <span id="slideY">{{ slideY }}</span></a>
                 <br>Saved Z Coordinate = <span id="slideZ">{{ slideZ }} </span></a><br><br>
-            </h3>
+            </h4>
         </div>
     </div>
 </div>
-
+</body>
 
 
 <!-- Form for Go To XYZ Position -->
 <form class="form-horizontal" action="/calibration/postCoord" method="POST">
     <fieldset>
         <legend>Go To</legend>
-        <div class="form-group">
-            <label for="X" class="col-xs-2 control-label">X</label>
-            <div class="col-xs-2">
+        <div class="form-group col-xs-6">
+            <label for="X" class="col-xs-12 control-label" style = "text-align:left">X</label>
+            <div class="col-xs-12">
                 <input type="text" class="form-control" name="postX" placeholder="X Coordinate">
             </div>
-        </div>
-        <div class="form-group">
-            <label for="Y" class="col-xs-2 control-label">Y</label>
-            <div class="col-xs-2">
+
+            <label for="Y" class="col-xs-12 control-label" style = "text-align:left">Y</label>
+            <div class="col-xs-12">
                 <input type="text" class="form-control" name="postY" placeholder="Y Coordinate">
             </div>
-        </div>
-        <div class="form-group">
-            <label for="Z" class="col-xs-2 control-label">Z</label>
-            <div class="col-xs-2">
+
+            <label for="Z" class="col-xs-12 control-label" style = "text-align:left">Z</label>
+            <div class="col-xs-12">
                 <input type="text" class="form-control" name="postZ" placeholder="Z Coordinate">
             </div>
-        </div>
-        <div class="form-group">
-            <label for="F" class="col-xs-2 control-label">Speed</label>
-            <div class="col-xs-2">
+
+            <label for="F" class="col-xs-12 control-label" style = "text-align:left">Speed</label>
+            <div class="col-xs-12">
                 <input type="text" class="form-control" name="postF" placeholder="F Coordinate">
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-xs-2 col-xs-offset-2">
-                <button type="reset" class="btn btn-default">Cancel</button>
-                <button type="postCoord" name="postCoord" class="btn btn-primary">Submit</button>
+
+        <div class="form-group col-xs-6" style = "float: right ;top:10px">
+            <div class="col-xs-12" style= "padding-top:2px">
+                <button type="submit" name="postCoord" class="btn btn-primary" value = "save">Save Coordinates</button>
+            </div>
+            <div class="col-xs-12" style= "padding-top:2px">
+                <button type="submit" name="postCoord" class="btn btn-primary" value = "submit">Submit</button>
+            </div>
+            <div class="col-xs-12" style= "padding-top:2px">
+                <button type="reset" class="btn btn-default">Cancel</button>         
+            </div>
             </div>
         </div>
     </fieldset>
 </form>
 
 <form class="form-horizontal" action="/calibration/saveCoord" method="POST">
-    <input type ="hidden" name = "newCoord" value = "{{ tipX }}"/>
-    <button type="saveCoord" name="saveCoord" class="btn btn-primary">Save Coordinates</button>
+    <input type="hidden" name="newCoord" value="{{ tipX }}" />
+    
 </form>
 
 <footer class="jumbotron text-center" style="padding-bottom:10px; padding-top:10px;">

@@ -14,6 +14,7 @@ from flask import Flask,render_template,request,redirect,Response,jsonify
 from camera import VideoCamera
 import cv2
 import csv
+import os
 
 app = Flask(__name__)
 
@@ -35,6 +36,7 @@ GPIO.setup(11,GPIO.IN)
 #Read in coordinates.csv and store them into variables
 varName = []
 coords = []
+tipX = 0
 with open('coordinates.csv', 'r') as f:
     reader = csv.reader(f, delimiter=',')
     for row in reader:
@@ -64,6 +66,7 @@ coordX = 0
 coordY = 0
 coordZ = 0
 activeTab = ""
+
 #----------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------
 #FUNCTIONS 
@@ -238,9 +241,9 @@ def wash (num,firstFlag,count):
 				if slideNum == 1 or (slideNum == 3 and j == 4):
 					vol = 7.75
 				if j % 4 == 0:
-					pickFluid(reserveX,washY,vol)
+					pickFluid(reagentX,washY,vol)
 					speed = 5000
-				dispense(slideX,slideYDis,j,speed,vol,1)
+				dispense(slideX,slideY,j,speed,vol,1)
 
 
 			moduleGap = 0 
@@ -251,7 +254,7 @@ def wash (num,firstFlag,count):
 					tipCount = count	
 				if (j != 0 and j % 2 == 0 ):
 					moduleGap += 6.65
-				aspirate(slideX,slideY,j,2800,0)
+				aspirate(slideX,slideYEdge,j,2800,0)
 				dispose(wasteLX,wasteLY)
 				eject(wasteTX,wasteTY,0)
 
@@ -285,9 +288,9 @@ def wash (num,firstFlag,count):
 				if slideNum == 1 or (slideNum == 3 and j == 4):
 					vol = 7.75
 				if j % 4 == 0:
-					pickFluid(reserveX,washY,vol)
+					pickFluid(reagentX,washY,vol)
 					speed = 5000
-				dispense(slideX,slideYDis,j,speed,vol,1)
+				dispense(slideX,slideY,j,speed,vol,1)
 
 
 			moduleGap = 0
@@ -295,7 +298,7 @@ def wash (num,firstFlag,count):
 			for j in xrange(0,2*slideNum):
 				if (j != 0 and j % 2 == 0):
 					moduleGap += 6.65
-				aspirate(slideX,slideY,j,speed,1)
+				aspirate(slideX,slideYEdge,j,speed,1)
 				speed = 900
 				if (j != 0 and j % 2 -1 == 0):
 					dispose(wasteLX,wasteLY)
@@ -497,7 +500,7 @@ def runProgram():
 		pickTip(tipX,tipY,tipZ,i)
 		#pickTip(tipX,tipY,tipZ,12)
 		pickSample(sampleX,sampleY,i)
-		dispense(slideX,slideYDis,i,5000,4.75,0)
+		dispense(slideX,slideY,i,5000,4.75,0)
 		count += 1
 		#eject(returnX,returnY,i) 
 		eject(tipX,tipY,i)
@@ -518,7 +521,7 @@ def runProgram():
 		message = "Step 1.0 - Aspirating Sample " + str(i + 1)
 		#pickTip(returnX,returnY,returnZ,i)
 		pickTip(tipX,tipY,tipZ,i)
-		aspirate(slideX,slideY,i,5000,0)
+		aspirate(slideX,slideYEdge,i,5000,0)
 		dispose(wasteLX,wasteLY)
 		eject(wasteTX,wasteTY,0)
 
@@ -551,9 +554,9 @@ def runProgram():
 			if slideNum == 1 or (slideNum == 3 and j == 4):
 				vol = 7.75
 			if j % 4 == 0:
-				pickFluid(reserveX,conjGY+(reserveGap*k),vol)
+				pickFluid(reagentX,conjGY+(reagentGap*k),vol)
 				speed = 5000
-			dispense(slideX,slideYDis,j,speed,vol,1)
+			dispense(slideX,slideY,j,speed,vol,1)
 
 		homeE() #Home E as sometimes it loses its zero position
 		moduleGap = 0
@@ -575,7 +578,7 @@ def runProgram():
 		for j in xrange(2*slideNum):
 			if (j != 0 and j % 2 == 0):
 				moduleGap += 6.65
-			aspirate(slideX,slideY,j,speed,1)
+			aspirate(slideX,slideYEdge,j,speed,1)
 			speed = 900
 			if (j != 0 and j % 2 - 1 == 0):
 				dispose(wasteLX,wasteLY)
@@ -778,9 +781,9 @@ def refresh():
 #URL JSON refresher  for updated string information
 @app.route("/calibration/refreshCalib")
 def refreshCalib():
-	json = jsonify({'coordX': coordX, 'coordY': coordY, 'coordZ' : coordZ,'tipX':tipX,'tipY':tipY,'tipZ':tipZ,'sampleX':sampleX,'sampleY':sampleY,'sampleZ':samplePick,\
+	json = jsonify({'coordX': coordX, 'coordY': coordY, 'coordZ' : coordZ,'tipX':tipX,'tipY':tipY,'tipZ':tipZ,'sampleX':sampleX,'sampleY':sampleY,'sampleZ':sampleZ,\
     'returnX':returnX,'returnY':returnY,'returnZ':returnZ,'wasteTX':wasteTX,'wasteTY':wasteTY,'wasteTZ':wasteTZ,'wasteLX':wasteLX,'wasteLY':wasteLY,'wasteLZ':wasteLZ, \
-    'reserveX':reserveX,'reserveY':washY,'reserveZ':reservePick,'slideX':slideX,'slideY':slideY,'slideZ':slideZ})
+    'reserveX':reagentX,'reserveY':washY,'reserveZ':reagentZ,'slideX':slideX,'slideY':slideY,'slideZ':slideZ})
 	return json	
 #----------------------------------------------------------------------------------------
 #URL JSON refresher for progress bar 
@@ -822,46 +825,111 @@ def tipform():
 #Form in calibration to go to XYZ Position
 @app.route("/calibration/postCoord",methods = ['GET','POST'])
 def calibForm():
-    if request.method == 'POST':
-        try:
-            postX = 'X' + str(request.form['postX'])
-            postY = 'Y' + str(request.form['postY'])
-            postZ = 'Z' + str(request.form['postZ'])
-            postF = 'F' + str(request.form['postF'])
-            print(postX,postY,postZ,postF)
-            poststr = 'G1' + " " + postX + " " + postY + " " + postZ + " " + postF
-            print(poststr)            
-        except:
-            print("Error")
-    serialSend(poststr)
-    serialSend("M114")
-    
-    return redirect("/calibration")
+	global coords
+	global varName
+	if request.method == 'POST':
+		try:
+			postX = str(request.form['postX'])
+			postY = str(request.form['postY'])
+			postZ = str(request.form['postZ'])
+			postF = str(request.form['postF'])
+			print(postX,postY,postZ,postF)
+			poststr = 'G1' + " " + 'X' + postX + " " + 'Y' + postY + " " + 'Z' + postZ + " " + "F" + postF
+			#print(poststr) 
+			#print(str(request.form["postCoord"]))
+
+			#Submit button - sends G-code and moves machine
+			if (request.form["postCoord"] == "submit"):
+				serialSend(poststr)
+				serialSend("M114")
+			#Save button - finds active tab and replaces XYZ coordinates for that tab
+			elif (request.form["postCoord"]== "save"):
+				posStr = ['tip','sample','return','wasteT','wasteL','reagent','slide']
+				temp = activeTab.split()
+				temp = temp
+				print(temp[0].lower())
+				for idx,text in enumerate(posStr):
+					#print(temp[0].lower(),text)
+					if temp[0].lower() in text:
+						if temp[0].lower() == 'waste' and temp[1].lower() == 'tip':
+							idx = 3
+						elif temp[0].lower() == 'waste' and temp[1].lower() == 'liquid':
+							idx = 4
+						print('match found')
+						print(idx)
+						#Append strings together to form coordinates
+						strTempX = posStr[idx] + 'X'  
+						strTempY = posStr[idx] + 'Y'
+						strTempZ = posStr[idx] + 'Z'
+						print(strTempX,strTempY,strTempZ)
+						break
+				#Read coordinates.csv and open edit.csv to copy contents and replace with new coordinates
+				with open('coordinates.csv', 'r') as filecsv:
+					reader = csv.reader(filecsv, delimiter=',')
+					print(coords)
+					writer = csv.writer(open('edit.csv','wb'))
+					for i,line in enumerate(reader):
+						#print(line[0])
+						#print(strTempX)
+						#print('line read')
+						if line[0] == strTempX:
+							#print('matched')
+							writer.writerow([line[0],postX])
+							coords[i] = float(postX)
+							#print('replaced X')
+						elif line[0] == strTempY:
+							writer.writerow([line[0],postY])
+							coords[i] = float(postY)
+							#print('replaced Y')
+						elif line[0] == strTempZ:
+							writer.writerow([line[0],postZ])
+							coords[i] = float(postZ)
+							#print('replaced Z')
+						else:
+							writer.writerow(line)
+
+				#Delete coordinates.csv and replace and rename with edit.csv
+				os.remove('coordinates.csv')
+				print('coordinates.csv deleted')
+				#Reread coordinates.csv and update in calibration.html
+				os.rename('edit.csv','coordinates.csv')
+				print('new coordinates.csv saved')
+				#print(coords)
+				
+				#d = dict(zip(varName,coords))
+				#Convert dict objects back into variable names
+				#for key,val in d.items():
+					#exec(key + '=val')
+				print(varName,coords)
+		except:
+			print("Saving coordinates failed")
+	return redirect("/calibration")
 #----------------------------------------------------------------------------------------
 #Form to save new coordinates into coordinates.csv
 @app.route("/calibration/saveCoord",methods = ['GET','POST'])
 def calibSave():
-    if request.method == 'POST':
-        try:
-            coordN = request.form['newCoord']
-            print("return value:")
-            print(coordN)
-            #postY = 'Y' + str(request.form['postY'])
-            #postZ = 'Z' + str(request.form['postZ'])
-        except:
-            print("Error")
+	#Find position of coordinates through activeTab
+	
 
-    return redirect("/calibration")
+	if request.method == 'POST':
+		try:
+			postX = 'X' + str(request.form['postX'])
+			postY = 'Y' + str(request.form['postY'])
+			postZ = 'Z' + str(request.form['postZ'])
+			print(postX,postY,postZ)
+
+			#Open file and save 
+		except:
+			print("Error")
+	return redirect("/calibration")
     #----------------------------------------------------------------------------------------
 @app.route("/calibration/activeTab",methods = ['POST'])
 def activeTab():
     global activeTab
     if request.method == 'POST':
         try:
-            activeTab = request.form['activeTab']
+            activeTab = str(request.form['activeTab'])
             print(activeTab)
-            #postY = 'Y' + str(request.form['postY'])
-            #postZ = 'Z' + str(request.form['postZ'])
         except:
             print("Error")
 
