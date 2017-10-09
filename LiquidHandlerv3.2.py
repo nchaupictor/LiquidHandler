@@ -1,8 +1,16 @@
 #----------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------
-#                                 Liquid Handler Routine v3
-#                          Date created: 23/11/2016 #Author: N Chau
-#Added features: Host raspberry pi as webserver through flask, GUI controlled through server
+#                                 Liquid Handler Routine v3.2
+#                          Date created: 09/10/2017 #Author: N Chau
+#v3.1 (15/08/2017) Added features: Calibration page
+#                  Coordinates migrated to csv / with saving functionality
+#                  Manual control for calibration 
+#----------------------------------------------------------------------------------------
+#v3.2 (09/10/2017) Full redesign of webserver
+#				   Changed all POST request to onclick events to prevent page refreshing (in Python)
+#				   Upgraded to Bootstrap v4.0Beta
+#                  Replaced 3 separate pages into one main.html
+#				   Mobile optimisations required for mobile control
 #----------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------
 #SETUP
@@ -118,7 +126,7 @@ def pickTip (X,Y,Z,count):
 	tipEnd = "No"
 
 	Y = Y - count * tipGap
-	string = stringFormat(X,Y,None,None,5000)
+	string = stringFormat(X,Y,None,None,10000)
 	serialSend(string)
 	string = stringFormat(None,None,60,None,900) #60
 	serialSend(string)
@@ -136,7 +144,7 @@ def pickSample (X,Y,count):
 	global submessage
 	submessage = "Picking sample..."
 	Y = Y - count * sampleGap
-	string = stringFormat(X,Y,None,None,5000)
+	string = stringFormat(X,Y,None,None,10000)
 	serialSend(string)
 	string = stringFormat(None,None,33,None,900)
 	serialSend(string)
@@ -152,7 +160,7 @@ def pickSample (X,Y,count):
 def pickFluid (X,Y,E):
 	global submessage
 	submessage = "Picking reagent..."
-	string = stringFormat(X,Y,None,None,5000)
+	string = stringFormat(X,Y,None,None,10000)
 	serialSend(string)
 	string = stringFormat(None,None,65,None,900)
 	serialSend(string)
@@ -242,7 +250,7 @@ def wash (num,firstFlag,count):
 					vol = 7.75
 				if j % 4 == 0:
 					pickFluid(reagentX,washY,vol)
-					speed = 5000
+					speed = 10000
 				dispense(slideX,slideY,j,speed,vol,1)
 
 
@@ -289,7 +297,7 @@ def wash (num,firstFlag,count):
 					vol = 7.75
 				if j % 4 == 0:
 					pickFluid(reagentX,washY,vol)
-					speed = 5000
+					speed = 10000
 				dispense(slideX,slideY,j,speed,vol,1)
 
 
@@ -315,7 +323,7 @@ def dispose (X,Y):
 	global submessage
 	submessage = "Disposing..."
 	serialSend("G1 Z10 F900")
-	string = stringFormat(X,Y,None,None,5000)
+	string = stringFormat(X,Y,None,None,10000)
 	serialSend(string)
 	string = stringFormat(None,None,19,None,900)
 	serialSend(string)
@@ -329,7 +337,7 @@ def eject (X,Y,count):
 	submessage = "Ejecting tips..."
 	serialSend("G1 Z10 F550")
 	Y = Y - count * returnGap
-	string = stringFormat(X,Y,None,None,5000)
+	string = stringFormat(X,Y,None,None,10000)
 	serialSend(string)
 	string = stringFormat(None,None,40,None,900)
 	serialSend(string)
@@ -406,7 +414,7 @@ def incubation(seconds):
 			#print("\r{0}".format(j)),
 			print(s)
 			time.sleep(1)
-			if skip == 1:
+			if skip == 1: #Triggered from skip button press 
 				skip = 0 
 				break
 		#return incubationTime
@@ -458,6 +466,8 @@ def runProgram():
 	#cv2.namedWindow("camera", cv2.CV_WINDOW_AUTOSIZE)
 	#cv2.imshow("camera",img)
 
+	#Create thread and initialise computer vision functions
+
 	#Home XYZ 
 	print ("Homing...")
 	message = "Homing..."
@@ -500,7 +510,7 @@ def runProgram():
 		pickTip(tipX,tipY,tipZ,i)
 		#pickTip(tipX,tipY,tipZ,12)
 		pickSample(sampleX,sampleY,i)
-		dispense(slideX,slideY,i,5000,4.75,0)
+		dispense(slideX,slideY,i,10000,4.75,0)
 		count += 1
 		#eject(returnX,returnY,i) 
 		eject(tipX,tipY,i)
@@ -555,7 +565,7 @@ def runProgram():
 				vol = 7.75
 			if j % 4 == 0:
 				pickFluid(reagentX,conjGY+(reagentGap*k),vol)
-				speed = 5000
+				speed = 10000
 			dispense(slideX,slideY,j,speed,vol,1)
 
 		homeE() #Home E as sometimes it loses its zero position
@@ -583,7 +593,7 @@ def runProgram():
 			if (j != 0 and j % 2 - 1 == 0):
 				dispose(wasteLX,wasteLY)
 				serialSend("G1 Z10 F900")	
-				speed = 5000
+				speed = 10000
 		moduleGap = 0
 		eject(wasteTX,wasteTY,0)
 
@@ -650,7 +660,6 @@ def get_incubationTime(s):
 	global incubationTime
 	incubationTime = s 
 	return incubationTime
-
 #------------------------------------------------------------------------------------------
 #URL State Checker 
 @app.route("/")
@@ -672,103 +681,117 @@ def gen(camera):
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 #------------------------------------------------------------------------------------------          
 #Check for button states of main program
-@app.route("/<state>")
+@app.route("/<state>", methods = ['POST'])
 def startProgram(state = None):
 	if state == 'Start': 
 		global t0
 		t0 = time.time() #Start timing
-		runProgram()
+		if request.method == "POST":
+			runProgram()
+			time.sleep(0.5)
+			return jsonify(result={"status": 200})
 		#serialSend("M106")
-		time.sleep(0.5)
-		return redirect('/')
+		#return redirect('/')
 	if state == 'Stop':
 		global message
 		print("STOP PRESSED")
 		message = "EMERGENCY STOP"
-		serialSend("M112") #Emergency Stop 
-		ser.reset_input_buffer() #Flush buffer 
-		time.sleep(0.5)
-		return redirect('/')
+		if request.method =="POST":
+			serialSend("M112") #Emergency Stop 
+			ser.reset_input_buffer() #Flush buffer 
+			time.sleep(0.5)
+			return jsonify(result={"status": 200})
+		#return redirect('/')
 	if state == 'Skip': 
 		global skip
 		global incubationTime
 		skip = 1 
 		print("INCUBATION SKIPPED")
-		incubationTime = 0
-		time.sleep(0.5)
-		return redirect('/')
+		if request.method == "POST":
+			incubationTime = 0
+			time.sleep(0.5)
+			return jsonify(result={"status": 200})
+		#return redirect('/')
 #------------------------------------------------------------------------------------------
 #Check for button states of main program
-@app.route("/calibration/Home")
+@app.route("/Home",methods = ["POST"])
 def calibHome():
-    serialSend("G28 Z")
-    serialSend("G28 X Y")
-    time.sleep(0.5)
-    print('Calib Home Pressed')
-    serialSend("M114")
+	if request.method == "POST":
+		serialSend("G28 Z")
+		serialSend("G28 X Y")
+		time.sleep(0.5)
+		print('Calib Home Pressed')
+		serialSend("M114")
+		return jsonify(result={"status": 200})
     #marlinOut = out
         #Get current coordinates and display onto calibration html\
-    return redirect('/calibration')
+    #return redirect('/')
 
-@app.route("/calibration/Left")
+@app.route("/Left",methods = ["POST"])
 def calibLeft():
-    serialSend("G91")
-    serialSend("G1 X10 F900")
-    time.sleep(0.25)
-    serialSend("G90")
-    print("Calib Left Pressed")
-    serialSend("M114")
-    return redirect('/calibration')
+	serialSend("G91")
+	serialSend("G1 X10 F900")
+	time.sleep(0.25)
+	serialSend("G90")
+	print("Calib Left Pressed")
+	serialSend("M114")
+	return jsonify(result={"status": 200})
+    #return redirect('/')
 
-@app.route("/calibration/Right")
+@app.route("/Right",methods = ["POST"])
 def calibRight():
-    serialSend("G91")
-    serialSend("G1 X-10 F900")
-    time.sleep(0.25)
-    serialSend("G90")
-    print("Calib Right Pressed")
-    serialSend("M114")
-    return redirect('/calibration')
+	serialSend("G91")
+	serialSend("G1 X-10 F900")
+	time.sleep(0.25)
+	serialSend("G90")
+	print("Calib Right Pressed")
+	serialSend("M114")
+	return jsonify(result={"status": 200})
+    #return redirect('/')
 
-@app.route("/calibration/Forward")
+@app.route("/Forward",methods = ["POST"])
 def calibForward():
-    serialSend("G91")
-    serialSend("G1 Y10 F900")
-    time.sleep(0.25)
-    serialSend("G90")
-    print("Calib Forward Pressed")
-    serialSend("M114")
-    return redirect('/calibration')
+	serialSend("G91")
+	serialSend("G1 Y10 F900")
+	time.sleep(0.25)
+	serialSend("G90")
+	print("Calib Forward Pressed")
+	serialSend("M114")
+	return jsonify(result={"status": 200})
+    #return redirect('/')
 
-@app.route("/calibration/Backward")
+@app.route("/Backward",methods = ["POST"])
 def calibBackward():
-    serialSend("G91")
-    serialSend("G1 Y-10 F900")
-    time.sleep(0.25)
-    serialSend("G90")
-    print("Calib Backward Pressed")
-    serialSend("M114")
-    return redirect('/calibration')
+	serialSend("G91")
+	serialSend("G1 Y-10 F900")
+	time.sleep(0.25)
+	serialSend("G90")
+	print("Calib Backward Pressed")
+	serialSend("M114")
+	return jsonify(result={"status": 200})
+    #return redirect('/')
 
-@app.route("/calibration/Up")
+@app.route("/Up",methods = ["POST"])
 def calibUp():
-    serialSend("G91")
-    serialSend("G1 Z-10 F700")
-    time.sleep(0.25)
-    serialSend("G90")
-    print("Calib Up Pressed")
-    serialSend("M114")
-    return redirect('/calibration')
+	serialSend("G91")
+	serialSend("G1 Z-10 F700")
+	time.sleep(0.25)
+	serialSend("G90")
+	print("Calib Up Pressed")
+	serialSend("M114")
+	return jsonify(result={"status": 200})
+    #return redirect('/')
 
-@app.route("/calibration/Down")
+@app.route("/Down",methods = ["POST"])
 def calibDown():
-    serialSend("G91")
-    serialSend("G1 Z10 F700")
-    time.sleep(0.25)
-    serialSend("G90")
-    print("Calib Down Pressed")
-    serialSend("M114")
-    return redirect('/calibration')   
+	serialSend("G91")
+	serialSend("G1 Z10 F700")
+	time.sleep(0.25)
+	serialSend("G90")
+	print("Calib Down Pressed")
+	serialSend("M114")
+	return jsonify(result={"status": 200})
+    #return redirect('/')   
 
 
 #----------------------------------------------------------------------------------------
@@ -779,7 +802,7 @@ def refresh():
 	return json	
 #----------------------------------------------------------------------------------------
 #URL JSON refresher  for updated string information
-@app.route("/calibration/refreshCalib")
+@app.route("/refreshCalib")
 def refreshCalib():
 	json = jsonify({'coordX': coordX, 'coordY': coordY, 'coordZ' : coordZ,'tipX':tipX,'tipY':tipY,'tipZ':tipZ,'sampleX':sampleX,'sampleY':sampleY,'sampleZ':sampleZ,\
     'returnX':returnX,'returnY':returnY,'returnZ':returnZ,'wasteTX':wasteTX,'wasteTY':wasteTY,'wasteTZ':wasteTZ,'wasteLX':wasteLX,'wasteLY':wasteLY,'wasteLZ':wasteLZ, \
@@ -823,7 +846,7 @@ def tipform():
 	return redirect("/")
 #----------------------------------------------------------------------------------------
 #Form in calibration to go to XYZ Position
-@app.route("/calibration/postCoord",methods = ['GET','POST'])
+@app.route("/postCoord",methods = ['GET','POST'])
 def calibForm():
 	global coords
 	global varName
@@ -903,14 +926,13 @@ def calibForm():
 				print(varName,coords)
 		except:
 			print("Saving coordinates failed")
-	return redirect("/calibration")
+	return redirect("/")
 #----------------------------------------------------------------------------------------
 #Form to save new coordinates into coordinates.csv
-@app.route("/calibration/saveCoord",methods = ['GET','POST'])
+@app.route("/saveCoord",methods = ['GET','POST'])
 def calibSave():
 	#Find position of coordinates through activeTab
 	
-
 	if request.method == 'POST':
 		try:
 			postX = 'X' + str(request.form['postX'])
@@ -921,9 +943,9 @@ def calibSave():
 			#Open file and save 
 		except:
 			print("Error")
-	return redirect("/calibration")
+	return redirect("/")
     #----------------------------------------------------------------------------------------
-@app.route("/calibration/activeTab",methods = ['POST'])
+@app.route("/activeTab",methods = ['POST'])
 def activeTab():
     global activeTab
     if request.method == 'POST':
@@ -933,7 +955,7 @@ def activeTab():
         except:
             print("Error")
 
-    return redirect("/calibration")
+    return redirect("/")
 #----------------------------------------------------------------------------------------
 #Return video stream back to /index from /video_feed
 @app.route('/video_feed')
@@ -941,18 +963,6 @@ def video_feed():
     return Response(gen(VideoCamera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
     
-#----------------------------------------------------------------------------------------
-#Launch instructions page from nav bar
-@app.route('/instructions')
-def instructions():
-	return render_template('instructions.html')
-
-#----------------------------------------------------------------------------------------
-#Launch calibration page from nav bar
-@app.route('/calibration')
-def calibration():
-	return render_template('calibration.html')
-
 #----------------------------------------------------------------------------------------
 #Return to home from nav bar
 @app.route('/main')
